@@ -3,7 +3,7 @@ let modInfo = {
 	id: "mymod",
 	author: "2^32",
 	pointsName: "points",
-	modFiles: ["layers/A.js", "layers/B.js","layers/C.js","layers/D.js","layers/E.js","layers/ach.js","tree.js",],
+	modFiles: ["layers/A.js", "layers/B.js","layers/C.js","layers/D.js","layers/E.js","layers/F.js","layers/ach.js","tree.js",],
 
 	discordName: "",
 	discordLink: "",
@@ -13,14 +13,16 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.4.2",
-	name: "E finish",
+	num: "0.5.1",
+	name: "F",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+    <h3>v0.5.1</h3> (240713)
+		- Add F and some powerful upg.<br> And some nerfs for balance. <br>
     <h3>v0.4.2</h3> (240705)
 		- fix buyable code,a bit rebalance. <br>
-    <h3>v0.4.1</h3> (240701-05)
+    <h3>v0.4.1</h3> (240701)
 		- Added achievements,Ek,Ec5-8,E31-50,etc.<br> And a TOUGH rebalance. <br>
     <h3>v0.3.7</h3> (240624)
 		- Added Em / rebalance <br>
@@ -76,6 +78,7 @@ function getPointGen() {
 	gain = gain.mul(hasUpgrade("D",43)?upgradeEffect("D",43):1)
 	gain = gain.mul(hasUpgrade("E",85)?upgradeEffect("E",85):1)
 	gain = gain.mul(hasUpgrade("E",104)?upgradeEffect("E",104):1)
+	gain = gain.mul(hasUpgrade("F",11)?upgradeEffect("F",11):1)
 
 	if (inChallenge("A", 11))  gain = gain.pow(0.75)
 	if (inChallenge("A", 21))  gain = gain.pow(0.55)
@@ -93,6 +96,9 @@ function getPointGen() {
 
 	if (hasChallenge("A", 32))  gain = gain.pow(1.01)
 	if (hasChallenge("C", 11))  gain = gain.pow(1.01)
+	if (hasUpgrade("F", 11))  gain = gain.pow(1.0016)
+	if (hasUpgrade("F", 14))  gain = gain.pow(1.0012)
+
 	if (hasChallenge("E", 21))  gain = gain.mul(challengeEffect('E',21))
 	if (hasChallenge("E", 22))  gain = gain.mul(challengeEffect('E',22))
 
@@ -105,11 +111,11 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() {return "current endgame:1e140300 points,1e1024 E<br> next layer requires 1e1024 E."},
+	function() {return "current endgame:1e6600000 points<br> Too easy? go to play qqqe308's NG-10!."},
 ]
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("1e140300"))
+	return player.points.gte(new Decimal("e6600000"))
 }
 
 //<br> bilibili: @bili_68585026743

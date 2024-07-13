@@ -38,6 +38,8 @@ addLayer("C", {
 
         return mult
     },
+    softcap(){return new Decimal(Infinity)},
+	softcapPower(){return new Decimal(1)},
     branches: ['A','B'],
     milestones: {
         0: {requirementDescription: "3 total C",
@@ -76,6 +78,14 @@ addLayer("C", {
         ["microtabs", "stuff"],
         ["blank", "25px"],
     ],
+    doReset(layer){
+        if (layer=="F") {        
+            let keep = [];
+            if (hasMilestone("F", 1)) keep.push("upgrades")
+            if (hasMilestone("F", 1)) keep.push("milestones")
+            if (hasMilestone("F", 2)) keep.push("challenges")
+            layerDataReset(this.layer, keep)}
+    },
     upgrades: {
         11: {
             title:'C1',
@@ -90,9 +100,12 @@ addLayer("C", {
                 if (hasUpgrade('C',25)) ef = ef*1500
                 if (hasMilestone('C',3)) ef = ef*1000
                 if (hasUpgrade('C',31)) ef = ef*1e7
+                if (hasUpgrade('C',41)) ef = ef*1e32
+                if (hasUpgrade('C',42)) ef = ef*1e80
                 if (inChallenge('C',11))  ef = 1
                 if (hasUpgrade('E',64)) exp=exp+0.1
                 if (hasUpgrade('E',72)) exp=exp+0.1
+                if (hasUpgrade('F',21)) exp=exp+0.4
                 if (hasUpgrade('E',61)) ef=Decimal.pow(ef,1+(buyableEffect("E",21)-1)*exp)
                 return ef;          
             },
@@ -116,7 +129,7 @@ addLayer("C", {
                 if (hasUpgrade('C',24))  ef = ef*1.2
                 if (inChallenge('C',11))  ef = 0
                 if (inChallenge('E',11))  ef = 0
-                return player[this.layer].points.pow(ef);          
+                return player[this.layer].points.add(1).pow(ef);          
             },
             effectDisplay() { return format(this.effect())+"x" }, 
         },
@@ -205,6 +218,18 @@ addLayer("C", {
             description: "E3/E4 ^1.2",
             cost:new Decimal('1e2996'),
             unlocked() { return (hasUpgrade(this.layer, 34))},
+        },
+        41: {
+            title:'C16',
+            description: "x1e32 pts",
+            cost:new Decimal('1e58100'),
+            unlocked() { return (hasUpgrade('F', 25))},
+        },
+        42: {
+            title:'C17',
+            description: "x1e80 pts",
+            cost:new Decimal('1e59100'),
+            unlocked() { return (hasUpgrade(this.layer, 41))},
         },
     },
     challenges: {

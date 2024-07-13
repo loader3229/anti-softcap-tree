@@ -239,7 +239,7 @@ addLayer("ac", {
         },
         84: {
             name: "46.powerful 666",
-            done() { return (hasMilestone('D',3))},
+            done() { return player.D.points.gte('1e666')},
             tooltip: "get 1e666 D",
         },
         85: {
@@ -327,9 +327,94 @@ addLayer("ac", {
             done() {return player.E.Ek.gte('1e590')},
             tooltip: "get 1e590 Ek",
         },
+        114: {
+            name: "64.REAL PRESTIGE",
+            done() {return player.F.total.gte('1')},
+            tooltip: "get 1 F",
+        },
+        115: {
+            name: "65.PRESTIGE again",
+            done() {return player.F.total.gte('2')},
+            tooltip: "get 2 F",
+        },
+        116: {
+            name: "66.triplekill",
+            done() {return player.F.total.gte('3')},
+            tooltip: "get 3 F",
+        },
+        121: {
+            name: "67.auto E",
+            done() {return player.F.total.gte('6')},
+            tooltip: "get 6 F",
+        },
+        122: {
+            name: "68.get 2 F at once",
+            done() {return player.E.points.gte('1.8e1099')},
+            tooltip: "get 1.8e1099 E",
+        },
+        123: {
+            name: "69.no wait",
+            done() {return (hasMilestone("F", 4))},
+            tooltip: "keep E upg", 
+        },
+        124: {
+            name: "70.no clicks",
+            done() {return (hasMilestone("F", 5))},
+            tooltip: "keep E chal", 
+        },
+        125: {
+            name: "71.fluorine",
+            done() {return (hasUpgrade("F", 24))},
+            tooltip: "get F9", 
+        },
+        126: {
+            name: "72.AT inflation",
+            done() {return (hasMilestone("F", 7))},
+            tooltip: "get F mil 7", 
+        },
+        131: {
+            name: "73.hidden upg^6",
+            done() {return (hasUpgrade("C", 41))},
+            tooltip: "get C16", 
+        },
+        132: {
+            name: "74.real chal",
+            done() {return (challengeCompletions("F", 11) >= 1)},
+            tooltip: "complete Fc1x1", 
+        },
+        133: {
+            name: "75.more inf-e5e5",
+            done() {return player.points.gte('e500000')},
+            tooltip: "get e500000 pts",
+        },
+        134: {
+            name: "76.super surge",
+            done() {return (hasUpgrade("F", 34))},
+            tooltip: "get F14", 
+        },
+        135: {
+            name: "77.1M OoM",
+            done() {return player.points.gte('e1000000')},
+            tooltip: "get e1000000 pts",
+        },
+        136: {
+            name: "78.restricted",
+            done() {return (challengeCompletions("F", 11) >= 3)},
+            tooltip: "complete Fc1x3", 
+        },
+        141: {
+            name: "79.so quick?",
+            done() {return (hasMilestone("F", 9))},
+            tooltip: "get F passive generation", 
+        },
+        142: {
+            name: "80.why it's faster?",
+            done() {return player.points.gte('e3000000')},
+            tooltip: "get e3000000 pts<br>are there any softcaps?",
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/63 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/80 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },

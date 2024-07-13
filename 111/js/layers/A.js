@@ -7,12 +7,13 @@ addLayer("A", {
 		points: new Decimal(0),
     }},
     passiveGeneration(){
-        let a_pg=1
-        if (hasMilestone("C", 1))  a_pg=a_pg*100
-        if (hasMilestone("C", 2))  a_pg=a_pg*100
-        if (hasMilestone("D", 1))  a_pg=a_pg*100
-        if (hasMilestone("D", 2))  a_pg=a_pg*1e4
-        return hasUpgrade("B",23)?a_pg:0},
+        let pg=0
+        if (hasUpgrade("B",23)) pg=Decimal.add(pg,1)
+        if (hasMilestone("C", 1))  pg=Decimal.mul(pg,100)
+        if (hasMilestone("C", 2))  pg=Decimal.mul(pg,100)
+        if (hasMilestone("D", 1))  pg=Decimal.mul(pg,100)
+        if (hasMilestone("D", 2))  pg=Decimal.mul(pg,1e4)
+        return pg},
     color: "#4BDC13",
     requires: new Decimal(10), // Can be a funct}ion that takes requirement increases into account
     resource: "A", // Name of prestige currency
@@ -36,12 +37,17 @@ addLayer("A", {
         mult = mult.pow(hasChallenge("C", 12)?1.025:1)
         mult = mult.mul(buyableEffect("B",11))
         mult = mult.mul(buyableEffect("E",11))
+        mult = mult.mul(hasMilestone("F", 0)?10:1)
         return mult
     },
+    softcap(){return new Decimal(Infinity)},
+	softcapPower(){return new Decimal(1)},
     doReset(layer){
-        if (layer=="C"){
-            //if (hasMilestone("C", 0)) keep.push("challenges")
-        }
+        if (layer=="F") {        
+            let keep = [];
+            if (hasMilestone("F", 0)) keep.push("challenges")
+            if (hasMilestone("F", 0)) keep.push("upgrades")
+            layerDataReset(this.layer, keep)}
     },
     microtabs: {
         stuff: {       
@@ -198,7 +204,7 @@ addLayer("A", {
             effect()  { 
                 let efa15 = 0.2
                 if (hasUpgrade('A', 42))  efa15 = efa15*1.5               
-                return player[this.layer].points.pow(efa15);          
+                return player[this.layer].points.add(1).pow(efa15);          
             },
             effectDisplay() { return format(this.effect())+"x" }, 
         },
@@ -267,8 +273,8 @@ addLayer("A", {
             description: "mult to C based on Bb1 eff.",
             cost:new Decimal('1e1896'),
             effect()  { 
-                let efa26 = buyableEffect('B',11).pow(0.02).times(buyableEffect('B',11).add(10).log(10).pow(1.5))
-                return efa26;},
+                let ef = buyableEffect('B',11).pow(0.02).times(buyableEffect('B',11).add(10).log(10).pow(1.5))
+                return ef},
             effectDisplay() { return format(this.effect())+"x" }, 
             unlocked() { return (hasMilestone('B', 6))},
         },

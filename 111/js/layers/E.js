@@ -8,11 +8,13 @@ addLayer("E", {
         Em: new Decimal(0),
         Ek: new Decimal(0),
     }},
-    passiveGeneration(){    let pg=1
-        if (hasMilestone('E',10)) pg=pg*10
-        if (hasMilestone('E',11)) pg=pg*10
-        if (hasMilestone('E',15)) pg=pg*10
-        return (hasMilestone("E", 9))?pg:0},
+    passiveGeneration(){    let pg=0
+        if (hasMilestone('E',9)) pg=Decimal.add(pg,1)
+        if (hasMilestone('F',0)) pg=Decimal.add(pg,1)
+        if (hasMilestone('E',10)) pg=Decimal.mul(pg,10)
+        if (hasMilestone('E',11)) pg=Decimal.mul(pg,10)
+        if (hasMilestone('E',15)) pg=Decimal.mul(pg,10)
+        return pg},
     color: "#789A89",
     requires: new Decimal('1e1760'), 
     resource: "E", 
@@ -27,7 +29,7 @@ addLayer("E", {
     hotkeys: [
         {key: "e", description: "E: Reset for E points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){  if (player.E.unlocked) return true
+    layerShown(){  if (player[this.layer].unlocked) return true
     else return (hasMilestone("B", 7))},
     gainMult() {
         //let emxp=0.25
@@ -48,12 +50,17 @@ addLayer("E", {
         //mult = mult.mul(hasMilestone("E",11)?player.E.Em.max(1).pow(emxp):1)
         mult = mult.mul(hasMilestone("E",11)?tmp.E.emf:1)
         mult = mult.mul(hasMilestone("E",20)?2024:1)
+        mult = mult.mul(hasMilestone("F", 0)?10:1)
         mult = mult.mul(hasUpgrade("E",71)?upgradeEffect("E",71):1)
         mult = mult.mul(hasUpgrade("E",102)?upgradeEffect("E",102):1)
+        mult = mult.mul(hasUpgrade("F",12)?upgradeEffect("F",12):1)
         if (hasChallenge("E", 11))  mult = mult.mul(challengeEffect('E',11))
         if (hasChallenge("E", 12))  mult = mult.mul(challengeEffect('E',12))
+        if (inChallenge('F',11)) mult=Decimal.pow(mult,0.25)
         return mult
     },
+    softcap(){return new Decimal(Infinity)},
+	softcapPower(){return new Decimal(1)},
     branches: ['A','B','D'],
     milestones: {
         0: {requirementDescription: "1500 total E",
@@ -147,7 +154,7 @@ addLayer("E", {
         },
         20: {requirementDescription: "1e981 total E",
             done() {return player[this.layer].total.gte('1e981')}, 
-            effectDescription: "x2024 E,unlock the next layer (coming soon).",
+            effectDescription: "x2024 E,unlock the next layer.",
         },
     },
     microtabs: {
@@ -173,7 +180,7 @@ addLayer("E", {
             "Ek": {
                 unlocked() {return (hasMilestone("E", 15))},
                 content: [["display-text", () => "You have <h2 style='color: #177261; text-shadow: 0 0 10px #c2b280'>" + format(player.E.Ek) + "</h2> Ek, Bb scaling start <h2 style='color: #177261; text-shadow: 0 0 10px #c2b280'> " + format(tmp.E.ekf) + " </h2>later.<br>" + "<h3>" + format(tmp.E.Ekeffect) + " Ek/s<h3> <br>"],
-                ["raw-html", () => `<h4 style="opacity:.5">Ek delays Bb1-2 scaling. </h4>`],
+                ["raw-html", () => `<h4 style="opacity:.5">Ek delays Bb1-2 scaling.<br>for balance,Eb9 scaling faster after 10000 </h4>`],
                 ["buyables",[4]]]},
         }
     },
@@ -183,6 +190,17 @@ addLayer("E", {
         ["microtabs", "stuff"],
         ["blank", "25px"],
     ],
+    doReset(layer){
+        if (layer=="F") {        
+            let keep = []
+            if (hasMilestone("F",1)) keep.push("milestones")
+            if (hasMilestone("F",4)) keep.push("upgrades")
+            if (hasMilestone("F",5)) keep.push("challenges")
+            //if (hasMilestone("F",2)) player.E.challenges.push('11','12','21','22')
+            //if (hasMilestone("F",2)) keep.push(chal)
+            layerDataReset(this.layer, keep)}
+    },
+    autoUpgrade() { if (hasMilestone("F",3)) return true},
     upgrades: {
         11: {
             title:'E1',
@@ -221,7 +239,7 @@ addLayer("E", {
             title:'E3',
             description: "boost to E base on D.",
             effect()  { 
-                let ef = player.D.points.add(10).log(10).div(100)
+                let ef = player.D.points.add(10).log(10).div(100).add(1)
                 if (hasUpgrade('E',24)) ef = Decimal.pow(ef,1.5)
                 if (hasUpgrade('E',63)) ef = Decimal.pow(ef,1.2)
                 if (hasUpgrade('C',35)) ef = Decimal.pow(ef,1.2)
@@ -235,7 +253,7 @@ addLayer("E", {
             title:'E4',
             description: "boost to E base on C.",
             effect()  { 
-                let ef = player.C.points.add(10).log(10).div(200)
+                let ef = player.C.points.add(10).log(10).div(200).add(1)
                 if (hasUpgrade('E',25)) ef = Decimal.pow(ef,1.5)
                 if (hasUpgrade('E',63)) ef = Decimal.pow(ef,1.2)
                 if (hasUpgrade('C',35)) ef = Decimal.pow(ef,1.2)
@@ -311,7 +329,7 @@ addLayer("E", {
             description: "boost to E base on B.",
             cost:new Decimal('1.6e8'),
             effect()  { 
-                let ef = player.B.points.add(10).log(10).div(300)
+                let ef = player.B.points.add(10).log(10).div(300).add(1)
                 if (hasMilestone('E',3)) ef = Decimal.pow(ef,1.5)
                 if (hasUpgrade('E',63)) ef = Decimal.pow(ef,1.2)
                 if (hasUpgrade('D',45)) ef = Decimal.pow(ef,1.2)
@@ -337,7 +355,7 @@ addLayer("E", {
             description: "boost to E base on A.",
             cost:new Decimal('1e13'),
             effect()  { 
-                let ef = player.A.points.add(10).log(10).div(500)
+                let ef = player.A.points.add(10).log(10).div(500).add(1)
                 if (hasUpgrade('E',41)) ef = Decimal.pow(ef,1.5)
                 if (hasUpgrade('E',63)) ef = Decimal.pow(ef,1.2)
                 if (hasUpgrade('D',45)) ef = Decimal.pow(ef,1.2)
@@ -388,6 +406,7 @@ addLayer("E", {
             cost:new Decimal('4e32'),
             effect()  { 
                 let ef = Decimal.add(player.E.points,10).log(10).pow(0.75).div(150).add(1)
+                if (ef>10) ef=Decimal.pow(ef,0.85).mul(Decimal.pow(10,0.15))
                 if (hasUpgrade('E',74)) ef = 1+(ef-1)*1.1
                 return ef;          
             },
@@ -397,7 +416,7 @@ addLayer("E", {
         53: {
             title:'E23',
             description: "Bb5 is stronger (+3%)<br>and x1e6 pts.",
-            cost:new Decimal('2e32'),
+            cost:new Decimal('2e34'),
             unlocked() { return (hasUpgrade(this.layer, 52))},
         },
         54: {
@@ -597,7 +616,7 @@ addLayer("E", {
         },
         104: {
             title:'E49',
-            description: "Ek^1.5 mult pts,Eb6/9 base +0.25,Eb7 base +1,Eb1-4 scaling are 10 later.",
+            description: "Ek^1.5 mult pts,Eb6/9 base +0.25,Eb7 base +1,Ec8 eff x1.2,Eb1-4 scaling are 10 later.",
             effect()  { 
                 let ef = player.E.Ek.max(1).pow(1.5)
                 return ef;          
@@ -628,16 +647,26 @@ addLayer("E", {
                 let cost = Decimal.pow(2, x.pow(1.02)).times('1500')
                 let sc=40
                 if (hasUpgrade('E',104)) sc=Decimal.add(sc,10)
-                if (x.gte(sc))  cost =Decimal.pow(cost,x.sub(sc).div(80).add(1).pow(0.3))
+                if (hasUpgrade('F',22)) sc=Decimal.add(sc,5)
+                let t=80
+                let p=0.3
+                if (x.gte(sc))  cost =Decimal.pow(cost,x.sub(sc).div(t).add(1).pow(p)) 
                 if (hasUpgrade('E',54)) cost = Decimal.pow(cost, 0.985)
                 if (hasUpgrade('E',103)) cost = Decimal.pow(cost, 0.99)
                 if (hasChallenge('E',41)) cost = Decimal.pow(cost, challengeEffect('E',41))
                 return cost},
             canAfford() { return player[this.layer].points.gte(this.cost()) },
+            bulk() { 
+                let tar=1
+                if (hasMilestone('F', 6)) tar=Decimal.mul(tar,10)
+                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].points.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)},
             buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   let bas = 5
                 if (hasUpgrade('E',21)) bas = Decimal.add(bas,1)
                 if (hasUpgrade('E',42)) bas = Decimal.add(bas,1)
+                if (hasUpgrade('F',14)) bas = Decimal.add(bas,0.3)
                 if (hasUpgrade('E',55)) bas = Decimal.add(bas,upgradeEffect('E',55))
                 if (hasMilestone('E',18)) bas = Decimal.add(bas,buyableEffect('E',22))
                 if (inChallenge('E',21)) bas = 2
@@ -658,17 +687,26 @@ addLayer("E", {
                 let cost = Decimal.pow(3, x.pow(1.02)).times('7500')                
                 let sc=40
                 if (hasUpgrade('E',104)) sc=Decimal.add(sc,10)
-                if (hasUpgrade('E',104)) sc=Decimal.add(sc,10)
-                if (x.gte(sc))  cost =Decimal.pow(cost,x.sub(sc).div(80).add(1).pow(0.3))                
+                if (hasUpgrade('F',22)) sc=Decimal.add(sc,5)
+                let t=80
+                let p=0.3
+                if (x.gte(sc))  cost =Decimal.pow(cost,x.sub(sc).div(t).add(1).pow(p))                
                 if (hasUpgrade('E',54)) cost = Decimal.pow(cost, 0.985)
                 if (hasUpgrade('E',103)) cost = Decimal.pow(cost, 0.99)
                 if (hasChallenge('E',41)) cost = Decimal.pow(cost, challengeEffect('E',41))
                 return cost},
             canAfford() { return player[this.layer].points.gte(this.cost()) },
+            bulk() { 
+                let tar=1
+                if (hasMilestone('F', 6)) tar=Decimal.mul(tar,10)
+                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].points.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)},
             buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   let bas = 5
                 if (hasUpgrade('E',21)) bas = Decimal.add(bas,1)
                 if (hasUpgrade('E',42)) bas = Decimal.add(bas,1)
+                if (hasUpgrade('F',14)) bas = Decimal.add(bas,0.3)
                 if (hasUpgrade('E',55)) bas = Decimal.add(bas,upgradeEffect('E',55))
                 if (hasMilestone('E',18)) bas = Decimal.add(bas,buyableEffect('E',22))
                 if (inChallenge('E',21)) bas = 2
@@ -689,16 +727,25 @@ addLayer("E", {
                 let cost = Decimal.pow(6, x.pow(1.04)).times('50000')
                 let sc=40
                 if (hasUpgrade('E',104)) sc=Decimal.add(sc,10)
-                if (hasUpgrade('E',104)) sc=Decimal.add(sc,10)
-                if (x.gte(sc))  cost =Decimal.pow(cost,x.sub(sc).div(80).add(1).pow(0.3))   
+                if (hasUpgrade('F',22)) sc=Decimal.add(sc,5)
+                let t=80
+                let p=0.3
+                if (x.gte(sc))  cost =Decimal.pow(cost,x.sub(sc).div(t).add(1).pow(p))    
                 if (hasUpgrade('E',54)) cost = Decimal.pow(cost, 0.985)
                 if (hasUpgrade('E',103)) cost = Decimal.pow(cost, 0.99)
                 if (hasChallenge('E',41)) cost = Decimal.pow(cost, challengeEffect('E',41))
                 return cost},
             canAfford() { return player[this.layer].points.gte(this.cost()) },
+            bulk() { 
+                let tar=1
+                if (hasMilestone('F', 6)) tar=Decimal.mul(tar,10)
+                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].points.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)},
             buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   let bas = 5               
                 if (hasMilestone('E',5)) bas = Decimal.add(bas,1)
+                if (hasUpgrade('F',14)) bas = Decimal.add(bas,0.3)
                 if (hasMilestone('E',18)) bas = Decimal.add(bas,buyableEffect('E',22))
                 return bas},
             effect(x) { // Effects of owning x of the items, x is a decimal
@@ -718,14 +765,27 @@ addLayer("E", {
                 if (hasUpgrade('E',94)) cost =Decimal.pow(25, x.pow(1.09)).times('1e29')
                 let sc=40
                 if (hasUpgrade('E',104)) sc=Decimal.add(sc,10)
-                if (x.gte(sc))  cost =Decimal.pow(cost,x.sub(sc).div(80).add(1).pow(0.3))                
+                if (hasUpgrade('F',22)) sc=Decimal.add(sc,5)
+                let t=80
+                let p=0.3
+                if (x.gte(sc))  cost =Decimal.pow(cost,x.sub(sc).div(t).add(1).pow(p))               
                 if (hasUpgrade('C',34)) cost =Decimal.pow(cost,0.98)
                 if (hasChallenge('E',41)) cost = Decimal.pow(cost, challengeEffect('E',41))
                 return cost},
             canAfford() { return player[this.layer].points.gte(this.cost()) },
+            bulk() { 
+                let tar=1
+                if (hasUpgrade('F', 25)) tar=Decimal.mul(tar,10)
+                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)        
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].points.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)},
             buy() { setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let ef = Decimal.pow(x/1.6+1,0.6).div(5).add(0.8)
+                if (hasUpgrade('F',22)) ef=Decimal.mul(ef-1,1.1).add(1)
+                if (hasUpgrade('F',23)) ef=Decimal.mul(ef-1,1.1).add(1)
+                if (hasUpgrade('F',35)) ef =Decimal.mul(ef-1,1.08).add(1)
+
                 if (inChallenge('E',31)) ef = 1
                 if (inChallenge('E',41)) ef = Decimal.mul(ef-1,0.4).add(1)
                 if (inChallenge('E',42)) ef = 1
@@ -745,6 +805,13 @@ addLayer("E", {
                 return cost
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
+            bulk() { 
+                let tar=1
+                if (hasUpgrade('F', 25)) tar=Decimal.mul(tar,10)
+                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+                if (hasUpgrade('F',35)) tar = player.E.points.add(10).log(10).sub(72).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].points.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)},
             buy() { setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   let base = 2               
                 return base},
@@ -766,6 +833,12 @@ addLayer("E", {
                 return cost
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
+            bulk() { 
+                let tar=1
+                if (hasUpgrade('F', 25)) tar=Decimal.mul(tar,10)
+                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].points.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)},
             buy() { setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   let base = 2      
                 if (hasChallenge("E", 32))  base = Decimal.add(base,challengeEffect('E',32)) 
@@ -789,11 +862,18 @@ addLayer("E", {
                 return cost
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
+            bulk() { 
+                let tar=1
+                if (hasUpgrade('F', 25)) tar=Decimal.mul(tar,10)
+                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].points.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)},
             buy() { setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   let base = 10             
                 if (hasChallenge("E", 32))  base = Decimal.add(base,challengeEffect('E',32))  
                 if (hasUpgrade("E", 104))  base = Decimal.add(base,1)
-                if (hasUpgrade("E", 105))  base = Decimal.add(base,1)                                                
+                if (hasUpgrade("E", 105))  base = Decimal.add(base,1)  
+                if (hasUpgrade("F", 14))  base = Decimal.add(base,1)                                                                                              
                 return base},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let ef = Decimal.pow(this.base(),x.pow(1.012))
@@ -811,7 +891,16 @@ addLayer("E", {
                 let cost = Decimal.pow(10, x).times('1e170')
                 return cost
             },
-            canAfford() { return player[this.layer].points.gte(this.cost()) },
+            canAfford() { if (getBuyableAmount(this.layer, this.id).gte(20000)) return false
+                else return player[this.layer].points.gte(this.cost()) },
+            bulk() { 
+                let tar=1
+                if (hasUpgrade('F', 25)) tar=Decimal.mul(tar,10)
+                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+                if (hasUpgrade('F',35)) tar = player.E.points.add(10).log(10).sub(171).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)
+                if (getBuyableAmount(this.layer, this.id).gte(20000)) tar=0
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].points.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)},
             buy() { setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   let base = 2               
                 return base},
@@ -821,6 +910,7 @@ addLayer("E", {
             display() { // Everything else displayed in the buyable button after the title
                 return "give Ek a x"+ format(this.base()) + " mult \n\
                 Eb8's factor/cost multiplier are fixed. \n\
+                for balance,Eb8 is hardcapped at 20000 purchases\n\
                 Cost: " + format(this.cost()) + " E \n\
                 Amount: " + player[this.layer].buyables[this.id]  +" \n\
                 Effect: x" + format(this.effect())},
@@ -830,9 +920,19 @@ addLayer("E", {
             title: "Eb9", 
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
                 let cost = Decimal.pow(6, x.pow(1.03)).times('1e180')
+                let sc=10000
+                let t=5000
+                let p=0.4
+                if (x.gte(sc)) cost=Decimal.pow(cost,x.sub(10000).div(5000).add(1).pow(0.4))
                 return cost
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
+            bulk() { 
+                let tar=1
+                if (hasUpgrade('F', 25)) tar=Decimal.mul(tar,10)
+                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].points.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)},
             buy() { setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   let base = 2      
                 if (hasUpgrade("E", 104))  base = Decimal.add(base,0.25)                 
@@ -852,16 +952,20 @@ addLayer("E", {
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
                 let cost = Decimal.pow(1e6, x.pow(1.4)).times('1e570')
                 let sc=40
-                let scpow=0.3
+                if (hasUpgrade('F',22)) sc=Decimal.add(sc,5)
+                let p=0.3
                 let t=80
-                if (x.gte(sc)) cost =Decimal.pow(cost,x.sub(sc).div(t).add(1).pow(scpow))
+                if (x.gte(sc)) cost =Decimal.pow(cost,x.sub(sc).div(t).add(1).pow(p))
                 return cost
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
-            buy() {
-                if (hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(0)
-                else player[this.layer].points = player[this.layer].points.sub(this.cost())
-                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
+            bulk() { 
+                let tar=1
+                if (hasUpgrade('F', 25)) tar=Decimal.mul(tar,10)
+                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].points.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)},
+            buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let ef = Decimal.pow(x/6+1,0.7).sub(1)
                 return ef},
@@ -878,7 +982,7 @@ addLayer("E", {
         name: "Ec1",
         completionLimit: 3,
         challengeDescription: function() {
-            return "C3/D5/E2 do nothing. <br> Completion: " +challengeCompletions("E", 11) + "/3"},
+            return "C3/D5/E2 are disabled. <br> Completion: " +challengeCompletions("E", 11) + "/3"},
         unlocked() { return (hasMilestone("E", 2))},
         goal(){
             if (challengeCompletions('E',11) == 0) return Decimal.pow(10,6020);
@@ -1019,6 +1123,7 @@ addLayer("E", {
             rewardEffect() {
                 //let t=Decimal.mul(challengeCompletions("E", 31),0.0025)
                 let ef=(challengeCompletions("E", 32))*0.2
+                if (hasUpgrade('F',24)) ef=Decimal.mul(ef,1.5)
                 if (challengeCompletions("E", 32) >= 1)  return ef
                 else return new Decimal(0)
             },
@@ -1070,6 +1175,7 @@ addLayer("E", {
             rewardEffect() {
                 let ef=challengeCompletions("E", 42)
                 if (hasUpgrade('E',104)) ef=Decimal.mul(ef,1.2)
+                if (hasUpgrade('F',24)) ef=Decimal.mul(ef,1.1)
                 if (challengeCompletions("E", 42) >= 1)  return ef
                 else return new Decimal(0)
             },
@@ -1102,10 +1208,13 @@ addLayer("E", {
     },
     ekf() {
         let m=3
+        let p=0.85
         if (hasUpgrade('E',101))  m=Decimal.add(m,2)  
         if (hasChallenge('E', 42))  m=Decimal.add(m,challengeEffect('E',42)*0.5)    
-        if (inChallenge('E',42)) m=0              
-        let ef=player.E.Ek.add(1).log(10).pow(0.85).mul(m)
+        if (hasUpgrade('F',34))  m=Decimal.add(m,0.4)  
+        if (inChallenge('E',42)) m=0 
+        if (player.E.Ek.gte('1e5000')) p=p/(player.E.Ek.log(10).div(5000).pow(0.06))             
+        let ef=player.E.Ek.add(1).log(10).pow(p).mul(m)
         return ef
     },
     update(diff) {
