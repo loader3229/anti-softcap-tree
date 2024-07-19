@@ -439,21 +439,18 @@ addLayer("B", {
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
             bulk() { 
-                let tar=1
-                if (hasMilestone('B', 8)) tar=Decimal.mul(tar,10)
-                if (hasMilestone('F', 2)) tar=Decimal.mul(tar,2)
-                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+                let tar=tmp.B.bulk
                 let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
                 if (player[this.layer].points.gte(c)) player.B.buyables[this.id] = player.B.buyables[this.id].add(tar)},
             buy() {
-                if (hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(0)
-                else player[this.layer].points = player[this.layer].points.sub(this.cost())
+                if (!hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   let bas = 3
-                if (hasUpgrade('B',54)) bas = Decimal.add(bas,1.05)
-                if (hasUpgrade('B',71)) bas = Decimal.add(bas,1.05)
+                if (hasUpgrade('B',54)) bas = Decimal.add(bas,0.05)
+                if (hasUpgrade('B',71)) bas = Decimal.add(bas,0.05)
                 if (hasUpgrade('B',73)) bas = Decimal.mul(bas,1.02)
                 if (hasMilestone('B',3)) bas = Decimal.add(bas,buyableEffect('B',23))
+                if (hasUpgrade('F',65)) bas = Decimal.pow(bas,upgradeEffect('F',65))
                 if (inChallenge('E',12)) bas = 2
                 if (inChallenge('E',31)) bas = 1.2
                 return bas},
@@ -492,19 +489,16 @@ addLayer("B", {
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
             bulk() { 
-                let tar=1
-                if (hasMilestone('B', 8)) tar=Decimal.mul(tar,10)
-                if (hasMilestone('F', 2)) tar=Decimal.mul(tar,2)
-                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+                let tar=tmp.B.bulk
                 let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
                 if (player[this.layer].points.gte(c)) player.B.buyables[this.id] = player.B.buyables[this.id].add(tar)},
             buy() {
-                if (hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(0)
-                else player[this.layer].points = player[this.layer].points.sub(this.cost())
+                if (!hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   let bas = 2
                 if (hasUpgrade('B',71)) bas = Decimal.add(bas,0.05)
                 if (hasMilestone('B',3)) bas = Decimal.add(bas,buyableEffect('B',23))
+                if (hasUpgrade('F',65)) bas = Decimal.pow(bas,upgradeEffect('F',65))
                 if (inChallenge('E',12)) bas = 2
                 if (inChallenge('E',31)) bas = 1.2
                 return bas},
@@ -540,15 +534,11 @@ addLayer("B", {
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
             bulk() { 
-                let tar=1
-                if (hasMilestone('B', 8)) tar=Decimal.mul(tar,10)
-                if (hasMilestone('F', 2)) tar=Decimal.mul(tar,2)
-                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+                let tar=tmp.B.bulk
                 let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
                 if (player[this.layer].points.gte(c)) player.B.buyables[this.id] = player.B.buyables[this.id].add(tar)},
             buy() {
-                if (hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(0)
-                else player[this.layer].points = player[this.layer].points.sub(this.cost())
+                if (!hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let ef = Decimal.pow(x/1.3+1,0.6).div(6).add(0.8333)
@@ -588,15 +578,11 @@ addLayer("B", {
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
             bulk() { 
-                let tar=1
-                if (hasMilestone('B', 8)) tar=Decimal.mul(tar,10)
-                if (hasMilestone('F', 2)) tar=Decimal.mul(tar,2)
-                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+                let tar=tmp.B.bulk
                 let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
                 if (player[this.layer].points.gte(c)) player.B.buyables[this.id] = player.B.buyables[this.id].add(tar)},
             buy() {
-                if (hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(0)
-                else player[this.layer].points = player[this.layer].points.sub(this.cost())
+                if (!hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let ef = Decimal.pow(x/1.3+1,0.7).div(6).add(0.8333)
@@ -636,15 +622,11 @@ addLayer("B", {
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
             bulk() { 
-                let tar=1
-                if (hasMilestone('B', 8)) tar=Decimal.mul(tar,10)
-                if (hasMilestone('F', 2)) tar=Decimal.mul(tar,2)
-                if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+                let tar=tmp.B.bulk
                 let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
                 if (player[this.layer].points.gte(c)) player.B.buyables[this.id] = player.B.buyables[this.id].add(tar)},
             buy() {
-                if (hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(0)
-                else player[this.layer].points = player[this.layer].points.sub(this.cost())
+                if (!hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let ef = Decimal.pow(x/40+1,0.7).sub(1)
@@ -656,6 +638,7 @@ addLayer("B", {
                 if (hasMilestone('F',7)) ef = Decimal.mul(ef,1.025)
                 if (hasChallenge('F',11)) ef = Decimal.mul(ef,Decimal.add(1,challengeEffect('F',11)/100))
                 if (hasUpgrade('F',33)) ef = Decimal.mul(ef,Decimal.add(1,upgradeEffect('F',33)/100))
+                if (hasUpgrade('F',41)) ef = Decimal.mul(ef,1.03)
                 if (inChallenge('E',41)) ef = Decimal.mul(ef,0.4)
                 if (inChallenge('E',42)) ef = 0
                 return ef},
@@ -666,6 +649,16 @@ addLayer("B", {
                 Effect: +" + format(this.effect())},
             unlocked() { return hasMilestone('B',3) }
         }
+    },
+    bulk(){
+        let tar=1
+        if (hasMilestone('B', 8)) tar=Decimal.mul(tar,10)
+        if (hasMilestone('F', 2)) tar=Decimal.mul(tar,2)
+        if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
+        if (hasUpgrade('F', 62)) tar=Decimal.mul(tar,3)
+        if (hasUpgrade('F', 64)) tar=Decimal.mul(tar,3)
+        if (hasMilestone('F', 16)) tar=Decimal.mul(tar,10)
+        return tar 
     },
     scaling(){
         let sc=400
@@ -679,6 +672,7 @@ addLayer("B", {
         if (hasUpgrade('A',65)) scpow=Decimal.add(scpow,-0.01)
         if (hasUpgrade('E',103)) scpow=Decimal.add(scpow,-0.005)
         if (hasUpgrade('F',34)) scpow=Decimal.add(scpow,-0.003)
+        if (hasUpgrade('F',54)) scpow=Decimal.add(scpow,-0.008)
         return scpow
     },
     scad(){let t=800
@@ -687,6 +681,9 @@ addLayer("B", {
         return t
     },
     sc2(){let sc=Decimal.add(tmp.B.scaling,60000)
+        if (hasUpgrade('F',42)) sc=Decimal.add(sc,1000)
+        if (hasUpgrade('F',55)) sc=Decimal.add(sc,2000)
+        if (hasUpgrade('F',63)) sc=Decimal.add(sc,tmp.E.ekf)
         //let sc=50000
         return sc
     }

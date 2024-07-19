@@ -412,9 +412,79 @@ addLayer("ac", {
             done() {return player.points.gte('e3000000')},
             tooltip: "get e3000000 pts<br>are there any softcaps?",
         },
+        143: {
+            name: "81.real AD",
+            done() {return (getBuyableAmount('F',11))>=1},
+            tooltip: "get F dim 1", 
+        },
+        144: {
+            name: "82.iteration",
+            done() {return (getBuyableAmount('F',13))>=1},
+            tooltip: "get F dim 3", 
+        },
+        145: {
+            name: "83.removed softcap",
+            done() {return player.points.gte('e1e7')},
+            tooltip: "get e1e7 pts",
+        },
+        146: {
+            name: "84.no dimboosts?",
+            done() {return (getBuyableAmount('F',22))>=1},
+            tooltip: "get F dim 5.<br>in AD,1 dimboost is required to unlock AD5", 
+        },
+        151: {
+            name: "85.obedient?",
+            done() {return (getBuyableAmount('F',32))>=1},
+            tooltip: "get F dim 8.", 
+        },
+        152: {
+            name: "86.massive inf",
+            done() {return player.points.gte('e1e8')},
+            tooltip: "get e1e8 pts",
+        },
+        153: {
+            name: "87.massive_inf",
+            done() {return player.points.gte('e1e9')},
+            tooltip: "get e1e9 pts",
+        },
+        154: {
+            name: "88.just wait",
+            done() {return (challengeCompletions("F", 12) >= 3)},
+            tooltip: "complete Fc1x3", 
+        },
+        155: {
+            name: "89.similar to a galaxy...",
+            done() {return (getBuyableAmount('F',102)>=1)},
+            tooltip: "get a tickboost",
+        },
+        156: {
+            name: "90.F3.0!",
+            done() {return player.points.gte('e1e10')},
+            tooltip: "get e1e10 pts",
+        },
+        161: {
+            name: "91.quitting control",
+            done() {return (hasUpgrade("F", 63))},
+            tooltip: "get F28", 
+        },
+        162: {
+            name: "92.half infinity",
+            done() {return player.F.F1.gte('1e154')},
+            tooltip: "get 1e154 F1", 
+        },
+        163: {
+            name: "93.megasurge",
+            done() {return player.points.gte('e1e16')},
+            tooltip: "get e1e16 pts",
+        },
+        164: {
+            name: "94.is it a softcap?",
+            done() {return player.F.F1.gte('1e500')},
+            tooltip: "get 1e500 F1.<br>in AD,Am is hardcapped at 2^1024(pre-break) and scaling after this(post-break).", 
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/80 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/94 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },

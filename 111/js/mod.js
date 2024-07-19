@@ -13,11 +13,17 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.5.1",
-	name: "F",
+	num: "0.5.3.1",
+	name: "F dim",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+    <h3>v0.5.3.1</h3> (240719)
+		- rebalance. <br>
+    <h3>v0.5.3</h3> (240718)
+		- Add tickboost,like AG,etc. <br>
+    <h3>v0.5.2</h3> (240715)
+		- Add F dim. <br>
     <h3>v0.5.1</h3> (240713)
 		- Add F and some powerful upg.<br> And some nerfs for balance. <br>
     <h3>v0.4.2</h3> (240705)
@@ -87,6 +93,7 @@ function getPointGen() {
 	if (inChallenge("E", 22))  gain = gain.pow(player.points.add(10).log(10).pow(-0.06))
 	if (inChallenge("E", 32))  gain = gain.pow(player.E.Em.add(10).log(10).pow(-0.2))
 	if (inChallenge("E", 42))  gain = gain.pow(player.points.add(10).log(10).pow(-0.12))
+	if (inChallenge("F", 12))  gain = Decimal.pow(10,gain.add(10).log(10).pow(0.8))
 
 	if (hasChallenge("A", 21))  gain = gain.mul(50)
 	if (hasChallenge("A", 22))  gain = gain.mul(100)
@@ -98,6 +105,8 @@ function getPointGen() {
 	if (hasChallenge("C", 11))  gain = gain.pow(1.01)
 	if (hasUpgrade("F", 11))  gain = gain.pow(1.0016)
 	if (hasUpgrade("F", 14))  gain = gain.pow(1.0012)
+	if (hasUpgrade("F", 52))  gain = gain.pow(1.002)
+	if (hasUpgrade("F", 65))  gain = gain.pow(1.006)
 
 	if (hasChallenge("E", 21))  gain = gain.mul(challengeEffect('E',21))
 	if (hasChallenge("E", 22))  gain = gain.mul(challengeEffect('E',22))
@@ -111,11 +120,11 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() {return "current endgame:1e6600000 points<br> Too easy? go to play qqqe308's NG-10!."},
+	function() {return "current endgame:e1e17 points,1e560 F<br>next layer requires 1e560 F.<br> Too easy? go to play qqqe308's NG-10!."},
 ]
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e6600000"))
+	return player.points.gte(new Decimal("ee17"))
 }
 
 //<br> bilibili: @bili_68585026743

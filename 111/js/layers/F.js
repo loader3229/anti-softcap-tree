@@ -5,7 +5,18 @@ addLayer("F", {
     startData() { return {
         unlocked: false,
 		points: new Decimal(0),
+        F1: new Decimal(10),
+        fd1: new Decimal(0),
+        fd2: new Decimal(0),
+        fd3: new Decimal(0),
+        fd4: new Decimal(0),
+        fd5: new Decimal(0),
+        fd6: new Decimal(0),
+        fd7: new Decimal(0),
+        fd8: new Decimal(0),
+
     }},
+    //resetsNothing(){return hasMilestone('F',13)},
     passiveGeneration(){    let pg=0
         if (hasMilestone("F", 9)) pg=Decimal.add(pg,0.02)
         return pg},
@@ -33,6 +44,7 @@ addLayer("F", {
         if (hasUpgrade('F',21)) mult=Decimal.mul(mult,2)
         if (hasUpgrade('F',23)) mult=Decimal.mul(mult,upgradeEffect('F',23))
         if (hasUpgrade('F',32)) mult=Decimal.mul(mult,upgradeEffect('F',32))
+        if (hasMilestone('F',10)) mult=Decimal.mul(mult,tmp.F.F1f)
 
         return mult
     },
@@ -78,6 +90,36 @@ addLayer("F", {
             done() {return player[this.layer].total.gte('1e26')}, 
             effectDescription: "gain 2% F on reset/sec.",
         },
+        10: {requirementDescription: "1e120 total F",
+            done() {return player[this.layer].total.gte('1e120')}, 
+            effectDescription: "unlock F1 and F dim.",
+        },
+        11: {requirementDescription: "1e10 total F1",
+            done() {return player[this.layer].F1.gte('1e10')}, 
+            effectDescription: "unlock tickspeed.",
+        },
+        12: {requirementDescription: "1e45 total F1",
+            done() {return player[this.layer].F1.gte('1e45')}, 
+            effectDescription: "Eb10 is cheaper,Fc1 x1.2.",
+        },
+        13: {requirementDescription: "1e69 total F1",
+            done() {return player[this.layer].F1.gte('1e69')}, 
+            effectDescription: "unlock dimboost and F resets nothing.",
+        },
+        14: {requirementDescription: "1 tickboost",
+            done() {return (getBuyableAmount('F',102)>=1)}, 
+            effectDescription: "x10 F1,start with 1e6 F1,unlock new upg.",
+        },
+        15: {requirementDescription: "2 tickboost",
+            done() {return (getBuyableAmount('F',102)>=2)}, 
+            effectDescription: "start with 1e30 F1,dimmult per buy +0.15,autobuy dims.",
+            toggles: [["F","auto"]]
+        },
+        16: {requirementDescription: "3 tickboost",
+            done() {return (getBuyableAmount('F',102)>=3)}, 
+            effectDescription: "autobuy tickspeed,bulk buy x10 Bb/Eb.",
+            toggles: [["F","auto"]]
+        },
     },
     microtabs: {
         stuff: {       
@@ -90,6 +132,13 @@ addLayer("F", {
             "Challenges": {
                 unlocked() {return (hasMilestone("F",8))},
                 content: ["challenges"]},
+            "F dims": {
+                unlocked() {return (hasMilestone("F",10))},
+                content: [["display-text", () => "You have <h2 style='color: #128253; text-shadow: 0 0 10px #c2b280'>" + format(player.F.F1) + "</h2> F1, mult F by <h2 style='color: #128253; text-shadow: 0 0 10px #c2b280'> " + format(tmp.F.F1f) + "x</h2>.<br>" + "<h3>" + format(tmp.F.F1effect.mul(player.F.fd1)) + " F1/s<h3> <br>"],
+                ["raw-html", () => `<h4 style="opacity:.5">like Em,F1 mults F.<br></h4>`]
+                ,["raw-html", () => `<h4 style="opacity:.5">this part is from Antimatter Dimensions(but easier).<br></h4>`]
+                ,["display-text", () => "dim mult per buy: x<h2 style='color: #128253; text-shadow: 0 0 10px #c2b280'>" + format(tmp.F.fdbas)],
+                ,"buyables"]},  
         }
     },
     softcap(){return new Decimal(Infinity)},
@@ -103,8 +152,8 @@ addLayer("F", {
     upgrades: {
         11: {
             title:'F1',
-            description: function() {return '1e15x and ^1.0016 points \n\
-                '+'layer F total: \n\
+            description: function() {return '1e15x and ^1.0016 points<br> \n\
+                '+'layer F total:<br> \n\
                 '+ format(this.effect()) +'x'},            
             effect()  { 
                 let ef = 1e15
@@ -205,7 +254,7 @@ addLayer("F", {
             cost:new Decimal('1e10'),
             effect()  { 
                 let exp=0.1
-                if (hasUpgrade('F',3)) exp=Decimal.add(exp,0.1)
+                if (hasUpgrade('F',33)) exp=Decimal.add(exp,0.1)
                 let ef = player.F.total.add(1).pow(exp)
                 return ef;
             },
@@ -214,9 +263,11 @@ addLayer("F", {
         33: {
             title:'F13',
             description: "F11 x1.25,F12 exp +0.1,F boost Bb5",
-            cost:new Decimal('2e12'),
+            cost:new Decimal('1e12'),
             effect()  { 
                 let ef = player.F.total.add(10).log(10).pow(0.25).div(1.5)
+                //if (hasUpgrade('F',42)) cs=Decimal.add(sc,3000)
+                if (hasUpgrade('F',53)) ef=player.F.total.add(10).log(10).pow(0.28).div(1.35)
                 return ef;
             },
             effectDisplay() { return "+"+format(this.effect())+'%' },
@@ -230,9 +281,167 @@ addLayer("F", {
         },
         35: {
             title:'F15',
-            description: "Fc1 eff x1.25,Bb3-4 +5%,Eb4 +8%,buy max Eb5/8,fix Bb cost,and unlock ??(coming soon)",
-            cost:new Decimal('3e20'),
+            description: "Fc1 eff x1.25,Bb3-4 +5%,Eb4 +8%,buy max Eb5/8,fix Bb cost,and unlock F dim.",
+            cost:new Decimal('5e20'),
             unlocked() { return (hasUpgrade(this.layer, 34))},
+        },
+        41: {
+            title:'F16',
+            description: "x2 F1,Bb5 +3%",
+            cost:new Decimal('2e4'),
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            unlocked() { return (hasMilestone(this.layer, 10))},
+        },
+        42: {
+            title:'F17',
+            description: "Bb further scaling is 1000 later.",
+            cost:new Decimal('2e7'),
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            unlocked() { return (hasUpgrade(this.layer, 41))},
+        },
+        43: {
+            title:'F18',
+            description: "F boost Fd1",
+            cost:new Decimal('2e9'),
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            effect()  { 
+                let ef = player.F.total.add(10).log(10).mul(0.2)
+                if (hasUpgrade('F',63)) ef=Decimal.pow(ef,1.2)
+                return ef;
+            },
+            effectDisplay() { return format(this.effect())+'x' },
+            unlocked() { return (hasUpgrade(this.layer, 42))},
+        },
+        44: {
+            title:'F19',
+            description: "Em boost Fd1",
+            cost:new Decimal('5e16'),
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            effect()  { 
+                let ef = player.E.Em.add(10).log(10).div(80)
+                if (hasUpgrade('F',63)) ef=Decimal.pow(ef,1.2)
+                return ef;
+            },
+            effectDisplay() { return format(this.effect())+'x' },
+            unlocked() { return (hasUpgrade(this.layer, 43))},
+        },
+        45: {
+            title:'F20',
+            description: "increase Eb8 hardcap based on pts,and x4 F1",
+            cost:new Decimal('2e30'),
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            effect()  { 
+                let ef = player.points.add(10).log(10).div(4e3).pow(0.85).ceil()
+                return ef;
+            },
+            effectDisplay() { return '+'+format(this.effect()) },
+            unlocked() { return (hasUpgrade(this.layer, 44))},
+        },
+        51: {
+            title:'F21',
+            description: "Ek boost Fd1",
+            cost:new Decimal('5e37'),
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            effect()  { 
+                let ef = player.E.Ek.add(10).log(10).div(30)
+                return ef;
+            },
+            effectDisplay() { return format(this.effect())+'x' },
+            unlocked() { return (hasUpgrade(this.layer, 45))},
+        },
+        52: {
+            title:'F22',
+            description: "^3 F1 eff,^1.002 pts.",
+            cost:new Decimal('1e88888'),//3333
+            unlocked() { return (hasUpgrade(this.layer, 51))},
+        },
+        53: {
+            title:'F23',
+            description: "F13 is stronger,unlock a chal.",
+            cost:new Decimal('1e111111'),//5945
+            unlocked() { return (hasUpgrade(this.layer, 52))},
+        },
+        54: {
+            title:'F24',
+            description: "F1 eff exp is 1,nerf Bb scaling.",
+            cost:new Decimal('2e65'),
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            unlocked() { return (hasUpgrade(this.layer, 53))},
+        },
+        55: {
+            title:'F25',
+            description: "Bb further scaling is 2000 later.",
+            cost:new Decimal('5e73'),
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            unlocked() { return (hasUpgrade(this.layer, 54))},
+        },
+        61: {
+            title:'F26',
+            description: "F dim mult per buy+0.25.",
+            cost:new Decimal('2e90'),
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            unlocked() { return (hasMilestone(this.layer,14))},
+        },
+        62: {
+            title:'F27',
+            description: "bulk buy x3 Bb/Eb,Ek is stronger.",
+            cost:new Decimal('5e120'),
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            unlocked() { return (hasUpgrade(this.layer,61))},
+        },
+        63: {
+            title:'F28',
+            description: "F1 eff exp x2 and ^1.015,Ek applies to Bb further scaling,F18-19 ^1.2.",
+            cost:new Decimal('e4e7'),
+            unlocked() { return (hasUpgrade(this.layer, 62))},
+        },
+        64: {
+            title:'F29',
+            description: "bulk buy x3 Bb/Eb,F1 boost Fd1",
+            cost:new Decimal('1e148'),
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            effect()  { 
+                let ef = player.F.F1.add(10).log(10).div(1.5)
+                return ef;
+            },
+            effectDisplay() { return format(this.effect())+'x' },
+            unlocked() { return (hasUpgrade(this.layer, 63))},
+        },
+        65: {
+            title:'F30',
+            description: "F1 boost Bb1-2,Eb1-3 base,^1.006 pts,F1 eff exp ^1.05.",
+            cost:new Decimal('2e242'),
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            effect()  { 
+                let ef = player.F.F1.add(10).log(10).pow(0.25).div(25).add(1)
+                return ef;
+            },
+            effectDisplay() { return '^'+format(this.effect(),4) },
+            unlocked() { return (hasUpgrade(this.layer, 64))},
         },
     },
     challenges:{
@@ -244,8 +453,8 @@ addLayer("F", {
             unlocked() { return (hasMilestone("F", 8))},
             goal(){
                 if (challengeCompletions("F", 11) == 0) return Decimal.pow(10,5840);
-                if (challengeCompletions("F", 11) == 1) return Decimal.pow(10,6440);
-                if (challengeCompletions("F", 11) == 2) return Decimal.pow(10,7070);
+                if (challengeCompletions("F", 11) == 1) return Decimal.pow(10,6940);
+                if (challengeCompletions("F", 11) == 2) return Decimal.pow(10,7020);
             },            
             goalDescription:  function() {return format(this.goal())+' points'},
             canComplete(){return player.points.gte(this.goal())},
@@ -253,10 +462,351 @@ addLayer("F", {
             rewardEffect() {
                 let ef = Decimal.mul(challengeCompletions("F", 11),0.8)
                 if (hasUpgrade('F',35)) ef=Decimal.mul(ef,1.25)
+                if (hasMilestone('F',12)) ef=Decimal.mul(ef,1.2)
                 if (challengeCompletions("F", 11) >= 1)  return ef
                 else return new Decimal(0)
             },
             rewardDisplay() {return '+'+format(this.rewardEffect())+"%"},
+        },
+        12: {//
+            name: "Fc2",
+            completionLimit: 3,
+            challengeDescription: function() {
+                return "pts exp ^0.8. <br> Completion: " +challengeCompletions("F", 12) + "/3"},
+            unlocked() { return (hasUpgrade("F", 53))},
+            goal(){
+                if (challengeCompletions("F", 12) == 0) return Decimal.pow(10,2e8);
+                if (challengeCompletions("F", 12) == 1) return Decimal.pow(10,3e8);
+                if (challengeCompletions("F", 12) == 2) return Decimal.pow(10,4e8);
+            },            
+            goalDescription:  function() {return format(this.goal())+' points'},
+            canComplete(){return player.points.gte(this.goal())},
+            rewardDescription: "B boost Fd1.",
+            rewardEffect() {
+                let exp = Decimal.mul(challengeCompletions("F", 12),0.06).add(0.08)
+                let ef = player.B.points.add(10).log(10).add(1).pow(exp)
+                if (challengeCompletions("F", 12) >= 1)  return ef
+                else return new Decimal(1)
             },
-    }
+            rewardDisplay() {return 'x'+format(this.rewardEffect())},
+        },
+    },
+    automate(){
+        if (player.F.auto) {if (hasMilestone("F",15))  buyBuyable("F",11),buyBuyable("F",12),buyBuyable("F",13),buyBuyable("F",21),
+            buyBuyable("F",22),buyBuyable("F",23),buyBuyable("F",31),buyBuyable("F",32)
+            if (hasMilestone("F",16)) buyBuyable("F",101)
+         }
+    },
+    buyables:{
+        11: {
+            title: "Fd1", 
+            cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
+                let cost = Decimal.pow(100, x).times('10')
+                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(1.6)))
+                return cost},
+            canAfford() { return player[this.layer].F1.gte(this.cost()) },
+            buy() {
+                player.F.fd1 = player.F.fd1.add(1)
+                setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
+            base(){   let bas = tmp.F.fdbas
+                return bas},
+            effect(x) { // Effects of owning x of the items, x is a decimal
+                let ef = Decimal.pow(this.base(),x)
+                ef=Decimal.mul(ef,tmp.F.fdm)
+                if (hasUpgrade('F',43))  ef=Decimal.mul(ef,upgradeEffect('F',43))
+                if (hasUpgrade('F',44))  ef=Decimal.mul(ef,upgradeEffect('F',44))
+                if (hasUpgrade('F',51))  ef=Decimal.mul(ef,upgradeEffect('F',51))
+                if (hasChallenge('F',12))  ef=Decimal.mul(ef,challengeEffect('F',12))
+                if (hasUpgrade('F',64))  ef=Decimal.mul(ef,upgradeEffect('F',64))
+                return ef},
+            display() { // Everything else displayed in the buyable button after the title
+                return "produce F1 \n\
+                Need: " + format(this.cost()) + " F1 \n\
+                Amount: "+ format(player.F.fd1) + "(" + player[this.layer].buyables[this.id]  +") \n\
+                Effect: x" + format(this.effect())},
+            unlocked() { if (getBuyableAmount('F',102)>=1) return true
+                else return hasMilestone('F',10) },
+            style: {'height':'150px'},
+        },
+        12: {
+            title: "Fd2", 
+            cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
+                let cost = Decimal.pow(1e3, x).times('100')
+                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(1.6)))
+                return cost},
+            canAfford() { return player[this.layer].F1.gte(this.cost()) },
+            buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                player.F.fd2 = player.F.fd2.add(1)
+            },
+            base(){   let bas = tmp.F.fdbas
+                return bas},
+            effect(x) { // Effects of owning x of the items, x is a decimal
+                let ef = Decimal.pow(this.base(),x)
+                ef=Decimal.mul(ef,tmp.F.fdm)
+                return ef},
+            display() { // Everything else displayed in the buyable button after the title
+                return "produce Fd1 \n\
+                Need: " + format(this.cost()) + " F1 \n\
+                Amount: " + format(player.F.fd2) + "(" + player[this.layer].buyables[this.id]  +") \n\
+                Effect: x" + format(this.effect())},
+            unlocked() { if (getBuyableAmount('F',102)>=1) return true
+                else return (tmp.F.buyables[11].effect.gte(2)) },
+            style: {'height':'150px'},
+        },
+        13: {
+            title: "Fd3", 
+            cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
+                let cost = Decimal.pow(1e5, x).times('1e4')
+                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(1.6)))
+                return cost},
+            canAfford() { return player[this.layer].F1.gte(this.cost()) },
+            buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                player.F.fd3 = player.F.fd3.add(1)
+            },
+            base(){   let bas = tmp.F.fdbas
+                return bas},
+            effect(x) { // Effects of owning x of the items, x is a decimal
+                let ef = Decimal.pow(this.base(),x)
+                ef=Decimal.mul(ef,tmp.F.fdm)
+                return ef},
+            display() { // Everything else displayed in the buyable button after the title
+                return "produce Fd2 \n\
+                Need: " + format(this.cost()) + " F1 \n\
+                Amount: " + format(player.F.fd3) + "(" + player[this.layer].buyables[this.id]  +") \n\
+                Effect: x" + format(this.effect())},
+            unlocked() { if (getBuyableAmount('F',102)>=1) return true
+                else return (tmp.F.buyables[12].effect.gte(2)) },
+            style: {'height':'150px'},
+        },
+        21: {
+            title: "Fd4", 
+            cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
+                let cost = Decimal.pow(1e8, x).times('1e8')
+                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(1.6)))
+                return cost},
+            canAfford() { return player[this.layer].F1.gte(this.cost()) },
+            buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                player.F.fd4 = player.F.fd4.add(1)
+            },
+            base(){   let bas = tmp.F.fdbas
+                return bas},
+            effect(x) { // Effects of owning x of the items, x is a decimal
+                let ef = Decimal.pow(this.base(),x)
+                ef=Decimal.mul(ef,tmp.F.fdm)
+                return ef},
+            display() { // Everything else displayed in the buyable button after the title
+                return "produce Fd3 \n\
+                Need: " + format(this.cost()) + " F1 \n\
+                Amount: " + format(player.F.fd4) + "(" + player[this.layer].buyables[this.id]  +") \n\
+                Effect: x" + format(this.effect())},
+            unlocked() { if (getBuyableAmount('F',102)>=1) return true
+                else return (player.F.F1.gte(1e7)) },
+            style: {'height':'150px'},
+        },
+        22: {
+            title: "Fd5", 
+            cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
+                let cost = Decimal.pow(1e10, x).times('1e16')
+                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(1.6)))
+                return cost},
+            canAfford() { return player[this.layer].F1.gte(this.cost()) },
+            buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                player.F.fd5 = player.F.fd5.add(1)
+            },
+            base(){   let bas = tmp.F.fdbas
+                return bas},
+            effect(x) { // Effects of owning x of the items, x is a decimal
+                let ef = Decimal.pow(this.base(),x)
+                ef=Decimal.mul(ef,tmp.F.fdm)
+                return ef},
+            display() { // Everything else displayed in the buyable button after the title
+                return "produce Fd4 \n\
+                Need: " + format(this.cost()) + " F1 \n\
+                Amount: " + format(player.F.fd5) + "(" + player[this.layer].buyables[this.id]  +") \n\
+                Effect: x" + format(this.effect())},
+            unlocked() { if (getBuyableAmount('F',102)>=1) return true
+                else return (player.F.F1.gte(1e16)) },
+            style: {'height':'150px'},
+        },
+        23: {
+            title: "Fd6", 
+            cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
+                let cost = Decimal.pow(1e12, x).times('1e24')
+                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(1.6)))
+                return cost},
+            canAfford() { return player[this.layer].F1.gte(this.cost()) },
+            buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                player.F.fd6 = player.F.fd6.add(1)
+            },
+            base(){   let bas = tmp.F.fdbas
+                return bas},
+            effect(x) { // Effects of owning x of the items, x is a decimal
+                let ef = Decimal.pow(this.base(),x)
+                ef=Decimal.mul(ef,tmp.F.fdm)
+                return ef},
+            display() { // Everything else displayed in the buyable button after the title
+                return "produce Fd5 \n\
+                Need: " + format(this.cost()) + " F1 \n\
+                Amount: " + format(player.F.fd6) + "(" + player[this.layer].buyables[this.id]  +") \n\
+                Effect: x" + format(this.effect())},
+            unlocked() { if (getBuyableAmount('F',102)>=1) return true
+                else return (player.F.F1.gte(1e24)) },
+            style: {'height':'150px'},
+        },
+        31: {
+            title: "Fd7", 
+            cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
+                let cost = Decimal.pow(1e16, x).times('1e32')
+                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(1.6)))
+                return cost},
+            canAfford() { return player[this.layer].F1.gte(this.cost()) },
+            buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                player.F.fd7 = player.F.fd7.add(1)
+            },
+            base(){   let bas = tmp.F.fdbas
+                return bas},
+            effect(x) { // Effects of owning x of the items, x is a decimal
+                let ef = Decimal.pow(this.base(),x)
+                ef=Decimal.mul(ef,tmp.F.fdm)
+                return ef},
+            display() { // Everything else displayed in the buyable button after the title
+                return "produce Fd6 \n\
+                Need: " + format(this.cost()) + " F1 \n\
+                Amount: " + format(player.F.fd7) + "(" + player[this.layer].buyables[this.id]  +") \n\
+                Effect: x" + format(this.effect())},
+            unlocked() { return (player.F.F1.gte(1e30)) },
+            style: {'height':'150px'},
+        },
+        32: {
+            title: "Fd8", 
+            cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
+                let cost = Decimal.pow(1e20, x).times('1e40')
+                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(1.6)))
+                return cost},
+            canAfford() { return player[this.layer].F1.gte(this.cost()) },
+            buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                player.F.fd8 = player.F.fd8.add(1)
+            },
+            base(){   let bas = tmp.F.fdbas
+                return bas},
+            effect(x) { // Effects of owning x of the items, x is a decimal
+                let ef = Decimal.pow(this.base(),x)
+                ef=Decimal.mul(ef,tmp.F.fdm)
+                return ef},
+            display() { // Everything else displayed in the buyable button after the title
+                return "produce Fd7 \n\
+                Need: " + format(this.cost()) + " F1 \n\
+                Amount: " + format(player.F.fd8) + "(" + player[this.layer].buyables[this.id]  +") \n\
+                Effect: x" + format(this.effect())},
+            unlocked() { if (getBuyableAmount('F',102)>=1) return true
+                else return (player.F.F1.gte(1e38)) },
+            style: {'height':'150px'},
+        },
+        101: {
+            title: "tickspeed", 
+            cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
+                let cost = Decimal.pow(10, x).times('1e10')
+                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(1.6)))
+                return cost},
+            canAfford() { return player[this.layer].F1.gte(this.cost()) },
+            buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
+            base(){   let bas = 1.05
+                if (getBuyableAmount('F',102)==1) bas =1.065
+                if (getBuyableAmount('F',102)==2) bas =1.08
+                if (getBuyableAmount('F',102)>2) bas =Decimal.pow(1.08,getBuyableAmount('F',102)).mul(0.3).add(0.73)
+                return bas},
+            effect(x) { // Effects of owning x of the items, x is a decimal
+                let ef = Decimal.pow(this.base(),x)
+                return ef},
+            display() { // Everything else displayed in the buyable button after the title
+                return "boost all FDs \n\
+                Need: " + format(this.cost()) + " F1 \n\
+                Mult per tickspeed: x" + format(this.base(),4) + " \n\
+                Amount: "+ player[this.layer].buyables[this.id]  +" \n\
+                Effect: x" + format(this.effect())},
+            unlocked() { if (getBuyableAmount('F',102)>=1) return true
+                else return hasMilestone('F',11) },
+            style: {'height':'150px'},
+        },
+        102: {
+            title: "tickboost", 
+            cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
+                let cost = Decimal.mul(x.add(7), x).div(2).add(3)///n(n+7)/2+3,from(0,3)(1,7)(2,12)
+                return cost},
+            canAfford() { return player[this.layer].fd8.gte(this.cost()) },
+            buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+                let st=10
+                if (hasMilestone('F',14)) st=1e6
+                if (hasMilestone('F',15)) st=1e30
+                player.F.fd1=0
+                player.F.fd2=0
+                player.F.fd3=0
+                player.F.fd4=0
+                player.F.fd5=0
+                player.F.fd6=0
+                player.F.fd7=0
+                player.F.fd8=0
+                setBuyableAmount(this.layer,11,0)
+                setBuyableAmount(this.layer,12,0)
+                setBuyableAmount(this.layer,13,0)
+                setBuyableAmount(this.layer,21,0)
+                setBuyableAmount(this.layer,22,0)
+                setBuyableAmount(this.layer,23,0)
+                setBuyableAmount(this.layer,31,0)
+                setBuyableAmount(this.layer,32,0)
+                setBuyableAmount(this.layer,101,0)
+                player.F.F1=st
+            },
+            base(){   let bas = 1.08
+                return bas},
+            effect(x) { // Effects of owning x of the items, x is a decimal
+                let ef = Decimal.pow(this.base(),x)
+                return ef},
+            display() { // Everything else displayed in the buyable button after the title
+                return "reset for a tickboost <br>boost tickspeed mult \n\
+                Need: " + format(this.cost()) + " Fd8 \n\
+                Amount: "+ player[this.layer].buyables[this.id] },
+            unlocked() { return hasMilestone('F',13) },
+            style: {'height':'150px'},
+        },
+    },
+    F1effect() {
+        ef = new Decimal(1)
+        if (hasMilestone('F',10))  ef=Decimal.mul(ef,buyableEffect("F", 11))
+        if (hasUpgrade('F',41))  ef=Decimal.mul(ef,2)
+        if (hasUpgrade('F',45))  ef=Decimal.mul(ef,4)
+        if (hasMilestone('F',14))  ef=Decimal.mul(ef,10)
+        return ef;
+    },
+    fdm(){
+        ef = new Decimal(1)
+        ef=Decimal.mul(ef,buyableEffect('F',101))
+        return ef;
+    },
+    fdbas(){
+        ef=2
+        if (hasUpgrade('F',61))  ef=Decimal.add(ef,0.25)
+        if (hasMilestone('F',15)) ef=Decimal.add(ef,0.15)
+        return ef
+    },
+    F1f() {
+        let exp=0.15  
+        if (hasUpgrade('F',52))  exp=Decimal.mul(exp,3)
+        if (hasUpgrade('F',54))  exp=Decimal.add(exp,0.55)
+        if (hasUpgrade('F',63))  exp=Decimal.mul(exp,2)
+        let ef=player.F.F1.max(1).pow(exp)
+        if (hasUpgrade('F',63))  ef=Decimal.pow(10,ef.add(10).log(10).pow(1.015))
+        if (hasUpgrade('F',65))  ef=Decimal.pow(10,ef.add(10).log(10).pow(1.05))
+        return ef
+    },
+    update(diff) {
+        if (hasMilestone('F',10))  player.F.F1 = player.F.F1.add(tmp.F.F1effect.mul(player.F.fd1).mul(diff))
+        if (tmp.F.buyables[11].effect.gte(1)) player.F.fd1 = player.F.fd1.add(tmp.F.buyables[12].effect.mul(player.F.fd2).mul(diff))
+        if (tmp.F.buyables[12].effect.gte(1)) player.F.fd2 = player.F.fd2.add(tmp.F.buyables[13].effect.mul(player.F.fd3).mul(diff))
+        if (tmp.F.buyables[13].effect.gte(1)) player.F.fd3 = player.F.fd3.add(tmp.F.buyables[21].effect.mul(player.F.fd4).mul(diff))
+        if (tmp.F.buyables[21].effect.gte(1)) player.F.fd4 = player.F.fd4.add(tmp.F.buyables[22].effect.mul(player.F.fd5).mul(diff))
+        if (tmp.F.buyables[22].effect.gte(1)) player.F.fd5 = player.F.fd5.add(tmp.F.buyables[23].effect.mul(player.F.fd6).mul(diff))
+        if (tmp.F.buyables[23].effect.gte(1)) player.F.fd6 = player.F.fd6.add(tmp.F.buyables[31].effect.mul(player.F.fd7).mul(diff))
+        if (tmp.F.buyables[31].effect.gte(1)) player.F.fd7 = player.F.fd7.add(tmp.F.buyables[32].effect.mul(player.F.fd8).mul(diff))
+    },
 })
