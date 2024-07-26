@@ -450,7 +450,7 @@ addLayer("ac", {
         154: {
             name: "88.just wait",
             done() {return (challengeCompletions("F", 12) >= 3)},
-            tooltip: "complete Fc1x3", 
+            tooltip: "complete Fc2x3", 
         },
         155: {
             name: "89.similar to a galaxy...",
@@ -480,11 +480,51 @@ addLayer("ac", {
         164: {
             name: "94.is it a softcap?",
             done() {return player.F.F1.gte('1e500')},
-            tooltip: "get 1e500 F1.<br>in AD,Am is hardcapped at 2^1024(pre-break) and scaling after this(post-break).", 
+            tooltip: "get 1e500 F1.<br>in AD,AM is hardcapped at 2^1024(pre-break) and scaling after this(post-break).", 
+        },
+        165: {
+            name: "95.effariG",
+            done() {return player.G.total.gte('1')},
+            tooltip: "get 1 G",
+        },
+        166: {
+            name: "96.scaled galaxy",
+            done() {return (getBuyableAmount('F',102)>=5)},
+            tooltip: "get 5 tickboost",
+        },
+        171: {
+            name: "97.remove a scale",
+            done() {return (hasUpgrade("G", 15))},
+            tooltip: "get G5", 
+        },
+        172: {
+            name: "98.why it is diminishing?",
+            done() {return player.E.Ek.gte('ee25')},
+            tooltip: "get ee25 Ek.", 
+        },
+        173: {
+            name: "99.x2 IP",
+            done() {return (getBuyableAmount('G',11)>=1)},
+            tooltip: "get a Gc1<br>in AD,there is a x2 IP buyable below 16 infinity upgs.<br>cost is x10(x1e10 between e3e6 and e6e6) and eff is x2.", 
+        },
+        174: {
+            name: "100.privileged",
+            done() {return (hasUpgrade("F", 71))},
+            tooltip: "get F31", 
+        },
+        175: {
+            name: "101.G power",
+            done() {return (challengeCompletions("G", 11) >= 3)},
+            tooltip: "complete Gc1x3", 
+        },
+        176: {
+            name: "102.true unscaled",
+            done() {return (hasUpgrade("G", 32))},
+            tooltip: "get G12", 
         },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/94 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/102 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },

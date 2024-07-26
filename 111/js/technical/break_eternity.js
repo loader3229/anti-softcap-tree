@@ -1,3 +1,7 @@
+function n(num) {
+  return new Decimal(num)
+}
+
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -1126,7 +1130,7 @@
         }
       }
       
-      this.normalize();
+      this.normalize();//normal1zer brokennerdz supa7onyz
       return this;
     };
 

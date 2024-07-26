@@ -54,6 +54,7 @@ addLayer("E", {
         mult = mult.mul(hasUpgrade("E",71)?upgradeEffect("E",71):1)
         mult = mult.mul(hasUpgrade("E",102)?upgradeEffect("E",102):1)
         mult = mult.mul(hasUpgrade("F",12)?upgradeEffect("F",12):1)
+        //mult = mult.mul(hasUpgrade("G",22)?Decimal.pow(player.E.points.max(1),upgradeEffect("G",22)):1)
         if (hasChallenge("E", 11))  mult = mult.mul(challengeEffect('E',11))
         if (hasChallenge("E", 12))  mult = mult.mul(challengeEffect('E',12))
         if (inChallenge('F',11)) mult=Decimal.pow(mult,0.25)
@@ -174,13 +175,14 @@ addLayer("E", {
                 content: ["challenges"]},
             "Em": {
                 unlocked() {return (hasMilestone("E", 11))},
-                content: [["display-text", () => "You have <h2 style='color: #789A89; text-shadow: 0 0 10px #c2b280'>" + format(player.E.Em) + "</h2> Em, mult E by <h2 style='color: #789A89; text-shadow: 0 0 10px #c2b280'> " + format(tmp.E.emf) + "x</h2>.<br>" + "<h3>" + format(tmp.E.Emeffect) + " Em/s<h3> <br>"],
+                content: [["display-text", () => "You have <h3 style='color: #789A89; text-shadow: 0 0 3px #c2b280'>" + format(player.E.Em) + "</h3> Em, mult E by <h3 style='color: #789A89; text-shadow: 0 0 3px #c2b280'> " + format(tmp.E.emf) + "x</h3>.<br>" + "<h4>" + format(tmp.E.Emeffect) + " Em/s<h4> <br>"],
                 ["raw-html", () => `<h4 style="opacity:.5">welcome to first sub-currency.Em^0.25 mults E. </h4>`],
                 ["buyables",[3]]]},
             "Ek": {
                 unlocked() {return (hasMilestone("E", 15))},
-                content: [["display-text", () => "You have <h2 style='color: #177261; text-shadow: 0 0 10px #c2b280'>" + format(player.E.Ek) + "</h2> Ek, Bb scaling start <h2 style='color: #177261; text-shadow: 0 0 10px #c2b280'> " + format(tmp.E.ekf) + " </h2>later.<br>" + "<h3>" + format(tmp.E.Ekeffect) + " Ek/s<h3> <br>"],
+                content: [["display-text", () => "You have <h3 style='color: #177261; text-shadow: 0 0 3px #c2b280'>" + format(player.E.Ek) + "</h3> Ek, Bb scaling start <h3 style='color: #177261; text-shadow: 0 0 3px #c2b280'> " + format(tmp.E.ekf) + " </h3>later.<br>" + "<h4>" + format(tmp.E.Ekeffect) + " Ek/s<h4> <br>"],
                 ["raw-html", () => `<h4 style="opacity:.5">Ek delays Bb1-2 scaling.<br>for balance,Eb9 scaling faster after 10000 </h4>`],
+                ["display-text", () => "Ek mults Bb5 base by <h3 style='color: #177261; text-shadow: 0 0 3px #c2b280'> " + format(tmp.E.ekf2) + " </h3>after upgrade G12.<br>" ],
                 ["buyables",[4]]]},
         }
     },
@@ -668,6 +670,7 @@ addLayer("E", {
                 if (hasUpgrade('E',55)) bas = Decimal.add(bas,upgradeEffect('E',55))
                 if (hasMilestone('E',18)) bas = Decimal.add(bas,buyableEffect('E',22))
                 if (hasUpgrade('F',65)) bas = Decimal.pow(bas,upgradeEffect('F',65))
+                if (hasUpgrade('G',21)) bas = Decimal.mul(bas,upgradeEffect('G',21)[1])
                 if (inChallenge('E',21)) bas = 2
                 return bas},
             effect(x) { // Effects of owning x of the items, x is a decimal
@@ -707,6 +710,7 @@ addLayer("E", {
                 if (hasUpgrade('E',55)) bas = Decimal.add(bas,upgradeEffect('E',55))
                 if (hasMilestone('E',18)) bas = Decimal.add(bas,buyableEffect('E',22))
                 if (hasUpgrade('F',65)) bas = Decimal.pow(bas,upgradeEffect('F',65))
+                if (hasUpgrade('G',21)) bas = Decimal.mul(bas,Decimal.pow(buyableEffect('E',22),0.25))
                 if (inChallenge('E',21)) bas = 2
                 return bas},
             effect(x) { // Effects of owning x of the items, x is a decimal
@@ -744,6 +748,7 @@ addLayer("E", {
                 if (hasUpgrade('F',14)) bas = Decimal.add(bas,0.3)
                 if (hasMilestone('E',18)) bas = Decimal.add(bas,buyableEffect('E',22))
                 if (hasUpgrade('F',65)) bas = Decimal.pow(bas,upgradeEffect('F',65))
+                if (hasUpgrade('G',21)) bas = Decimal.mul(bas,Decimal.pow(buyableEffect('E',22),0.25))
                 return bas},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let ef = Decimal.pow(this.base(),x.pow(1.005))
@@ -957,6 +962,8 @@ addLayer("E", {
             buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let ef = Decimal.pow(x/6+1,0.7).sub(1)
+                if (hasUpgrade('G',22)) ef=Decimal.pow(ef,upgradeEffect('G',22)) 
+                ef=Decimal.mul(ef,buyableEffect('G',13))
                 return ef},
             display() { // Everything else displayed in the buyable button after the title
                 return "boost Eb1-3 base \n\
@@ -973,6 +980,10 @@ addLayer("E", {
         if (hasUpgrade('F', 62)) tar=Decimal.mul(tar,3)
         if (hasUpgrade('F', 64)) tar=Decimal.mul(tar,3)
         if (hasMilestone('F', 16)) tar=Decimal.mul(tar,10)
+        if (hasUpgrade('G', 14)) tar=Decimal.mul(tar,10)
+        if (hasUpgrade('G', 23)) tar=Decimal.mul(tar,10)
+        if (hasMilestone('G',2)) tar=Decimal.mul(tar,10)
+        if (hasMilestone('F',17)) tar=Decimal.mul(tar,Decimal.mul(5,player.G.total.add(10).log(10)))
         return tar 
     },
     challenges: {
@@ -1211,10 +1222,18 @@ addLayer("E", {
         if (hasUpgrade('E',101))  m=Decimal.add(m,2)  
         if (hasChallenge('E', 42))  m=Decimal.add(m,challengeEffect('E',42)*0.5)    
         if (hasUpgrade('F',34))  m=Decimal.add(m,0.4)  
+        if (hasUpgrade('G',21))  m=Decimal.add(m,2)  
         if (inChallenge('E',42)) m=0 
         if (hasUpgrade('F',34))  scp=Decimal.add(scp,-0.015)  
+        if (hasUpgrade('G',21))  scp=Decimal.add(scp,-0.02)  
+        if (hasUpgrade('G',22))  scp=Decimal.add(scp,-0.02)  
+        if (hasUpgrade('G',23))  scp=n(0)  
         if (player.E.Ek.gte('1e5000')) p=p/(player.E.Ek.log(10).div(5000).pow(scp))             
         let ef=player.E.Ek.add(1).log(10).pow(p).mul(m)
+        return ef
+    },
+    ekf2(){
+        let ef=player.E.Ek.add(1).log(10).pow(0.12)
         return ef
     },
     update(diff) {

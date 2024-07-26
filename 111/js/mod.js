@@ -3,42 +3,46 @@ let modInfo = {
 	id: "mymod",
 	author: "2^32",
 	pointsName: "points",
-	modFiles: ["layers/A.js", "layers/B.js","layers/C.js","layers/D.js","layers/E.js","layers/F.js","layers/ach.js","tree.js",],
+	modFiles: ["layers/A.js", "layers/B.js","layers/C.js","layers/D.js","layers/E.js","layers/F.js","layers/G.js","layers/ach.js","tree.js",],
 
 	discordName: "",
 	discordLink: "",
 	initialStartPoints: new Decimal (10), // Used for hard resets and new players
-	offlineLimit: 168,  // In hours
+	offlineLimit: 1440,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.5.3.1",
-	name: "F dim",
+	num: "0.5.5",
+	name: "infinity",
 }
 
-let changelog = `<h1>Changelog:</h1><br>
-    <h3>v0.5.3.1</h3> (240719)
+let changelog = `<h2>Changelog:</h2><br>
+    <h4>v0.5.5</h4> (240725)
+		- add G chal and G power. <br>
+    <h4>v0.5.4</h4> (240721)
+		- add layer G. <br>
+    <h4>v0.5.3.1</h4> (240719)
 		- rebalance. <br>
-    <h3>v0.5.3</h3> (240718)
+    <h4>v0.5.3</h4> (240718)
 		- Add tickboost,like AG,etc. <br>
-    <h3>v0.5.2</h3> (240715)
+    <h4>v0.5.2</h4> (240715)
 		- Add F dim. <br>
-    <h3>v0.5.1</h3> (240713)
+    <h4>v0.5.1</h4> (240713)
 		- Add F and some powerful upg.<br> And some nerfs for balance. <br>
-    <h3>v0.4.2</h3> (240705)
+    <h4>v0.4.2</h4> (240705)
 		- fix buyable code,a bit rebalance. <br>
-    <h3>v0.4.1</h3> (240701)
+    <h4>v0.4.1</h4> (240701)
 		- Added achievements,Ek,Ec5-8,E31-50,etc.<br> And a TOUGH rebalance. <br>
-    <h3>v0.3.7</h3> (240624)
+    <h4>v0.3.7</h4> (240624)
 		- Added Em / rebalance <br>
-	<h3>v0.3.6</h3> (240623)
+	<h4>v0.3.6</h4> (240623)
 		- Added new C/D upg,E11-20<br>
-    <h3>v0.3.5.1</h3> (240622)
+    <h4>v0.3.5.1</h4> (240622)
 		- rebalance / Ec3-4,E21-28<br>
-    <h3>v0.3.4.1</h3> (240620)
+    <h4>v0.3.4.1</h4> (240620)
 		- E6-20 rebalance<br>
-	<h3>v0.3.4</h3>(240620)
+	<h4>v0.3.4</h4>(240620)
 		- Added E chal,E11-20<br> `
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
@@ -120,11 +124,11 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() {return "current endgame:e1e17 points,1e560 F<br>next layer requires 1e560 F.<br> Too easy? go to play qqqe308's NG-10!."},
+	function() {return "current endgame:e2e34 points,1e1970 F1.<br> Too easy? go to play qqqe308's NG-10!."},
 ]
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("ee17"))
+	return player.points.gte(new Decimal("e2e34"))
 }
 
 //<br> bilibili: @bili_68585026743

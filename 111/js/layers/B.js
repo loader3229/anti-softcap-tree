@@ -267,9 +267,9 @@ addLayer("B", {
             description: "mult to pts based on Bb1 eff.",
             cost:new Decimal('3e46'),
             effect()  { 
-                let efb19 = buyableEffect('B',11).pow(0.2).times(buyableEffect('B',11).add(1).log(10).pow(2))
-                if (hasUpgrade('B',55)) efb19=Decimal.pow(efb19,1.25)
-                return efb19;          
+                let ef = buyableEffect('B',11).pow(0.2).times(buyableEffect('B',11).add(1).log(10).pow(2))
+                if (hasUpgrade('B',55)) ef=Decimal.pow(ef,1.25)
+                return ef;          
             },
             unlocked() { return (hasUpgrade(this.layer, 43))},
             effectDisplay() { return format(this.effect())+"x" }, 
@@ -451,13 +451,14 @@ addLayer("B", {
                 if (hasUpgrade('B',73)) bas = Decimal.mul(bas,1.02)
                 if (hasMilestone('B',3)) bas = Decimal.add(bas,buyableEffect('B',23))
                 if (hasUpgrade('F',65)) bas = Decimal.pow(bas,upgradeEffect('F',65))
+                if (hasUpgrade('G',25)) bas = Decimal.mul(bas,upgradeEffect('G',25))
                 if (inChallenge('E',12)) bas = 2
                 if (inChallenge('E',31)) bas = 1.2
                 return bas},
             effect(x) { // Effects of owning x of the items, x is a decimal
-                let efbb1 = Decimal.pow(this.base(),x.pow(1.01))
-                if (inChallenge('A',32)) efbb1=Decimal.pow(efbb1,0.5)
-                return efbb1},
+                let ef = Decimal.pow(this.base(),x.pow(1.01))
+                if (inChallenge('A',32)) ef=Decimal.pow(ef,0.5)
+                return ef},
             display() { // Everything else displayed in the buyable button after the title
                 return "give A a x"+ format(this.base()) + " mult \n\
                 Cost: " + format(this.cost()) + " B \n\
@@ -499,6 +500,7 @@ addLayer("B", {
                 if (hasUpgrade('B',71)) bas = Decimal.add(bas,0.05)
                 if (hasMilestone('B',3)) bas = Decimal.add(bas,buyableEffect('B',23))
                 if (hasUpgrade('F',65)) bas = Decimal.pow(bas,upgradeEffect('F',65))
+                if (hasUpgrade('G',25)) bas = Decimal.mul(bas,upgradeEffect('G',25))
                 if (inChallenge('E',12)) bas = 2
                 if (inChallenge('E',31)) bas = 1.2
                 return bas},
@@ -639,6 +641,8 @@ addLayer("B", {
                 if (hasChallenge('F',11)) ef = Decimal.mul(ef,Decimal.add(1,challengeEffect('F',11)/100))
                 if (hasUpgrade('F',33)) ef = Decimal.mul(ef,Decimal.add(1,upgradeEffect('F',33)/100))
                 if (hasUpgrade('F',41)) ef = Decimal.mul(ef,1.03)
+                ef=Decimal.mul(ef,buyableEffect('G',13))
+                if (hasUpgrade('G',23)) ef = Decimal.mul(ef,tmp.E.ekf2)
                 if (inChallenge('E',41)) ef = Decimal.mul(ef,0.4)
                 if (inChallenge('E',42)) ef = 0
                 return ef},
@@ -658,21 +662,27 @@ addLayer("B", {
         if (hasUpgrade('F', 62)) tar=Decimal.mul(tar,3)
         if (hasUpgrade('F', 64)) tar=Decimal.mul(tar,3)
         if (hasMilestone('F', 16)) tar=Decimal.mul(tar,10)
+        if (hasUpgrade('G', 14)) tar=Decimal.mul(tar,10)
+        if (hasUpgrade('G', 23)) tar=Decimal.mul(tar,10)
+        if (hasMilestone('G',2)) tar=Decimal.mul(tar,10)
+        if (hasMilestone('F',17)) tar=Decimal.mul(tar,Decimal.mul(5,player.G.total.add(10).log(10)))
         return tar 
     },
     scaling(){
         let sc=400
         if (hasMilestone('E',15)) sc=Decimal.add(sc,100)
         if (inChallenge('E',42)) sc=Decimal.add(sc,-300)
-        sc = Decimal.add(sc,tmp.E.ekf.ceil())
+        if (!hasUpgrade('G',32)) sc = Decimal.add(sc,tmp.E.ekf.ceil())
         sc = Decimal.add(sc,upgradeEffect('F',31).ceil())
+        if (hasUpgrade('G',15))  sc=n(Infinity)
         return sc
     },
-    scpow(){let scpow=0.45
+    scpow(){let scpow=n(0.45)
         if (hasUpgrade('A',65)) scpow=Decimal.add(scpow,-0.01)
         if (hasUpgrade('E',103)) scpow=Decimal.add(scpow,-0.005)
         if (hasUpgrade('F',34)) scpow=Decimal.add(scpow,-0.003)
         if (hasUpgrade('F',54)) scpow=Decimal.add(scpow,-0.008)
+        if (hasUpgrade('G',15))  scpow=n(0)
         return scpow
     },
     scad(){let t=800
@@ -683,7 +693,8 @@ addLayer("B", {
     sc2(){let sc=Decimal.add(tmp.B.scaling,60000)
         if (hasUpgrade('F',42)) sc=Decimal.add(sc,1000)
         if (hasUpgrade('F',55)) sc=Decimal.add(sc,2000)
-        if (hasUpgrade('F',63)) sc=Decimal.add(sc,tmp.E.ekf)
+        if (hasUpgrade('F',63)) {if (!hasUpgrade('G',32)) sc=Decimal.add(sc,tmp.E.ekf)}
+        if (hasUpgrade('G',32))  sc=n(Infinity)
         //let sc=50000
         return sc
     }
