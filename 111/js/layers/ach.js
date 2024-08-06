@@ -522,9 +522,74 @@ addLayer("ac", {
             done() {return (hasUpgrade("G", 32))},
             tooltip: "get G12", 
         },
+        181: {
+            name: "103.year^3",
+            done() { return player.F.F1.gte('1e2024')},
+            tooltip: "get 1e2024 F1",
+        },
+        182: {
+            name: "104.return?",
+            done() {return (hasUpgrade("F", 81))},
+            tooltip: "get F36", 
+        },
+        183: {
+            name: "105.true unscaled^2",
+            done() {return (challengeCompletions("G", 12) >= 3)},
+            tooltip: "complete Gc2x3", 
+        },
+        184: {
+            name: "106.cubic?",
+            done() {return (getBuyableAmount('F',102)>=10)},
+            tooltip: "get 10 tickboost",
+        },
+        185: {
+            name: "107.dilation",
+            done() {return (challengeCompletions("G", 12) >= 5)},
+            tooltip: "complete Gc2x5", 
+        },
+        186: {
+            name: "108.googolplex",
+            done() {return player.points.gte('e1e100')},
+            tooltip: "get e1e100 pts",
+        },
+        191: {
+            name: "109.inf in inf",
+            done() {return (hasUpgrade("G", 35))},
+            tooltip: "get G15", 
+        },
+        192: {
+            name: "110.expensive!",
+            done() {return (challengeCompletions("G", 21) >= 3)},
+            tooltip: "complete Gc3x3", 
+        },
+        193: {
+            name: "111.F3.5",
+            done() {return player.points.gte('ee100000')},
+            tooltip: "get ee100000 pts",
+        },
+        194: {
+            name: "112.gigasurge",
+            done() {return (challengeCompletions("G", 21) >= 5)},
+            tooltip: "complete Gc3x5", 
+        },
+        195: {
+            name: "113.logged galaxy",
+            done() {return (challengeCompletions("G", 22) >= 1)},
+            tooltip: "complete Gc4x1", 
+        },
+        196: {
+            name: "114.unscale for F1",
+            done() {return (hasUpgrade("G", 44))},
+            tooltip: "get G19", 
+        },
+        201: {
+            name: "115.F3_F1",
+            done() { return player.F.F1.gte('ee10')},
+            tooltip: "get e1e10 F1",
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/102 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/115 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },

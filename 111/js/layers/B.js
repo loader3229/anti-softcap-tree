@@ -131,8 +131,7 @@ addLayer("B", {
         11: {
             title:'B1',
             description: function() {return '5x points \n\
-                '+'layer B total: \n\
-                '+ format(this.effect()) +'x'},            
+                '+'<br>layer B total: '+ format(this.effect()) +'x'},            
             effect()  { 
                 let ef = 5
                 if (hasUpgrade('B',12)) ef = ef*5
@@ -455,6 +454,7 @@ addLayer("B", {
                 if (inChallenge('E',12)) bas = 2
                 if (inChallenge('E',31)) bas = 1.2
                 return bas},
+            purchaseLimit() {return n('1e300')},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let ef = Decimal.pow(this.base(),x.pow(1.01))
                 if (inChallenge('A',32)) ef=Decimal.pow(ef,0.5)
@@ -496,6 +496,7 @@ addLayer("B", {
             buy() {
                 if (!hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
+            purchaseLimit() {return n('1e300')},
             base(){   let bas = 2
                 if (hasUpgrade('B',71)) bas = Decimal.add(bas,0.05)
                 if (hasMilestone('B',3)) bas = Decimal.add(bas,buyableEffect('B',23))
@@ -632,19 +633,19 @@ addLayer("B", {
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let ef = Decimal.pow(x/40+1,0.7).sub(1)
-                if (inChallenge('A',41)) ef = 0
+                if (inChallenge('A',41)) ef = n(0)
                 if (hasUpgrade('A',63)) ef = Decimal.mul(ef,1.02)
                 if (hasUpgrade('E',34)) ef = Decimal.mul(ef,1.02)
                 if (hasUpgrade('E',45)) ef = Decimal.mul(ef,1.02)
                 if (hasUpgrade('E',53)) ef = Decimal.mul(ef,1.03)
                 if (hasMilestone('F',7)) ef = Decimal.mul(ef,1.025)
-                if (hasChallenge('F',11)) ef = Decimal.mul(ef,Decimal.add(1,challengeEffect('F',11)/100))
-                if (hasUpgrade('F',33)) ef = Decimal.mul(ef,Decimal.add(1,upgradeEffect('F',33)/100))
+                if (hasChallenge('F',11)) ef = Decimal.mul(ef,Decimal.add(1,challengeEffect('F',11).div(100)))
+                if (hasUpgrade('F',33)) ef = Decimal.mul(ef,Decimal.add(1,upgradeEffect('F',33).div(100)))
                 if (hasUpgrade('F',41)) ef = Decimal.mul(ef,1.03)
                 ef=Decimal.mul(ef,buyableEffect('G',13))
                 if (hasUpgrade('G',23)) ef = Decimal.mul(ef,tmp.E.ekf2)
                 if (inChallenge('E',41)) ef = Decimal.mul(ef,0.4)
-                if (inChallenge('E',42)) ef = 0
+                if (inChallenge('E',42)) ef = n(0)
                 return ef},
             display() { // Everything else displayed in the buyable button after the title
                 return "boost Bb1-2 base \n\

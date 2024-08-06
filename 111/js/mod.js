@@ -13,11 +13,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.5.5",
+	num: "0.5.6",
 	name: "infinity",
 }
 
 let changelog = `<h2>Changelog:</h2><br>
+    <h4>v0.5.6</h4> (240803)
+		- add more G chal and G power, massive fixes against inflation. <br>
     <h4>v0.5.5</h4> (240725)
 		- add G chal and G power. <br>
     <h4>v0.5.4</h4> (240721)
@@ -124,14 +126,14 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() {return "current endgame:e2e34 points,1e1970 F1.<br> Too easy? go to play qqqe308's NG-10!."},
+	function() {return "current endgame:ee3.7e9 points/e5.65e8 G.<br> Too easy? go to play qqqe308's NG-10!."},
 ]
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e2e34"))
+	return player.G.points.gte(new Decimal("e5.65e8"))
 }
 
-//<br> bilibili: @bili_68585026743
+//<br> bilibili: @bili_50929957100
 
 // Less important things beyond this point!
 
@@ -142,7 +144,7 @@ var backgroundStyle = {
 
 // You can change this if you have things that can be messed up by long tick lengths
 function maxTickLength() {
-	return(3600) // Default is 1 hour which is just arbitrarily large
+	return(360000) // Default is 100 hour which is just arbitrarily large
 }
 
 // Use this if you need to undo inflation from an older version. If the version is older than the version that fixed the issue,

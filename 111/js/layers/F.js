@@ -124,6 +124,10 @@ addLayer("F", {
             done() {return (getBuyableAmount('F',102)>=6)}, 
             effectDescription: "bulk buy Bb/Eb base on total G,G6/10 are stronger,unlock new upg,only can be bought in Gc.",
         },
+        18: {requirementDescription: "19 tickboost",
+            done() {return (getBuyableAmount('F',102)>=19)}, 
+            effectDescription: "edit F dim cost,Gc1p eff ^1.5.",
+        },
     },
     doReset(layer){
         if (layer=="G") {        
@@ -295,7 +299,7 @@ addLayer("F", {
         },
         35: {
             title:'F15',
-            description: "Fc1 eff x1.25,Bb3-4 +5%,Eb4 +8%,buy max Eb5/8,fix Bb cost,and unlock F dim.",
+            description: "Fc1 eff x1.25,Bb3-4 +5%,Eb4 +8%,buy max Eb5/8,fix Bb cost.",
             cost:new Decimal('5e20'),
             unlocked() { return (hasUpgrade(this.layer, 34))},
         },
@@ -326,6 +330,8 @@ addLayer("F", {
             currencyInternalName: "F1",
             effect()  { 
                 let ef = player.F.total.add(10).log(10).mul(0.2)
+                if (!hasUpgrade('G',44)) ef=ef.min('1e308')
+                if (ef.gte('1e500')) ef=Decimal.pow(10,ef.div('1e499').log(10).pow(0.9)).mul('1e500')
                 if (hasUpgrade('F',63)) ef=Decimal.pow(ef,1.2)
                 return ef;
             },
@@ -341,6 +347,8 @@ addLayer("F", {
             currencyInternalName: "F1",
             effect()  { 
                 let ef = player.E.Em.add(10).log(10).div(80)
+                if (!hasUpgrade('G',44)) ef=ef.min('1e308')
+                if (ef.gte('1e500')) ef=Decimal.pow(10,ef.div('1e499').log(10).pow(0.9)).mul('1e500')
                 if (hasUpgrade('F',63)) ef=Decimal.pow(ef,1.2)
                 return ef;
             },
@@ -370,6 +378,8 @@ addLayer("F", {
             currencyInternalName: "F1",
             effect()  { 
                 let ef = player.E.Ek.add(10).log(10).div(30)
+                if (!hasUpgrade('G',44)) ef=ef.min('1e308')
+                if (ef.gte('1e500')) ef=Decimal.pow(10,ef.div('1e499').log(10).pow(0.9)).mul('1e500')
                 return ef;
             },
             effectDisplay() { return format(this.effect())+'x' },
@@ -378,13 +388,13 @@ addLayer("F", {
         52: {
             title:'F22',
             description: "^3 F1 eff,^1.002 pts.",
-            cost:new Decimal('1e88888'),//3333
+            cost:new Decimal('1e15000'),//3333
             unlocked() { return (hasUpgrade(this.layer, 51))},
         },
         53: {
             title:'F23',
             description: "F13 is stronger,unlock a chal.",
-            cost:new Decimal('1e111111'),//5945
+            cost:new Decimal('1e100000'),//5945
             unlocked() { return (hasUpgrade(this.layer, 52))},
         },
         54: {
@@ -394,7 +404,7 @@ addLayer("F", {
             currencyLocation() {return player[this.layer]}, 
             currencyDisplayName: "F1",
             currencyInternalName: "F1",
-            unlocked() { return (hasUpgrade(this.layer, 53))},
+            unlocked() { return (hasUpgrade(this.layer, 45))},
         },
         55: {
             title:'F25',
@@ -426,7 +436,7 @@ addLayer("F", {
         63: {
             title:'F28',
             description: "F1 eff exp x2 and ^1.015,Ek applies to Bb further scaling,F18-19 ^1.2.",
-            cost:new Decimal('e4e7'),
+            cost:new Decimal('e1e7'),
             unlocked() { return (hasUpgrade(this.layer, 62))},
         },
         64: {
@@ -441,7 +451,7 @@ addLayer("F", {
                 return ef;
             },
             effectDisplay() { return format(this.effect())+'x' },
-            unlocked() { return (hasUpgrade(this.layer, 63))},
+            unlocked() { return (hasUpgrade(this.layer, 62))},
         },
         65: {
             title:'F30',
@@ -468,6 +478,7 @@ addLayer("F", {
             effect()  { 
                 let a=player[this.layer].upgrades.length
                 let ef = Decimal.pow(1.075,a)
+                if (hasUpgrade('F',75)) ef=Decimal.pow(ef,2)
                 return ef;          
             },
             currencyLocation() {return player[this.layer]}, 
@@ -513,7 +524,7 @@ addLayer("F", {
             title:'F34',
             description: "Gb2 amt boost its base,Gc1p mults G.(need Gc1).",
             cost(){
-                if (inChallenge('G',11)) return n('1e1165')
+                if (inChallenge('G',11)) return n('1e1155')
                 else return n(Infinity)},
             effect()  { 
                 let t = getBuyableAmount('G',12)
@@ -529,9 +540,9 @@ addLayer("F", {
         },
         75: {
             title:'F35',
-            description: "Gb3 amt boost its base,unlock next G chal(coming soon).(need Gc1).",
+            description: "Gb3 amt boost its base,F31 ^2,unlock next G chal.(need Gc1).",
             cost(){
-                if (inChallenge('G',11)) return n('1e1666')
+                if (inChallenge('G',11)) return n('1e1615')
                 else return n(Infinity)},
             effect()  { 
                 let t = getBuyableAmount('G',13)
@@ -543,6 +554,79 @@ addLayer("F", {
             currencyInternalName: "F1",
             unlocked() { return (hasUpgrade(this.layer, 74))},
             effectDisplay() { return '+'+format(this.effect())},
+        },
+        81: {
+            title:'F36',
+            description: "F dim mult +0.1,E25 is multiplicative at ^0.15 eff and applies to Eb3,reduce E22's nerf.(need Gc2)",         
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            cost(){
+                if (inChallenge('G',12)) return n('1e1290')
+                else return n(Infinity)},
+            effect()  { 
+                let exp=0.15
+                let ef= Decimal.pow(upgradeEffect('E',55),exp)
+                return ef;
+            },
+            effectDisplay() { return 'x'+format(this.effect()) },
+            unlocked() { return (hasUpgrade(this.layer, 75))},
+        },
+        82: {
+            title:'F37',
+            description: "Gc1p mults Gb3 base,reduce Gb2-3 cost base.(need Gc2)",         
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            cost(){
+                if (inChallenge('G',12)) return n('1e6000')
+                else return n(Infinity)},
+            effect()  { 
+                let exp=0.33
+                let ef=player.G.Gc1p.add(10).log(10).pow(exp)
+                return ef;
+            },
+            effectDisplay() { return 'x'+format(this.effect()) },
+            unlocked() { return (hasUpgrade(this.layer, 81))},
+        },
+        83: {
+            title:'F38',
+            description: "Gc2p eff ^1.5,tickboost cost scaling x0.9.(need Gc2)",         
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            cost(){
+                if (inChallenge('G',12)) return n('1e10500')
+                else return n(Infinity)},
+            unlocked() { return (hasUpgrade(this.layer, 82))},
+        },
+        84: {
+            title:'F39',
+            description: "Gc2p mults Gb3 base,reduce Gb2 scaling,tickboost cost scaling 1 later.(need Gc3)",         
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            cost(){
+                if (inChallenge('G',21)) return n('1e112000')
+                else return n(Infinity)},
+            effect()  { 
+                let exp=0.5
+                let ef=player.G.Gc2p.add(10).log(10).pow(exp)
+                return ef;
+            },
+            effectDisplay() { return 'x'+format(this.effect()) },
+            unlocked() { return (hasUpgrade(this.layer, 83))},
+        },
+        85: {
+            title:'F40',
+            description: "edit Gc3p prod formula,tickboost cost scaling is weaker.(need Gc3)",         
+            currencyLocation() {return player[this.layer]}, 
+            currencyDisplayName: "F1",
+            currencyInternalName: "F1",
+            cost(){
+                if (inChallenge('G',21)) return n('e1.65e8')
+                else return n(Infinity)},
+            unlocked() { return (hasUpgrade(this.layer, 83))},
         },
     },
     challenges:{
@@ -586,6 +670,7 @@ addLayer("F", {
             rewardEffect() {
                 let exp = Decimal.mul(challengeCompletions("F", 12),0.06).add(0.08)
                 let ef = player.B.points.add(10).log(10).add(1).pow(exp)
+                if (ef.gte('1e500')) ef=Decimal.pow(10,ef.div('1e499').log(10).pow(0.85)).mul('1e500')
                 if (challengeCompletions("F", 12) >= 1)  return ef
                 else return new Decimal(1)
             },
@@ -605,15 +690,23 @@ addLayer("F", {
             title: "Fd1", 
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
                 let cost = Decimal.pow(100, x).times('10')
-                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(tmp.F.scaling)))
+                let sc=tmp.F.scaling
+                //let c2=Decimal.pow(10, x.mul(2).pow(sc))
+                //if (c2.gte('e100000')) sc=Decimal.add(sc,cost.log(10).div('1e5').pow(0.3).sub(1).div(20))
+                if (cost.gte('1e500')) cost = n('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(sc)))
+                if (hasMilestone('F',18)) cost = Decimal.pow(10, x.mul(2).pow(sc))
                 return cost},
             canAfford() { let cost = this.cost()
                 return player[this.layer].F1.gte(cost) },
             bulk(){
                 let tar=n(0)
-                if (hasMilestone('G',0)) tar=player.F.F1.add(10).div('10').log(100).pow(0.85).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)
+                if (hasMilestone('G',3)) tar=player.F.F1.add(10).div('10').log(100).pow(0.855).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)
+                    {if (hasMilestone('F',18)) tar=player.F.F1.add(10).log(10).pow(tmp.F.scaling.pow(-1)).div(2).sub(getBuyableAmount(this.layer, this.id)).ceil().sub(1).max(0)
+                    else tar=player.F.F1.add(10).div('10').log('100').pow(0.855).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)}            
                 let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
-                if (player[this.layer].F1.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)
+                if (player[this.layer].F1.gte(c)) 
+                    {player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)
+                    player.F.fd1 = player.F.fd1.add(tar)}
             },
             buy() {
                 player.F.fd1 = player.F.fd1.add(1)
@@ -642,15 +735,22 @@ addLayer("F", {
             title: "Fd2", 
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
                 let cost = Decimal.pow(1e3, x).times('100')
-                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(tmp.F.scaling)))
+                let sc=tmp.F.scaling
+                //let c2=Decimal.pow(10, x.mul(3).pow(sc))
+                //if (c2.gte('e100000')) sc=Decimal.add(sc,cost.log(10).div('1e5').pow(0.3).sub(1).div(20))
+                if (cost.gte('1e500')) cost=n('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(sc)))
+                if (hasMilestone('F',18)) cost = Decimal.pow(10, x.mul(3).pow(sc))
                 return cost},
             canAfford() { return player[this.layer].F1.gte(this.cost()) },
             bulk(){
                 let tar=n(0)
-                if (hasMilestone('G',0)) tar=player.F.F1.add(10).div('100').log(1e3).pow(0.85).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)
+                if (hasMilestone('G',3)) tar=player.F.F1.add(10).div('100').log(1e3).pow(0.85).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)
+                    {if (hasMilestone('F',18)) tar=player.F.F1.add(10).log(10).pow(tmp.F.scaling.pow(-1)).div(3).sub(getBuyableAmount(this.layer, this.id)).ceil().sub(1).max(0)
+                    else tar=player.F.F1.add(10).div('100').log('1e3').pow(0.85).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)}            
                 let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
-                if (player[this.layer].F1.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)
-            },
+                if (player[this.layer].F1.gte(c)) 
+                    {player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)
+                    player.F.fd2 = player.F.fd2.add(tar)}            },
             buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 player.F.fd2 = player.F.fd2.add(1)
             },
@@ -673,15 +773,23 @@ addLayer("F", {
             title: "Fd3", 
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
                 let cost = Decimal.pow(1e5, x).times('1e4')
-                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(tmp.F.scaling)))
+                let sc=tmp.F.scaling
+                //let c2=Decimal.pow(10, x.mul(5).pow(sc))
+                //if (c2.gte('e100000')) sc=Decimal.add(sc,cost.log(10).div('1e5').pow(0.3).sub(1).div(20))
+                if (cost.gte('1e500')) cost=n('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(sc)))
+                if (hasMilestone('F',18)) cost = Decimal.pow(10, x.mul(5).pow(sc))
                 return cost},
             canAfford() { return player[this.layer].F1.gte(this.cost()) },
             bulk(){
                 let tar=n(0)
-                if (hasMilestone('G',0)) tar=player.F.F1.add(10).div('1e4').log(1e5).pow(0.85).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)
+                if (hasMilestone('G',3))// tar=player.F.F1.add(10).div('1e4').log(1e5).pow(0.84).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)
+                    {if (hasMilestone('F',18)) tar=player.F.F1.add(10).log(10).pow(tmp.F.scaling.pow(-1)).div(5).sub(getBuyableAmount(this.layer, this.id)).ceil().sub(1).max(0)
+                    else tar=player.F.F1.add(10).div('1e4').log('1e5').pow(0.84).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)}        
+    
                 let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
-                if (player[this.layer].F1.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)
-            },
+                if (player[this.layer].F1.gte(c)) 
+                    {player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)
+                    player.F.fd3 = player.F.fd3.add(tar)}},
             buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 player.F.fd3 = player.F.fd3.add(1)
             },
@@ -704,9 +812,21 @@ addLayer("F", {
             title: "Fd4", 
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
                 let cost = Decimal.pow(1e8, x).times('1e8')
-                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(tmp.F.scaling)))
+                let sc=tmp.F.scaling
+                //let c2=Decimal.pow(10, x.mul(8).pow(sc))
+                //if (c2.gte('e100000')) sc=Decimal.add(sc,cost.log(10).div('1e5').pow(0.3).sub(1).div(20))
+                if (cost.gte('1e500')) cost=n('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(sc)))
+                if (hasMilestone('F',18)) cost = Decimal.pow(10, x.mul(8).pow(sc))
                 return cost},
             canAfford() { return player[this.layer].F1.gte(this.cost()) },
+            bulk(){
+                let tar=n(0)
+                if (hasMilestone('G',3))// tar=player.F.F1.add(10).div('1e8').log('1e8').pow(0.84).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)
+                    {if (hasMilestone('F',18)) tar=player.F.F1.add(10).log(10).pow(tmp.F.scaling.pow(-1)).div(8).sub(getBuyableAmount(this.layer, this.id)).ceil().sub(1).max(0)
+                else tar=player.F.F1.add(10).div('1e8').log('1e8').pow(0.84).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)}            
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].F1.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)
+            },
             buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 player.F.fd4 = player.F.fd4.add(1)
             },
@@ -729,9 +849,21 @@ addLayer("F", {
             title: "Fd5", 
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
                 let cost = Decimal.pow(1e10, x).times('1e16')
-                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(tmp.F.scaling)))
+                let sc=tmp.F.scaling
+                //let c2=Decimal.pow(10, x.mul(10).pow(sc))
+                //if (c2.gte('e100000')) sc=Decimal.add(sc,cost.log(10).div('1e5').pow(0.3).sub(1).div(20))
+                if (cost.gte('1e500')) cost=n('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(sc)))
+                if (hasMilestone('F',18)) cost = Decimal.pow(10, x.mul(10).pow(sc))
                 return cost},
             canAfford() { return player[this.layer].F1.gte(this.cost()) },
+            bulk(){
+                let tar=n(0)
+                if (hasMilestone('G',3))// tar=player.F.F1.add(10).div('1e16').log('1e10').pow(0.83).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)
+                    {if (hasMilestone('F',18)) tar=player.F.F1.add(10).log(10).pow(tmp.F.scaling.pow(-1)).div(10).sub(getBuyableAmount(this.layer, this.id)).ceil().sub(1).max(0)
+                    else tar=player.F.F1.add(10).div('1e16').log('1e10').pow(0.83).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)}            
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].F1.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)
+            },
             buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 player.F.fd5 = player.F.fd5.add(1)
             },
@@ -754,9 +886,21 @@ addLayer("F", {
             title: "Fd6", 
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
                 let cost = Decimal.pow(1e12, x).times('1e24')
-                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(tmp.F.scaling)))
+                let sc=tmp.F.scaling
+                //let c2=Decimal.pow(10, x.mul(12).pow(sc))
+                //if (c2.gte('e100000')) sc=Decimal.add(sc,cost.log(10).div('1e5').pow(0.3).sub(1).div(20))
+                if (cost.gte('1e500')) cost=n('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(sc)))
+                if (hasMilestone('F',18)) cost = Decimal.pow(10, x.mul(12).pow(sc))                
                 return cost},
             canAfford() { return player[this.layer].F1.gte(this.cost()) },
+            bulk(){
+                let tar=n(0)
+                if (hasMilestone('G',3)) //tar=player.F.F1.add(10).div('1e24').log('1e12').pow(0.83).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)
+                    {if (hasMilestone('F',18)) tar=player.F.F1.add(10).log(10).pow(tmp.F.scaling.pow(-1)).div(12).sub(getBuyableAmount(this.layer, this.id)).ceil().sub(1).max(0)
+                    else tar=player.F.F1.add(10).div('1e24').log('1e12').pow(0.83).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)}        
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].F1.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)
+            },
             buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 player.F.fd6 = player.F.fd6.add(1)
             },
@@ -779,9 +923,21 @@ addLayer("F", {
             title: "Fd7", 
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
                 let cost = Decimal.pow(1e16, x).times('1e32')
-                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(tmp.F.scaling)))
+                let sc=tmp.F.scaling
+                //let c2=Decimal.pow(10, x.mul(16).pow(sc))
+                //if (c2.gte('e100000')) sc=Decimal.add(sc,cost.log(10).div('1e5').pow(0.3).sub(1).div(20))
+                if (cost.gte('1e500')) cost=n('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(sc)))
+                if (hasMilestone('F',18)) cost = Decimal.pow(10, x.mul(16).pow(sc))
                 return cost},
             canAfford() { return player[this.layer].F1.gte(this.cost()) },
+            bulk(){
+                let tar=n(0)
+                if (hasMilestone('G',3)) //tar=player.F.F1.add(10).div('1e32').log('1e16').pow(0.82).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)
+                    {if (hasMilestone('F',18)) tar=player.F.F1.add(10).log(10).pow(tmp.F.scaling.pow(-1)).div(16).sub(getBuyableAmount(this.layer, this.id)).ceil().sub(1).max(0)
+                else tar=player.F.F1.add(10).div('1e32').log('1e16').pow(0.82).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)}
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].F1.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)
+            },
             buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 player.F.fd7 = player.F.fd7.add(1)
             },
@@ -803,13 +959,29 @@ addLayer("F", {
             title: "Fd8", 
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
                 let cost = Decimal.pow(1e20, x).times('1e40')
-                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(tmp.F.scaling)))
+                let sc=tmp.F.scaling
+                //let c2=Decimal.pow(10, x.mul(20).pow(sc))
+                //if (c2.gte('e100000')) sc=Decimal.add(sc,cost.log(10).div('1e5').pow(0.3).sub(1).div(20))
+                if (cost.gte('1e500')) cost=n('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(sc)))
+                if (hasMilestone('F',18)) cost = Decimal.pow(10, x.mul(20).pow(sc))
+                if (inChallenge('G',21)) cost = Decimal.pow(cost,5)
                 return cost},
             canAfford() { return player[this.layer].F1.gte(this.cost()) },
+            bulk(){
+                let tar=n(0)
+                if (hasMilestone('G',3))// tar=player.F.F1.add(10).div('1e40').log('1e20').pow(0.82).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)
+                    {if (hasMilestone('F',18)) tar=player.F.F1.add(10).log(10).pow(tmp.F.scaling.pow(-1)).div(20).sub(getBuyableAmount(this.layer, this.id)).ceil().sub(1).max(0)
+                else tar=player.F.F1.add(10).div('1e40').log('1e20').pow(0.82).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)}
+                if (inChallenge('G',21)) tar = player.F.F1.add(10).log(10).div(5).pow(tmp.F.scaling.pow(-1)).div(20).sub(getBuyableAmount(this.layer, this.id)).div(5).ceil().sub(1).max(0)
+                let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
+                if (player[this.layer].F1.gte(c)) 
+                    {player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)
+                    player.F.fd8 = player.F.fd8.add(tar)}            },
             buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
                 player.F.fd8 = player.F.fd8.add(1)
             },
             base(){   let bas = tmp.F.fdbas
+                if (challengeCompletions("G", 21)>=3) bas=Decimal.mul(bas,tmp.G.gc3ef)
                 return bas},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let ef = Decimal.pow(this.base(),x)
@@ -828,12 +1000,18 @@ addLayer("F", {
             title: "tickspeed", 
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
                 let cost = Decimal.pow(10, x).times('1e10')
-                if (cost.gte('1e500')) cost = new Decimal('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(tmp.F.scaling)))
+                let sc=tmp.F.scaling
+                //let c2=Decimal.pow(10, x.pow(sc))
+                //if (c2.gte('e100000')) sc=Decimal.add(sc,cost.log(10).div('1e5').pow(0.3).sub(1).div(20))
+                if (cost.gte('1e500')) cost=n('1e500').mul(Decimal.pow(10,cost.div('1e499').log(10).pow(sc)))
+                if (hasMilestone('F',18)) cost = Decimal.pow(10, x.pow(sc))
                 return cost},
             canAfford() { return player[this.layer].F1.gte(this.cost()) },
             bulk(){
                 let tar=n(0)
-                if (hasMilestone('G',0)) tar=player.F.F1.add(10).div('1e11').log(10).pow(0.85).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)
+                if (hasMilestone('G',0)) {
+                    if (hasMilestone('F',18)) tar=player.F.F1.add(10).log(10).pow(tmp.F.scaling.pow(-1)).sub(getBuyableAmount(this.layer, this.id)).ceil().sub(1).max(0)
+                    else tar=player.F.F1.add(10).div('1e11').log(10).pow(0.857).sub(getBuyableAmount(this.layer, this.id)).ceil().max(1)}
                 let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
                 if (player[this.layer].F1.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)
             },
@@ -855,8 +1033,23 @@ addLayer("F", {
         102: {
             title: "tickboost", 
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
-                let cost = Decimal.mul(Decimal.add(x,7), x).div(2).add(3)///n(n+7)/2+3,from(0,3)(1,7)(2,12)
-                return cost},
+                let cost = n(Infinity)
+                let m=n(1) //scaling: ^3 growth past 10
+                let sc=n(20)
+                let sc2=n(0.8)
+                let b=n(3)
+                let p=n(0.7)
+                if (x.gte(75)) p=Decimal.add(p,0.02)
+                let m2=n(2)
+                if (hasUpgrade('F',83)) m=Decimal.add(m,-0.1)
+                if (hasUpgrade('F',84)) sc=Decimal.add(sc,1)
+                if (hasUpgrade('F',85)) m2=Decimal.add(m2,-0.04)
+                sc2=Decimal.add(sc2,x.sub(24).max(1).log(10).pow(1.5).div(4))
+                if (x.gte(sc)) m=Decimal.add(m,x.sub(sc).pow(sc2).div(10))
+                {if (x.gte(10)) cost=x.add(7).mul(x).div(2).add(3).add(x.sub(9).pow(3).mul(m)).ceil()
+                else cost = x.add(7).mul(x).div(2).add(3)}//n(n+7)/2+3,from(0,3)(1,7)(2,12)
+                if (challengeCompletions("G", 21)>=3) cost=x.add(7).mul(x).div(2).add(2).add(b.pow(x.sub(10).max(0).pow(p)).mul(m2).ceil())
+                return cost},//if (x.gte(20)) cost=x.add(7).mul(x).div(2).add(3).add(x.sub(9).pow(3).mul(m)).add(x.sub(17).pow(4)).ceil()
             canAfford() { return player[this.layer].fd8.gte(this.cost()) },
             buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             if (!hasMilestone('G',1))
@@ -882,10 +1075,16 @@ addLayer("F", {
         },
     },
     tick(){let bas = n(1.05)
+        let exp=n(1.08)
+        if (hasUpgrade('G',33)) exp=Decimal.add(exp,0.005)
+        if (hasChallenge('G',22)) exp=Decimal.add(exp,challengeEffect('G',22))
         if (getBuyableAmount('F',102)==1) bas =1.065
         if (getBuyableAmount('F',102)==2) bas =1.08
-        if (getBuyableAmount('F',102)>2) bas =Decimal.pow(1.08,getBuyableAmount('F',102)).mul(0.3).add(0.73)
+        if (getBuyableAmount('F',102)>2) bas =Decimal.pow(exp,getBuyableAmount('F',102)).mul(0.3).add(0.73)
         if (hasUpgrade('F',72))  bas=Decimal.mul(Decimal.add(bas,-1),1.01).add(1)
+        if (hasChallenge('G',12))  bas=Decimal.mul(Decimal.add(bas,-1),challengeEffect('G',12)).add(1)
+        if (inChallenge('G',22)) bas = n(1.05).add(getBuyableAmount('F',102).pow(1.5).div(100))
+        //if (bas.gte(2)) bas=Decimal.pow(10,bas.div(2).log(10).pow(0.96)).mul(2)
         return bas},
     F1effect() {
         ef = new Decimal(1)
@@ -909,11 +1108,15 @@ addLayer("F", {
         return ef;
     },
     fdbas(){
-        ef=2
+        ef=n(2)
         if (hasUpgrade('F',61))  ef=Decimal.add(ef,0.25)
         if (hasMilestone('F',15)) ef=Decimal.add(ef,0.15)
         if (hasUpgrade('G',12)) ef=Decimal.add(ef,0.1)
         if (hasUpgrade('G',24)) ef=Decimal.add(ef,0.1)
+        if (hasUpgrade('F',81)) ef=Decimal.add(ef,0.1)
+        if (hasChallenge('G',21)) ef=Decimal.add(ef,challengeEffect('G',21))
+        ef=Decimal.add(ef,tmp.G.gc4ef)
+        if (inChallenge('G',12)) ef=Decimal.pow(ef,0.5)
         return ef
     },
     scaling(){
@@ -923,6 +1126,11 @@ addLayer("F", {
         if (hasUpgrade('G',22))  ef=Decimal.add(ef,-0.1)
         if (hasUpgrade('G',23))  ef=Decimal.add(ef,-0.1)
         if (hasUpgrade('G',25))  ef=Decimal.add(ef,-0.04)
+        if (hasUpgrade('G',35))  ef=Decimal.add(ef,-0.01)
+        return ef;
+    },
+    sc2(){
+        ef = new Decimal(1.5)
         return ef;
     },
     F1f() {
@@ -935,7 +1143,11 @@ addLayer("F", {
         if (hasUpgrade('F',65))  ef=Decimal.pow(10,ef.add(10).log(10).pow(1.05))
         if (hasUpgrade('F',73))  ef=Decimal.pow(10,ef.add(10).log(10).pow(1.2))
         if (hasUpgrade('G',31)) {
-            let sc=n(1.5).add(player.F.F1.div('1e1200').log(10).div(400))
+            let t=n(400)
+            if (hasUpgrade('G',35))  t=Decimal.add(t,-150)
+            if (hasMilestone('G',5))  t=Decimal.add(t,-50)
+            if (hasUpgrade('G',43))  t=Decimal.add(t,-50)
+            let sc=n(1.5).add(player.F.F1.div('1e1200').log(10).div(t))
             if (player.F.F1.gte('1e1200')) ef=n('e21200').mul(Decimal.pow(10,player.F.F1.div('1e1199').log(10).pow(sc)))}//10^[(1200x3)^(1.015x1.05x1.21.2)]=e35331
         return ef
     },
