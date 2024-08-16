@@ -181,11 +181,10 @@ addLayer("B", {
             cost: new Decimal(140),
             unlocked() { return (hasUpgrade(this.layer, 15))},
             effect()  { 
-                let efb6 = 0.3
-                if (hasUpgrade('B', 32))  efb6 = efb6*1.5
-                if (hasUpgrade('C', 22))  efb6 = efb6*1.3
-
-                return player[this.layer].points.pow(efb6);          
+                let ef = 0.3
+                if (hasUpgrade('B', 32))  ef = ef*1.5
+                if (hasUpgrade('C', 22))  ef = ef*1.3
+                return player[this.layer].points.pow(ef);          
             },
             effectDisplay() { return format(this.effect())+"x" }, 
         },
@@ -290,9 +289,9 @@ addLayer("B", {
             description: "mult to pts based on Bb2 eff.",
             cost:new Decimal('5e55'),
             effect()  { 
-                let efb22 = buyableEffect('B',12).pow(0.25).times(buyableEffect('B',11).add(1).log(10).pow(2))
-                if (hasUpgrade('B',55)) efb22=Decimal.pow(efb22,1.25)
-                return efb22;          
+                let ef = buyableEffect('B',12).pow(0.25).times(buyableEffect('B',11).add(1).log(10).pow(2))
+                if (hasUpgrade('B',55)) ef=Decimal.pow(ef,1.25)
+                return ef;          
             },
             unlocked() { return (hasUpgrade(this.layer, 51))},
             effectDisplay() { return format(this.effect())+"x" }, 
@@ -320,19 +319,19 @@ addLayer("B", {
             description: "lg pts mult B.",
             cost:new Decimal('1e70'),
             effect()  { 
-                let efb26 = player.points.add(10).log(10)
-                if (hasUpgrade('A',53)) efb26=Decimal.mul(efb26,10)
-                if (hasUpgrade('A',54)) efb26=Decimal.mul(efb26,10)
-                if (hasUpgrade('B',63)) efb26=Decimal.pow(efb26,1.15)
-                if (hasUpgrade('B',64)) efb26=Decimal.pow(efb26,1.15)
-                if (hasUpgrade('B',74)) efb26=Decimal.pow(efb26,1.3)
-                if (hasUpgrade('A',62)) efb26=Decimal.mul(efb26,upgradeEffect('A',62))
-                if (hasUpgrade('E',31)) efb26=Decimal.pow(efb26,1.1)
-                if (hasMilestone('E',8)) efb26=Decimal.pow(efb26,1.05)
-                if (hasMilestone('E',10)) efb26=Decimal.pow(efb26,1.05)
-                if (hasUpgrade('E',105)) efb26=Decimal.pow(efb26,1.05)
-                if (hasMilestone('F',2)) efb26=Decimal.pow(efb26,1.1)
-                return efb26;          
+                let ef = player.points.add(10).log(10)
+                if (hasUpgrade('A',53)) ef=Decimal.mul(ef,10)
+                if (hasUpgrade('A',54)) ef=Decimal.mul(ef,10)
+                if (hasUpgrade('B',63)) ef=Decimal.pow(ef,1.15)
+                if (hasUpgrade('B',64)) ef=Decimal.pow(ef,1.15)
+                if (hasUpgrade('B',74)) ef=Decimal.pow(ef,1.3)
+                if (hasUpgrade('A',62)) ef=Decimal.mul(ef,upgradeEffect('A',62))
+                if (hasUpgrade('E',31)) ef=Decimal.pow(ef,1.1)
+                if (hasMilestone('E',8)) ef=Decimal.pow(ef,1.05)
+                if (hasMilestone('E',10)) ef=Decimal.pow(ef,1.05)
+                if (hasUpgrade('E',105)) ef=Decimal.pow(ef,1.05)
+                if (hasMilestone('F',2)) ef=Decimal.pow(ef,1.1)
+                return ef;          
             },
             unlocked() { return (hasUpgrade(this.layer, 55))},
             effectDisplay() { return format(this.effect())+"x" }, 
@@ -412,7 +411,7 @@ addLayer("B", {
         11: {
             title: "Bb1", 
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
-                let cp=1.027
+                let cp=n(1.027)
                 let cost = Decimal.pow(4, x.pow(1.035)).times('1e38')
                 if (hasUpgrade('B',43)) cost = Decimal.add(3.8, x.pow(1.03)).times('1e37')
                 if (hasUpgrade('B',53)) cost = Decimal.pow(3.8, x.pow(1.03)).times('1e35')
@@ -444,17 +443,17 @@ addLayer("B", {
             buy() {
                 if (!hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
-            base(){   let bas = 3
+            base(){   let bas = n(3)
                 if (hasUpgrade('B',54)) bas = Decimal.add(bas,0.05)
                 if (hasUpgrade('B',71)) bas = Decimal.add(bas,0.05)
                 if (hasUpgrade('B',73)) bas = Decimal.mul(bas,1.02)
                 if (hasMilestone('B',3)) bas = Decimal.add(bas,buyableEffect('B',23))
                 if (hasUpgrade('F',65)) bas = Decimal.pow(bas,upgradeEffect('F',65))
                 if (hasUpgrade('G',25)) bas = Decimal.mul(bas,upgradeEffect('G',25))
-                if (inChallenge('E',12)) bas = 2
-                if (inChallenge('E',31)) bas = 1.2
+                if (inChallenge('E',12)) bas = n(2)
+                if (inChallenge('E',31)) bas = n(1.2)
                 return bas},
-            purchaseLimit() {return n('1e300')},
+            //purchaseLimit() {return n('1e300')},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let ef = Decimal.pow(this.base(),x.pow(1.01))
                 if (inChallenge('A',32)) ef=Decimal.pow(ef,0.5)
@@ -469,7 +468,7 @@ addLayer("B", {
         12: {
             title: "Bb2", 
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
-                let cp=1.04
+                let cp=n(1.04)
                 let cost = Decimal.pow(10, x.pow(1.045)).times('1e40')
                 if (hasUpgrade('B',43)) cost = Decimal.pow(9, x.pow(1.041)).times('1e39')
                 if (hasUpgrade('B',65)) cost = Decimal.pow(9, x.pow(1.04)).times('1e38')
@@ -496,14 +495,14 @@ addLayer("B", {
             buy() {
                 if (!hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
-            purchaseLimit() {return n('1e300')},
-            base(){   let bas = 2
+            //purchaseLimit() {return n('1e300')},
+            base(){   let bas = n(2)
                 if (hasUpgrade('B',71)) bas = Decimal.add(bas,0.05)
                 if (hasMilestone('B',3)) bas = Decimal.add(bas,buyableEffect('B',23))
                 if (hasUpgrade('F',65)) bas = Decimal.pow(bas,upgradeEffect('F',65))
                 if (hasUpgrade('G',25)) bas = Decimal.mul(bas,upgradeEffect('G',25))
-                if (inChallenge('E',12)) bas = 2
-                if (inChallenge('E',31)) bas = 1.2
+                if (inChallenge('E',12)) bas = n(2)
+                if (inChallenge('E',31)) bas = n(1.2)
                 return bas},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let efbb2 = Decimal.pow(this.base(), x.pow(1.006))
@@ -521,11 +520,11 @@ addLayer("B", {
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
                 let cost = Decimal.pow(10, x.pow(1.07)).times('1e41')
                 if (hasUpgrade('B',65))  cost = Decimal.pow(10, x.pow(1.065)).times('1e40')
-                let sc=400
+                let sc=n(400)
                 if (inChallenge('E',42)) sc=Decimal.add(sc,-300)                
                 let sc2=tmp.B.sc2
                 let scpow=tmp.B.scpow
-                let cp=1.065
+                let cp=n(1.065)
                 if (x.gte(sc2)) cp =Decimal.add(cp,x.sub(sc2).div(sc2).div(40))
                 if (hasUpgrade('F',35))  cost = Decimal.pow(10, x.pow(cp))
                 let t=tmp.B.scad
@@ -544,14 +543,14 @@ addLayer("B", {
                 if (!hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             effect(x) { // Effects of owning x of the items, x is a decimal
-                let ef = Decimal.pow(x/1.3+1,0.6).div(6).add(0.8333)
-                if (hasUpgrade('B',51)) ef = Decimal.pow(x/1.25+1,0.6).div(4.5).add(0.777)
-                if (hasUpgrade('A',55)) ef = Decimal.pow(x/1.23+1,0.6).div(4).add(0.75)
+                let ef = Decimal.pow(x.div(1.3).add(1),0.6).div(6).add(0.8333)
+                if (hasUpgrade('B',51)) ef = Decimal.pow(x.div(1.25).add(1),0.6).div(4.5).add(0.777)
+                if (hasUpgrade('A',55)) ef = Decimal.pow(x.div(1.23).add(1),0.6).div(4).add(0.75)
                 if (hasChallenge('F',11)) ef = Decimal.mul(ef,Decimal.add(1,challengeEffect('F',11)/100))
-                if (hasUpgrade('F',35)) ef = Decimal.mul(ef-1,1.05).add(1)
-                if (inChallenge('A',41)) ef= 1
-                if (inChallenge('E',31)) ef=1
-                if (inChallenge('E',42)) ef=1
+                if (hasUpgrade('F',35)) ef = Decimal.mul(ef.sub(1),1.05).add(1)
+                if (inChallenge('A',41)) ef=n(1)
+                if (inChallenge('E',31)) ef=n(1)
+                if (inChallenge('E',42)) ef=n(1)
                 return ef},
             display() { // Everything else displayed in the buyable button after the title
                 return "boost to B's pts mult(exp) \n\
@@ -588,13 +587,13 @@ addLayer("B", {
                 if (!hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             effect(x) { // Effects of owning x of the items, x is a decimal
-                let ef = Decimal.pow(x/1.3+1,0.7).div(6).add(0.8333)
-                if (hasUpgrade('A',55)) ef= Decimal.pow(x/1.26+1,0.7).div(5).add(0.8)
+                let ef = Decimal.pow(x.div(1.3).add(1),0.7).div(6).add(0.8333)
+                if (hasUpgrade('A',55)) ef= Decimal.pow(x.div(1.26).add(1),0.7).div(5).add(0.8)
                 if (hasChallenge('F',11)) ef = Decimal.mul(ef,Decimal.add(1,challengeEffect('F',11)/100))
-                if (hasUpgrade('F',35)) ef = Decimal.mul(ef-1,1.05).add(1)
-                if(inChallenge('A',41)) ef=1
-                if (inChallenge('E',31)) ef=1
-                if (inChallenge('E',42)) ef=1
+                if (hasUpgrade('F',35)) ef = Decimal.mul(ef.sub(1),1.05).add(1)
+                if(inChallenge('A',41)) ef=n(1)
+                if (inChallenge('E',31)) ef=n(1)
+                if (inChallenge('E',42)) ef=n(1)
                 return ef},
             display() { // Everything else displayed in the buyable button after the title
                 return "boost to A's pts mult(exp) \n\
@@ -632,7 +631,7 @@ addLayer("B", {
                 if (!hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             effect(x) { // Effects of owning x of the items, x is a decimal
-                let ef = Decimal.pow(x/40+1,0.7).sub(1)
+                let ef = Decimal.pow(x.div(40).add(1),0.7).sub(1)
                 if (inChallenge('A',41)) ef = n(0)
                 if (hasUpgrade('A',63)) ef = Decimal.mul(ef,1.02)
                 if (hasUpgrade('E',34)) ef = Decimal.mul(ef,1.02)
@@ -656,7 +655,7 @@ addLayer("B", {
         }
     },
     bulk(){
-        let tar=1
+        let tar=n(1)
         if (hasMilestone('B', 8)) tar=Decimal.mul(tar,10)
         if (hasMilestone('F', 2)) tar=Decimal.mul(tar,2)
         if (hasUpgrade('F', 34)) tar=Decimal.mul(tar,5)
@@ -670,7 +669,7 @@ addLayer("B", {
         return tar 
     },
     scaling(){
-        let sc=400
+        let sc=n(400)
         if (hasMilestone('E',15)) sc=Decimal.add(sc,100)
         if (inChallenge('E',42)) sc=Decimal.add(sc,-300)
         if (!hasUpgrade('G',32)) sc = Decimal.add(sc,tmp.E.ekf.ceil())

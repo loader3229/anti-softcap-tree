@@ -6,10 +6,10 @@ addLayer("C", {
         unlocked: false,
 		points: new Decimal(0),
     }},
-    passiveGeneration(){    let c_pg=1
-        if (hasMilestone("D", 2))  c_pg=c_pg*100
-        if (hasMilestone("B", 5))  c_pg=c_pg*100
-        return (hasMilestone("D", 1))?c_pg:0},
+    passiveGeneration(){    let pg=1
+        if (hasMilestone("D", 2))  pg=pg*100
+        if (hasMilestone("B", 5))  pg=pg*100
+        return (hasMilestone("D", 1))?pg:0},
     color: "#A73E16",
     requires: new Decimal(2e36), 
     resource: "C", 
@@ -93,20 +93,20 @@ addLayer("C", {
                 '+'layer C total: \n\
                 '+ format(this.effect()) +'x'},
             effect()  { 
-                let ef = 20
-                let exp = 0.4
-                if (hasUpgrade('C',12)) ef = ef*20
-                if (hasUpgrade('C',15)) ef = ef*200
-                if (hasUpgrade('C',25)) ef = ef*1500
-                if (hasMilestone('C',3)) ef = ef*1000
-                if (hasUpgrade('C',31)) ef = ef*1e7
-                if (hasUpgrade('C',41)) ef = ef*1e32
-                if (hasUpgrade('C',42)) ef = ef*1e80
-                if (inChallenge('C',11))  ef = 1
-                if (hasUpgrade('E',64)) exp=exp+0.1
-                if (hasUpgrade('E',72)) exp=exp+0.1
-                if (hasUpgrade('F',21)) exp=exp+0.4
-                if (hasUpgrade('E',61)) ef=Decimal.pow(ef,1+(buyableEffect("E",21)-1)*exp)
+                let ef = n(20)
+                let exp = n(0.4)
+                if (hasUpgrade('C',12)) ef = ef.mul(20)
+                if (hasUpgrade('C',15)) ef = ef.mul(200)
+                if (hasUpgrade('C',25)) ef = ef.mul(1500)
+                if (hasMilestone('C',3)) ef = ef.mul(1000)
+                if (hasUpgrade('C',31)) ef = ef.mul(1e7)
+                if (hasUpgrade('C',41)) ef = ef.mul(1e32)
+                if (hasUpgrade('C',42)) ef = ef.mul(1e80)
+                if (inChallenge('C',11))  ef = n(1)
+                if (hasUpgrade('E',64)) exp=exp.add(0.1)
+                if (hasUpgrade('E',72)) exp=exp.add(0.1)
+                if (hasUpgrade('F',21)) exp=exp.add(0.4)
+                if (hasUpgrade('E',61)) ef=Decimal.pow(ef,n(buyableEffect("E",21).sub(1).mul(exp).add(1)))
                 return ef;          
             },
             cost:new Decimal(1),

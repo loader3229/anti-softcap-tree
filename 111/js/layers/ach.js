@@ -499,8 +499,8 @@ addLayer("ac", {
         },
         172: {
             name: "98.why it is diminishing?",
-            done() {return player.E.Ek.gte('ee25')},
-            tooltip: "get ee25 Ek.", 
+            done() {return player.E.Ek.gte('ee15')},
+            tooltip: "get ee15 Ek<br>i previous version,Ek eff decrease past a large number.this was fixed at later ver.", 
         },
         173: {
             name: "99.x2 IP",
@@ -587,9 +587,54 @@ addLayer("ac", {
             done() { return player.F.F1.gte('ee10')},
             tooltip: "get e1e10 F1",
         },
+        202: {
+            name: "116.F4.0!",
+            done() {return player.points.gte('eee10')},
+            tooltip: "get eee10 pts",
+        },
+        203: {
+            name: "117.ID but a bit different",
+            done() {return (hasMilestone("G", 8))},
+            tooltip: "unlock F2.<br>in AD,ID is multiplicative instead of exponential.", 
+        },
+        204: {
+            name: "118.we still need G chal?",
+            done() {return (hasUpgrade("G", 52))},
+            tooltip: "get G22", 
+        },
+        205: {
+            name: "119.beyond antimatter",
+            done() { return player.F.F1.gte('e9e15')},
+            tooltip: "get e9e15 F1.<br>in AD,AM is hardcapped at e9e15(can be reached before Pelle.shown as 'END' in Pelle and reach endgame).",
+        },
+        206: {
+            name: "120.F5.0!!",
+            done() {return player.points.gte('eeee10')},
+            tooltip: "get eeee10 pts",
+        },
+        211: {
+            name: "121.balance failure",
+            done() {return (hasUpgrade("G", 55))},
+            tooltip: "get G25", 
+        },
+        212: {
+            name: "122.another 'anti'",
+            done() {return (hasMilestone("G", 14))},
+            tooltip: "unlock Gs.<br>Gs part is inspired by plague tree.some currencies are named as 'anti-xxx' in PT.", 
+        },
+        213: {
+            name: "123.F6 terasurge",
+            done() {return player.points.gte('10^^6')},
+            tooltip: "get 1F6 pts",
+        },
+        214: {
+            name: "124.exp-exp-booster",
+            done() {return (getBuyableAmount('G',23)>=1)},
+            tooltip: "get a Gsb3",
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/115 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/124 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },

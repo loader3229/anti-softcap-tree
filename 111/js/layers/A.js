@@ -115,13 +115,13 @@ addLayer("A", {
             description: "point/s^1.1.",
             cost: new Decimal(12),
             unlocked() { return (hasUpgrade(this.layer, 14))},
-            effect()  {let efa5=0.1
-                if (hasUpgrade('B', 32))  efa5 = efa5+0.05
-                if (hasUpgrade('B', 35))  efa5 = efa5+0.05                
-                if (inChallenge("A", 12))  efa5 = efa5*0.25
-                if (inChallenge("A", 22))  efa5 = 0
-                if (inChallenge("A", 31))  efa5 = 0
-                return player.points.pow(efa5).add(1);          
+            effect()  {let ef=n(0.1)
+                if (hasUpgrade('B', 32))  ef = Decimal.add(ef,0.05)
+                if (hasUpgrade('B', 35))  ef = Decimal.add(ef,0.05)                
+                if (inChallenge("A", 12))  ef = Decimal.mul(ef,0.25)
+                if (inChallenge("A", 22))  ef = n(0)
+                if (inChallenge("A", 31))  ef = n(0)
+                return player.points.pow(ef).add(1);          
             },
             effectDisplay() { return format(this.effect())+"x" }, 
         },
@@ -149,20 +149,20 @@ addLayer("A", {
             cost: new Decimal(180),
             unlocked() { return (hasUpgrade(this.layer, 23))},
             effect()  { 
-                let efa9 = player.points.add(10).log(10)
-                if (hasUpgrade('A',31)) efa9 = efa9.mul(5)
-                if (hasUpgrade('A',32)) efa9 = efa9.mul(5)
-                if (hasUpgrade('A',33)) efa9 = efa9.pow(1.3)
-                if (hasUpgrade('A',34)) efa9 = efa9.pow(1.03)
-                if (hasUpgrade('B',33)) efa9 = efa9.pow(1.5)
-                if (hasUpgrade('B',34)) efa9 = efa9.pow(1.5)
-                if (hasUpgrade('A',44)) efa9 = efa9.pow(1.25)
-                if (hasUpgrade('A',52)) efa9 = efa9.pow(1.15)
+                let ef = player.points.add(10).log(10)
+                if (hasUpgrade('A',31)) ef = ef.mul(5)
+                if (hasUpgrade('A',32)) ef = ef.mul(5)
+                if (hasUpgrade('A',33)) ef = ef.pow(1.3)
+                if (hasUpgrade('A',34)) ef = ef.pow(1.03)
+                if (hasUpgrade('B',33)) ef = ef.pow(1.5)
+                if (hasUpgrade('B',34)) ef = ef.pow(1.5)
+                if (hasUpgrade('A',44)) ef = ef.pow(1.25)
+                if (hasUpgrade('A',52)) ef = ef.pow(1.15)
 
-                if (inChallenge("A",12)) efa9 = efa9.pow(0.25)
-                if (inChallenge("A",22)) efa9 = 1
-                if (inChallenge("A",31)) efa9 = 1
-                return efa9;          
+                if (inChallenge("A",12)) ef = ef.pow(0.25)
+                if (inChallenge("A",22)) ef = n(1)
+                if (inChallenge("A",31)) ef = n(1)
+                return ef;          
             },
             effectDisplay() { return format(this.effect())+"x" }, 
         },

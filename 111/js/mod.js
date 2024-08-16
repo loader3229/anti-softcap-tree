@@ -13,11 +13,17 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.5.6",
-	name: "infinity",
+	num: "0.5.8",
+	name: "tetration era",
 }
 
 let changelog = `<h2>Changelog:</h2><br>
+    <h4>v0.5.8</h4> (240815)
+		- add Gs,reach F(tetration). <br>
+	<h4>v0.5.7</h4> (240809)
+		- add F2(ID). <br>
+    <h4>v0.5.6.1</h4> (240807)
+		- rebalance <br>
     <h4>v0.5.6</h4> (240803)
 		- add more G chal and G power, massive fixes against inflation. <br>
     <h4>v0.5.5</h4> (240725)
@@ -45,7 +51,11 @@ let changelog = `<h2>Changelog:</h2><br>
     <h4>v0.3.4.1</h4> (240620)
 		- E6-20 rebalance<br>
 	<h4>v0.3.4</h4>(240620)
-		- Added E chal,E11-20<br> `
+		- Added E chal,E11-20<br>
+	<h4>v0.3.3</h4>(240619)
+		- Added E6-10<br>
+	<h4>v0.3.2</h4>(240618)
+		- Added layer E.<br> `
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -117,6 +127,8 @@ function getPointGen() {
 	if (hasChallenge("E", 21))  gain = gain.mul(challengeEffect('E',21))
 	if (hasChallenge("E", 22))  gain = gain.mul(challengeEffect('E',22))
 
+	if (hasMilestone("G", 14))  {if (player.points.gte('10^^5')) gain = n(10).pow(n(10).pow(n(10).pow(n(10).pow(gain.log(10).log(10).log(10).log(10).add(tmp.G.gsef)))))}
+
 	return gain
 }
 
@@ -126,11 +138,11 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() {return "current endgame:ee3.7e9 points/e5.65e8 G.<br> Too easy? go to play qqqe308's NG-10!."},
+	function() {return "current endgame:1.248F6 points/1e1360 Gs.<br> Too easy? go to play qqqe308's NG-10!"},
 ]
 // Determines when the game "ends"
 function isEndgame() {
-	return player.G.points.gte(new Decimal("e5.65e8"))
+	return player.G.points.gte(new Decimal("10^^6.096"))
 }
 
 //<br> bilibili: @bili_50929957100

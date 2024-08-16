@@ -90,20 +90,20 @@ addLayer("D", {
                 '+'layer D total: \n\
                 '+ format(this.effect()) +'x'},            
             effect()  { 
-                let ef = 1000
-                let exp = 0.4
-                if (hasUpgrade('D',14)) ef = ef*1000
-                if (hasUpgrade('D',25)) ef = ef*10000
-                if (hasUpgrade('D',33)) ef = ef*10000
-                if (hasUpgrade('D',41)) ef = ef*1e7
-                if (hasUpgrade('D',51)) ef = ef*1e40
-                if (hasUpgrade('D',52)) ef = ef*1e100                
+                let ef = n(1000)
+                let exp = n(0.4)
+                if (hasUpgrade('D',14)) ef = ef.mul(1000)
+                if (hasUpgrade('D',25)) ef = ef.mul(10000)
+                if (hasUpgrade('D',33)) ef = ef.mul(10000)
+                if (hasUpgrade('D',41)) ef = ef.mul(1e7)
+                if (hasUpgrade('D',51)) ef = ef.mul('1e40')
+                if (hasUpgrade('D',52)) ef = ef.mul('1e100')                
                 if (hasUpgrade('D',22)) ef = Decimal.pow(ef,1.2)
-                if (inChallenge('C',12)) ef = 1
-                if (hasUpgrade('E',64)) exp=exp+0.1
-                if (hasUpgrade('E',72)) exp=exp+0.1
-                if (hasUpgrade('F',21)) exp=exp+0.4
-                if (hasUpgrade('E',61)) ef=Decimal.pow(ef,1+(buyableEffect("E",21)-1)*exp)
+                if (inChallenge('C',12)) ef = n(1)
+                if (hasUpgrade('E',64)) exp=exp.add(0.1)
+                if (hasUpgrade('E',72)) exp=exp.add(0.1)
+                if (hasUpgrade('F',21)) exp=exp.add(0.4)
+                if (hasUpgrade('E',61)) ef=Decimal.pow(ef,n(buyableEffect("E",21).sub(1).mul(exp).add(1)))//ef=Decimal.pow(ef,1+(buyableEffect("E",21)-1)*exp)
                 return ef;          
             },
             cost:new Decimal(1),
@@ -258,7 +258,7 @@ addLayer("D", {
         },
         45: {
             title:'D20',
-            description: "E12/E15 ^1.2。",
+            description: "E12/E15 ^1.2",
             cost:new Decimal('1e684'),
             unlocked() { return (hasUpgrade('D', 44))},
         },

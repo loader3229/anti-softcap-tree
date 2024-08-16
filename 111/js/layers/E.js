@@ -787,14 +787,14 @@ addLayer("E", {
                 if (player[this.layer].points.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)},
             buy() { setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             effect(x) { // Effects of owning x of the items, x is a decimal
-                let ef = Decimal.pow(x/1.6+1,0.6).div(5).add(0.8)
-                if (hasUpgrade('F',22)) ef=Decimal.mul(ef-1,1.1).add(1)
-                if (hasUpgrade('F',23)) ef=Decimal.mul(ef-1,1.1).add(1)
-                if (hasUpgrade('F',35)) ef =Decimal.mul(ef-1,1.08).add(1)
+                let ef = Decimal.pow(x.div(1.6).add(1),0.6).div(5).add(0.8)
+                if (hasUpgrade('F',22)) ef=Decimal.mul(ef.sub(1),1.1).add(1)
+                if (hasUpgrade('F',23)) ef=Decimal.mul(ef.sub(1),1.1).add(1)
+                if (hasUpgrade('F',35)) ef =Decimal.mul(ef.sub(1),1.08).add(1)
 
-                if (inChallenge('E',31)) ef = 1
-                if (inChallenge('E',41)) ef = Decimal.mul(ef-1,0.4).add(1)
-                if (inChallenge('E',42)) ef = 1
+                if (inChallenge('E',31)) ef = n(1)
+                if (inChallenge('E',41)) ef = Decimal.mul(ef.sub(1),0.4).add(1)
+                if (inChallenge('E',42)) ef = n(1)
                 return ef},
             display() { // Everything else displayed in the buyable button after the title
                 return "boost to E's pts mult(exp) \n\
@@ -817,7 +817,7 @@ addLayer("E", {
                 let c = this.cost(getBuyableAmount(this.layer, this.id).add(tar))
                 if (player[this.layer].points.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)},
             buy() { setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
-            purchaseLimit() {return n('1e300')},
+            //purchaseLimit() {return n('1e300')},
             base(){   let base = 2               
                 return base},
             effect(x) { // Effects of owning x of the items, x is a decimal
@@ -968,7 +968,7 @@ addLayer("E", {
                 if (player[this.layer].points.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)},
             buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             effect(x) { // Effects of owning x of the items, x is a decimal
-                let ef = Decimal.pow(x/6+1,0.7).sub(1)
+                let ef = Decimal.pow(x.div(6).add(1),0.7).sub(1)
                 if (hasUpgrade('G',22)) ef=Decimal.pow(ef,upgradeEffect('G',22)) 
                 ef=Decimal.mul(ef,buyableEffect('G',13))
                 return ef},
