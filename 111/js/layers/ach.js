@@ -632,9 +632,49 @@ addLayer("ac", {
             done() {return (getBuyableAmount('G',23)>=1)},
             tooltip: "get a Gsb3",
         },
+        215: {
+            name: "125.PrPsc?",
+            done() {return (hasUpgrade("G", 83))},
+            tooltip: "unlock Gsi", 
+        },
+        216: {
+            name: "126.still isnt a softcap",
+            done() {return (getBuyableAmount('G',21)>=500)},
+            tooltip: "get 500 Gsb1",
+        },
+        221: {
+            name: "127.eternity here",
+            done() {return (hasUpgrade("G", 101))},
+            tooltip: "unlock Gse", 
+        },
+        222: {
+            name: "128.mysterious?",
+            done() {return (hasUpgrade("G", 104))},
+            tooltip: "get G49", 
+        },
+        223: {
+            name: "129.time dilation?",
+            done() {return player.G.Gse.gte('1e1300')},
+            tooltip: "get 1e1300 Gse", 
+        },
+        224: {
+            name: "130.making reality in G",
+            done() {return player.G.Gs.gte('e1e9')},
+            tooltip: "get e1e9 Gs", 
+        },
+        225: {
+            name: "131.d1lated",
+            done() {return (hasMilestone('G',19))},
+            tooltip: "unlock Gsb11-12",
+        },
+        226: {
+            name: "132.+ERABY+E 1NFLA+10N",
+            done() {return tmp.G.gsief.gte('1e12')},
+            tooltip: "get 1e12 Gsi eff", 
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/124 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/132 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },

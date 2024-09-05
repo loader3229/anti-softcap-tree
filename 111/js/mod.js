@@ -13,11 +13,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.5.8",
-	name: "tetration era",
+	num: "0.5.9",
+	name: "Gsi/e",
 }
 
 let changelog = `<h2>Changelog:</h2><br>
+    <h4>v0.5.9</h4> (240905)
+		- add Gsi/e and G31-55. <br>
     <h4>v0.5.8</h4> (240815)
 		- add Gs,reach F(tetration). <br>
 	<h4>v0.5.7</h4> (240809)
@@ -138,11 +140,11 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() {return "current endgame:1.248F6 points/1e1360 Gs.<br> Too easy? go to play qqqe308's NG-10!"},
+	function() {return "current endgame:5.530F6(eeeee338800) points.<br> Too easy? go to play qqqe308's NG-10!"},
 ]
 // Determines when the game "ends"
 function isEndgame() {
-	return player.G.points.gte(new Decimal("10^^6.096"))
+	return player.G.points.gte(new Decimal("eeeee338800"))
 }
 
 //<br> bilibili: @bili_50929957100
