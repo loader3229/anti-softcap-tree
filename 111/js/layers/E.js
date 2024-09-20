@@ -310,13 +310,13 @@ addLayer("E", {
         24: {
             title:'E9',
             description: "E3 ^1.5.",
-            cost:new Decimal('1e5'),
+            cost:new Decimal('1.5e5'),
             unlocked() { return (hasUpgrade(this.layer, 23))},
         },
         25: {
             title:'E10',
             description: "E4 ^1.5,E7 becomes e^4x.",
-            cost:new Decimal('2e5'),
+            cost:new Decimal('3e5'),
             unlocked() { return (hasUpgrade(this.layer, 24))},
         },
         31: {
@@ -328,7 +328,7 @@ addLayer("E", {
         32: {
             title:'E12',
             description: "boost to E base on B.",
-            cost:new Decimal('1.6e8'),
+            cost:new Decimal('2e8'),
             effect()  { 
                 let ef = player.B.points.add(10).log(10).div(300).add(1)
                 if (hasMilestone('E',3)) ef = Decimal.pow(ef,1.5)
@@ -342,13 +342,13 @@ addLayer("E", {
         33: {
             title:'E13',
             description: "x3e5 pts,<br>E7 becomes e^6x.",
-            cost:new Decimal('4e9'),
+            cost:new Decimal('8e9'),
             unlocked() { return (hasUpgrade(this.layer, 32))},
         },
         34: {
             title:'E14',
             description: "Bb5 is stronger.<br> (+2%)",
-            cost:new Decimal('1e11'),
+            cost:new Decimal('2e11'),
             unlocked() { return (hasUpgrade(this.layer, 33))},
         },
         35: {
@@ -369,12 +369,12 @@ addLayer("E", {
             title:'E16',
             description: "E15 ^1.5,x5 E.",
             cost:new Decimal('1e18'),
-            unlocked() { return  (challengeCompletions("E", 11) >= 1)},
+            unlocked() { return  (challengeCompletions("E", 12) >= 1)},
         },
         42: {
             title:'E17',
             description: "Eb1-2 base +1,x2 E.",
-            cost:new Decimal('5e19'),
+            cost:new Decimal('1e20'),
             unlocked() { return (hasUpgrade(this.layer, 41))},
         },
         43: {
@@ -386,7 +386,7 @@ addLayer("E", {
         44: {
             title:'E19',
             description: "E2 ^1.5",
-            cost:new Decimal('1e26'),
+            cost:new Decimal('3e26'),
             unlocked() { return (hasUpgrade(this.layer, 43))},
         },
         45: {
@@ -398,13 +398,13 @@ addLayer("E", {
         51: {
             title:'E21',
             description: "x1e6 pts.",
-            cost:new Decimal('1e31'),
+            cost:new Decimal('4e32'),
             unlocked() { return (hasUpgrade(this.layer, 45))},
         },
         52: {
             title:'E22',
             description: "Ac7 is stronger based on E.",
-            cost:new Decimal('4e32'),
+            cost:new Decimal('2e33'),
             effect()  { 
                 let ef = player.E.points.add(10).log(10).pow(0.75).div(150).add(1)
                 if (ef.gte(10)) {
@@ -420,13 +420,13 @@ addLayer("E", {
         53: {
             title:'E23',
             description: "Bb5 is stronger (+3%)<br>and x1e6 pts.",
-            cost:new Decimal('2e34'),
+            cost:new Decimal('2e36'),
             unlocked() { return (hasUpgrade(this.layer, 52))},
         },
         54: {
             title:'E24',
             description: "Eb1-3 are cheaper.<br>(^0.985,after scaling)",
-            cost:new Decimal('1e42'),
+            cost:new Decimal('1e43'),
             unlocked() { return (hasUpgrade(this.layer, 53))},
         },
         55: {
@@ -444,37 +444,37 @@ addLayer("E", {
         61: {
             title:'E26',
             description: "Eb4 applies to C/D(nerfed,40%).",
-            cost:new Decimal('6e49'),
+            cost:new Decimal('2e50'),
             unlocked() { return (hasMilestone(this.layer, 8))},
         },
         62: {
             title:'E27',
             description: "Bb5 is cheaper.",
-            cost:new Decimal('3e50'),
+            cost:new Decimal('3e51'),
             unlocked() { return (hasUpgrade(this.layer, 61))},
         },
         63: {
             title:'E28',
             description: "E3/4/12/15 ^1.2.",
-            cost:new Decimal('4e51'),
+            cost:new Decimal('5e52'),
             unlocked() { return (hasUpgrade(this.layer, 62))},
         },
         64: {
             title:'E29',
             description: "E26 +10%.<br>unlock new C/D upg.",
-            cost:new Decimal('6e54'),
+            cost:new Decimal('2e55'),
             unlocked() { return (hasUpgrade(this.layer, 63))},
         },
         65: {
             title:'E30',
             description: "^1.004 B,1e8x pts.",
-            cost:new Decimal('1e70'),
+            cost:new Decimal('1e71'),
             unlocked() { return (hasMilestone(this.layer, 10))},
         },
         71: {
             title:'E31',
             description: "logEm mults E.",
-            cost:new Decimal('1e77'),
+            cost:new Decimal('1e79'),
             unlocked() { return (hasMilestone(this.layer, 11))},
             effect()  { 
                 let ef = player.E.Em.add(10).log(10)
@@ -486,25 +486,25 @@ addLayer("E", {
         72: {
             title:'E32',
             description: "E26 +10%.",
-            cost:new Decimal('1e81'),
+            cost:new Decimal('1e83'),
             unlocked() { return (hasUpgrade(this.layer, 71))},
         },
         73: {
             title:'E33',
             description: "Bb1-2 are cheaper.<br>(^0.99,after scaling)",
-            cost:new Decimal('1e83'),
+            cost:new Decimal('1e84'),
             unlocked() { return (hasUpgrade(this.layer, 72))},
         },
         74: {
             title:'E34',
             description: "E22 x1.1.",
-            cost:new Decimal('1e87'),
+            cost:new Decimal('5e89'),
             unlocked() { return (hasUpgrade(this.layer, 73))},
         },
         75: {
             title:'E35',
             description: "C12/D17 base +0.1.",
-            cost:new Decimal('1e91'),
+            cost:new Decimal('1e94'),
             unlocked() { return (hasUpgrade(this.layer, 74))},
         },
         81: {
@@ -1003,7 +1003,7 @@ addLayer("E", {
         goal(){
             if (challengeCompletions('E',11) == 0) return Decimal.pow(10,6020);
             if (challengeCompletions('E',11) == 1) return Decimal.pow(10,6480);
-            if (challengeCompletions('E',11) == 2) return Decimal.pow(10,7100);
+            if (challengeCompletions('E',11) == 2) return Decimal.pow(10,7150);
         },            
         goalDescription:  function() {return format(this.goal())+' points'},
         canComplete(){return player.points.gte(this.goal())},

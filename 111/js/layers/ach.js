@@ -348,9 +348,9 @@ addLayer("ac", {
             tooltip: "get 6 F",
         },
         122: {
-            name: "68.get 2 F at once",
+            name: "68.2 F easy",
             done() {return player.E.points.gte('1.8e1099')},
-            tooltip: "get 1.8e1099 E",
+            tooltip: "get 2 F at once",//get 1.8e1099 E
         },
         123: {
             name: "69.no wait",
@@ -672,9 +672,64 @@ addLayer("ac", {
             done() {return tmp.G.gsief.gte('1e12')},
             tooltip: "get 1e12 Gsi eff", 
         },
+        231: {
+            name: "133.world n+1",
+            done() {return (hasUpgrade("G", 115))},
+            tooltip: "unlock GG", 
+        },
+        232: {
+            name: "134.separation",
+            done() {return player.G.GGtot.gte('15')},
+            tooltip: "get 15 GG", 
+        },
+        233: {
+            name: "135.luxury",
+            done() {return player.G.GGtot.gte('50')},
+            tooltip: "get 50 GG", 
+        },
+        234: {
+            name: "136.explorer",
+            done() {return (hasUpgrade("G", 123))},
+            tooltip: "get G58", 
+        },
+        235: {
+            name: "137.strayed",
+            done() {return player.G.GGtot.gte('200')},
+            tooltip: "get 200 GG", 
+        },
+        236: {
+            name: "138.F7 a real tower",
+            done() {return player.points.gte('10^^7')},
+            tooltip: "get 1F7 pts",
+        },
+        241: {
+            name: "139.system revolution",
+            done() {return (hasMilestone('G',22))},
+            tooltip: "unlock r5-7 qol",
+        },
+        242: {
+            name: "140.stretching",
+            done() {return player.G.GGtot.gte('500')},
+            tooltip: "get 500 GG", 
+        },
+        243: {
+            name: "141.+ERABY+E PrPres",
+            done() {return tmp.G.gseef.gte('1e12')},
+            tooltip: "get 1e12 Gse 1st eff", 
+        },
+        244: {
+            name: "142.googolpleS",
+            done() {return player.G.Gs.gte('e1e100')},
+            tooltip: "get e1e100 Gs", 
+        },
+        245: {
+            name: "143.for whole tree?",
+            done() {return player.G.GGtot.gte('1400')},
+            tooltip: "get 1400 GG", 
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/132 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/143 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },

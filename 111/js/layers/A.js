@@ -69,9 +69,7 @@ addLayer("A", {
 
         11: {
             title:'A1',
-            description: function() {return '2x points \n\
-                '+'layer A total: \n\
-                '+ format(this.effect()) +'x'},
+            description: function() {return '2x points <br> layer A total: <br> '+ format(this.effect()) +'x'},
             effect(){
                 let ef=1
                 if(hasUpgrade("A",11)) ef=ef*2
@@ -317,8 +315,8 @@ addLayer("A", {
             completionLimit: 1,
             challengeDescription() {return "points ^0.75"},
             unlocked() { return (hasUpgrade("B", 25))},
-            goalDescription: '1e12 points',
-            canComplete() {return player.points.gte('1e12')},
+            goalDescription: '5e12 points',
+            canComplete() {return player.points.gte('5e12')},//1e12
             rewardDescription: "B ^1.1.",
         },
         12: {
@@ -326,8 +324,8 @@ addLayer("A", {
             completionLimit: 1,
             challengeDescription() {return "A5/A9 ^0.25"},
             unlocked() {  return (hasChallenge(this.layer, 11))},
-            goalDescription: '4e12 points',
-            canComplete() {return player.points.gte('4e12')},
+            goalDescription: '2e13 points',
+            canComplete() {return player.points.gte('2e13')},//4e12
             rewardDescription: "B x10.",
         },
         21: {
@@ -335,8 +333,8 @@ addLayer("A", {
             completionLimit: 1,
             challengeDescription() {return "points ^0.55"},
             unlocked() { return (hasUpgrade("B", 32))},
-            goalDescription: '3e10 points',
-            canComplete() {return player.points.gte('3e10')},
+            goalDescription: '1e11 points',
+            canComplete() {return player.points.gte('1e11')},//3e10
             rewardDescription: "50x points.",
         },
         22: {
@@ -344,8 +342,8 @@ addLayer("A", {
             completionLimit: 1,
             challengeDescription() {return "A5/A9 are disabled"},
             unlocked() { return (hasUpgrade("B", 35))},
-            goalDescription: '5e16 points',
-            canComplete() {return player.points.gte('5e16')},
+            goalDescription: '5e17 points',
+            canComplete() {return player.points.gte('5e17')},//5e16
             rewardDescription: "100x points,20x A,10x B.<br>unlock C.",
         },
         31: {
@@ -353,8 +351,8 @@ addLayer("A", {
             completionLimit: 1,
             challengeDescription() {return "points ^0.5 and A5/A9 are disabled"},
             unlocked() { return (hasUpgrade("C", 15))},
-            goalDescription: '5e16 points',
-            canComplete() {return player.points.gte('5e16')},
+            goalDescription: '1e17 points',
+            canComplete() {return player.points.gte('1e17')},
             rewardDescription: "200x points,20x A,2x C.",
         },
         32: {

@@ -672,7 +672,7 @@ addLayer("B", {
         let sc=n(400)
         if (hasMilestone('E',15)) sc=Decimal.add(sc,100)
         if (inChallenge('E',42)) sc=Decimal.add(sc,-300)
-        if (!hasUpgrade('G',32)) sc = Decimal.add(sc,tmp.E.ekf.ceil())
+        if (!hasUpgrade('G',32)) sc=Decimal.add(sc,tmp.E.ekf.ceil())
         sc = Decimal.add(sc,upgradeEffect('F',31).ceil())
         if (hasUpgrade('G',15))  sc=n(Infinity)
         return sc
@@ -685,7 +685,7 @@ addLayer("B", {
         if (hasUpgrade('G',15))  scpow=n(0)
         return scpow
     },
-    scad(){let t=800
+    scad(){let t=n(800)
         if (hasUpgrade('A',65)) t=Decimal.add(t,150)
         if (hasUpgrade('E',103)) t=Decimal.add(t,50)
         return t

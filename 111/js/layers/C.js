@@ -89,9 +89,7 @@ addLayer("C", {
     upgrades: {
         11: {
             title:'C1',
-            description: function() {return '20x points \n\
-                '+'layer C total: \n\
-                '+ format(this.effect()) +'x'},
+            description: function() {return '20x points <br>layer C total: <br>'+ format(this.effect()) +'x'},
             effect()  { 
                 let ef = n(20)
                 let exp = n(0.4)
@@ -160,7 +158,7 @@ addLayer("C", {
         23: {
             title:'C8',
             description: "C3 ^1.3.",
-            cost:new Decimal(5.6e8),
+            cost:new Decimal(5e8),//5.6e8
             unlocked() { return (hasUpgrade(this.layer, 22))},
         },
         24: {

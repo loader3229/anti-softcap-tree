@@ -2,6 +2,18 @@ function n(num) {
   return new Decimal(num)
 }
 
+function gcs(a,b,c) {
+  return getClickableState(a,b,c)
+}
+
+function hupg(a,b) {
+  return hasUpgrade(a,b)
+}
+
+function hmil(a,b) {
+  return hasMilestone(a,b)
+}
+
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :

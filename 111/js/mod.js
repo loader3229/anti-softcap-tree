@@ -13,11 +13,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.5.9",
-	name: "Gsi/e",
+	num: "0.5.10",
+	name: "exploding",
 }
 
 let changelog = `<h2>Changelog:</h2><br>
+    <h4>v0.5.10</h4> (240919)
+		- add GG and upg tree. <br>
     <h4>v0.5.9</h4> (240905)
 		- add Gsi/e and G31-55. <br>
     <h4>v0.5.8</h4> (240815)
@@ -57,7 +59,8 @@ let changelog = `<h2>Changelog:</h2><br>
 	<h4>v0.3.3</h4>(240619)
 		- Added E6-10<br>
 	<h4>v0.3.2</h4>(240618)
-		- Added layer E.<br> `
+		- Added layer E.<br> 
+	project started at Mar,2024 `
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -140,11 +143,11 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() {return "current endgame:5.530F6(eeeee338800) points.<br> Too easy? go to play qqqe308's NG-10!"},
+	function() {return "current endgame:e1.504e8 Gse/1.676F7 points.<br> Too easy? go to play qqqe308's NG-10!"},
 ]
 // Determines when the game "ends"
 function isEndgame() {
-	return player.G.points.gte(new Decimal("eeeee338800"))
+	return player.G.Gse.gte('e1.504e8')
 }
 
 //<br> bilibili: @bili_50929957100
