@@ -3,7 +3,7 @@ let modInfo = {
 	id: "mymod",
 	author: "2^32",
 	pointsName: "points",
-	modFiles: ["layers/A.js", "layers/B.js","layers/C.js","layers/D.js","layers/E.js","layers/F.js","layers/G.js","layers/ach.js","tree.js",],
+	modFiles: ["layers/A.js", "layers/B.js","layers/C.js","layers/D.js","layers/E.js","layers/F.js","layers/G.js","layers/H.js","layers/ach.js","tree.js",],
 
 	discordName: "",
 	discordLink: "",
@@ -13,11 +13,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.5.10",
-	name: "exploding",
+	num: "0.6",
+	name: "layer H",
 }
 
 let changelog = `<h2>Changelog:</h2><br>
+    <h4>v0.6</h4> (240928)
+		- add H and harsh,some pre-F fixes. <br>
     <h4>v0.5.10</h4> (240919)
 		- add GG and upg tree. <br>
     <h4>v0.5.9</h4> (240905)
@@ -143,11 +145,11 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() {return "current endgame:e1.504e8 Gse/1.676F7 points.<br> Too easy? go to play qqqe308's NG-10!"},
+	function() {return "current endgame:2.828F7 points/1e126635 harsh.<br> Too easy? go to play qqqe308's NG-10!"},
 ]
 // Determines when the game "ends"
 function isEndgame() {
-	return player.G.Gse.gte('e1.504e8')
+	return tmp.G.gsef.gte('e5e672')
 }
 
 //<br> bilibili: @bili_50929957100

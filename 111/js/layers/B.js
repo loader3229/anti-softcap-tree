@@ -89,40 +89,40 @@ addLayer("B", {
     },
     autoUpgrade() { if (hasUpgrade("F",13)) return true},
     milestones: {
-        0: {requirementDescription: "1e65 total B",
+        0: {requirementDescription: "1e65 total B (1",
             done() {return player[this.layer].total.gte('1e65')}, 
             effectDescription: "buyables cost nothing.",
         },
-        1: {requirementDescription: "1e74 total B",
+        1: {requirementDescription: "1e74 total B (2",
             done() {return player[this.layer].total.gte('1e74')}, 
             effectDescription: "B26 effect divide Bb cost.",
         },
-        2: {requirementDescription: "1e111 total B",
+        2: {requirementDescription: "1e111 total B (3",
             done() {return player[this.layer].total.gte('1e111')}, 
             effectDescription: "autobuy B buyables.",
             toggles: [ ["B","auto"] ]
         },
-        3: {requirementDescription: "1e140 total B",
+        3: {requirementDescription: "1e140 total B (4",
             done() {return player[this.layer].total.gte('1e140')}, 
             effectDescription: "unlock 5th buyable.",
         },
-        4: {requirementDescription: "1e200 total B",
+        4: {requirementDescription: "1e200 total B (5",
             done() {return player[this.layer].total.gte('1e200')}, 
             effectDescription: "unlock a chal.",
         },
-        5: {requirementDescription: "1.79e308 total B",
+        5: {requirementDescription: "1.79e308 total B (6",
             done() {return player[this.layer].total.gte('1.79e308')}, 
             effectDescription: "100x C/D passive.",
         },
-        6: {requirementDescription: "1e658 total B",
+        6: {requirementDescription: "1e658 total B (7",
             done() {return player[this.layer].total.gte('1e658')}, 
             effectDescription: "x100 B,unlock a upg.",
         },
-        7: {requirementDescription: "1e1700 total B",
+        7: {requirementDescription: "1e1700 total B (8",
             done() {return player[this.layer].total.gte('1e1700')}, 
             effectDescription: "x1e5 B,unlock a layer.",
         },
-        8: {requirementDescription: "1e2345 total B",
+        8: {requirementDescription: "1e2345 total B (9",
             done() {return player[this.layer].total.gte('1e2345')}, 
             effectDescription: "bulk buy x10 B buyables.",
         },
@@ -154,31 +154,31 @@ addLayer("B", {
         12: {
             title:'B2',
             description: "5x points.",
-            cost:new Decimal(6),
+            cost:new Decimal(10),
             unlocked() { return (hasUpgrade(this.layer, 11))},
         },
         13: {
             title:'B3',
             description: "5x points.",
-            cost:new Decimal(12),
+            cost:new Decimal(20),
             unlocked() { return (hasUpgrade(this.layer, 12))},
         },
         14: {
             title:'B4',
             description: "2x B.",
-            cost:new Decimal(25),
+            cost:new Decimal(30),
             unlocked() { return (hasUpgrade(this.layer, 13))},
         },
         15: {
             title:'B5',
             description: "1.5x B,5x points.",
-            cost:new Decimal(60),
+            cost:new Decimal(80),
             unlocked() { return (hasUpgrade(this.layer, 14))},
         },
         21: {
             title:'B6',
             description: "B^0.3 boost points.",
-            cost: new Decimal(140),
+            cost: new Decimal(160),
             unlocked() { return (hasUpgrade(this.layer, 15))},
             effect()  { 
                 let ef = 0.3
@@ -197,7 +197,7 @@ addLayer("B", {
         23: {
             title:'B8',
             description: "get A passively.",
-            cost:new Decimal(450),
+            cost:new Decimal(500),
             unlocked() { return (hasUpgrade(this.layer, 22))},
         },
         24: {
@@ -215,30 +215,30 @@ addLayer("B", {
         31: {
             title:'B11',
             description: "20x points.",
-            cost:new Decimal(7e4),
+            cost:new Decimal(8e4),
             unlocked() { return (hasUpgrade(this.layer, 25))},
         },
         32: {
             title:'B12',
             description: "A5 exp+0.05.",
-            cost:new Decimal(1e5),
+            cost:new Decimal(1.2e5),
             unlocked() { return (hasUpgrade(this.layer, 31))},
         },
         33: {
             title:'B13',
-            description: "A9^1.5.",
+            description: "A9^1.5,unlock next chal.",
             cost:new Decimal(3e5),
             unlocked() { return (hasUpgrade(this.layer, 32))},
         },
         34: {
             title:'B14',
             description: "A9^1.5.",
-            cost:new Decimal(7e5),
+            cost:new Decimal(8e5),
             unlocked() { return (hasUpgrade(this.layer, 33))},
         },
         35: {
             title:'B15',
-            description: "A5 exp+0.05.",
+            description: "A5 exp+0.05,unlock next chal.",
             cost:new Decimal(1.5e6),
             unlocked() { return (hasUpgrade(this.layer, 34))},
         },
@@ -265,8 +265,9 @@ addLayer("B", {
             description: "mult to pts based on Bb1 eff.",
             cost:new Decimal('3e46'),
             effect()  { 
-                let ef = buyableEffect('B',11).pow(0.2).times(buyableEffect('B',11).add(1).log(10).pow(2))
-                if (hasUpgrade('B',55)) ef=Decimal.pow(ef,1.25)
+                let b=n(buyableEffect('B',11))
+                let ef = b.pow(0.2).times(b.add(1).log(10).pow(2))
+                if (hasUpgrade('B',55)) ef=ef.pow(1.25)
                 return ef;          
             },
             unlocked() { return (hasUpgrade(this.layer, 43))},
@@ -290,7 +291,7 @@ addLayer("B", {
             cost:new Decimal('5e55'),
             effect()  { 
                 let ef = buyableEffect('B',12).pow(0.25).times(buyableEffect('B',11).add(1).log(10).pow(2))
-                if (hasUpgrade('B',55)) ef=Decimal.pow(ef,1.25)
+                if (hasUpgrade('B',55)) ef=ef.pow(1.25)
                 return ef;          
             },
             unlocked() { return (hasUpgrade(this.layer, 51))},
@@ -413,7 +414,7 @@ addLayer("B", {
             cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
                 let cp=n(1.027)
                 let cost = Decimal.pow(4, x.pow(1.035)).times('1e38')
-                if (hasUpgrade('B',43)) cost = Decimal.add(3.8, x.pow(1.03)).times('1e37')
+                if (hasUpgrade('B',43)) cost = Decimal.pow(3.8, x.pow(1.03)).times('1e37')
                 if (hasUpgrade('B',53)) cost = Decimal.pow(3.8, x.pow(1.03)).times('1e35')
                 if (hasUpgrade('B',65)) cost = Decimal.pow(3.7, x.pow(1.028)).times('1e34')
                 if (hasUpgrade('B',82)) cost = Decimal.pow(3.6, x.pow(1.027)).times('1e27')
@@ -428,11 +429,10 @@ addLayer("B", {
                 if (hasUpgrade('F',35)) cost = Decimal.pow(3.6, x.pow(cp))
                 let t=tmp.B.scad
                 if (hasMilestone('B',1)) cost = cost.div(upgradeEffect('B',61))
-
                 if (x.gte(sc)) cost =Decimal.pow(cost,x.sub(sc).div(t).add(1).pow(scpow))
-                if (hasUpgrade('E',43)) cost = Decimal.pow(cost, 0.992)
-                if (hasUpgrade('E',73)) cost = Decimal.pow(cost, 0.99)
-                if (hasChallenge('E',31)) cost = Decimal.pow(cost, challengeEffect('E',31))
+                if (hasUpgrade('E',43)) cost = cost.pow(0.992)
+                if (hasUpgrade('E',73)) cost = cost.pow(0.99)
+                if (hasChallenge('E',31)) cost = cost.pow(challengeEffect('E',31))
                 return cost
             },
             canAfford() { return player[this.layer].points.gte(this.cost()) },
@@ -443,20 +443,20 @@ addLayer("B", {
             buy() {
                 if (!hasMilestone('B',0)) player[this.layer].points = player[this.layer].points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
-            base(){   let bas = n(3)
-                if (hasUpgrade('B',54)) bas = Decimal.add(bas,0.05)
-                if (hasUpgrade('B',71)) bas = Decimal.add(bas,0.05)
-                if (hasUpgrade('B',73)) bas = Decimal.mul(bas,1.02)
-                if (hasMilestone('B',3)) bas = Decimal.add(bas,buyableEffect('B',23))
-                if (hasUpgrade('F',65)) bas = Decimal.pow(bas,upgradeEffect('F',65))
-                if (hasUpgrade('G',25)) bas = Decimal.mul(bas,upgradeEffect('G',25))
-                if (inChallenge('E',12)) bas = n(2)
-                if (inChallenge('E',31)) bas = n(1.2)
-                return bas},
+            base(){   let b = n(3)
+                if (hasUpgrade('B',54)) b = b.add(0.05)
+                if (hasUpgrade('B',71)) b = b.add(0.05)
+                if (hasUpgrade('B',73)) b = b.mul(1.02)
+                if (hasMilestone('B',3)) b = b.add(buyableEffect('B',23))
+                if (hasUpgrade('F',65)) b = b.pow(upgradeEffect('F',65))
+                if (hasUpgrade('G',25)) b = b.mul(upgradeEffect('G',25))
+                if (inChallenge('E',12)) b = n(2)
+                if (inChallenge('E',31)) b = n(1.2)
+                return b},
             //purchaseLimit() {return n('1e300')},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let ef = Decimal.pow(this.base(),x.pow(1.01))
-                if (inChallenge('A',32)) ef=Decimal.pow(ef,0.5)
+                if (inChallenge('A',32)) ef=ef.pow(0.5)
                 return ef},
             display() { // Everything else displayed in the buyable button after the title
                 return "give A a x"+ format(this.base()) + " mult \n\

@@ -141,7 +141,7 @@ addLayer("D", {
         21: {
             title:'D6',
             description: "D upg boost pts.<br>(e^x).",
-            cost:new Decimal(4000),
+            cost:new Decimal(5000),
             effect()  { 
                 let a=player.D.upgrades.length
                 let ef = Decimal.pow(2.718,a)
@@ -154,19 +154,19 @@ addLayer("D", {
         22: {
             title:'D7',
             description: "D1-D5 ^1.2.",
-            cost:new Decimal(6000),
+            cost:new Decimal(8000),
             unlocked() { return (hasUpgrade(this.layer, 21))},
         },
         23: {
             title:'D8',
             description: "D6 ^2.",
-            cost:new Decimal(8000),
+            cost:new Decimal(10000),
             unlocked() { return (hasUpgrade(this.layer, 22))},
         },
         24: {
             title:'D9',
             description: "logC boost pts.",
-            cost:new Decimal(10000),
+            cost:new Decimal(15000),
             effect()  { 
                 let ef = player.C.points.add(1).log(10)
                 if (hasUpgrade('D',34)) efd9 = Decimal.pow(ef,2)
@@ -178,19 +178,19 @@ addLayer("D", {
         25: {
             title:'D10',
             description: "10000x points.",
-            cost:new Decimal(15000),
+            cost:new Decimal(25000),
             unlocked() { return (hasUpgrade(this.layer, 24))},
         },
         31: {
             title:'D11',
             description: "5x C.",
-            cost:new Decimal(25000),
+            cost:new Decimal(50000),
             unlocked() { return (hasUpgrade(this.layer, 25))},
         },
         32: {
             title:'D12',
             description: "logB boost pts.",
-            cost:new Decimal(40000),
+            cost:new Decimal('8e4'),
             effect()  { 
                 let ef = player.B.points.add(1).log(10)
                 if (hasUpgrade('D',35)) ef = Decimal.pow(ef,2)
@@ -202,13 +202,13 @@ addLayer("D", {
         33: {
             title:'D13',
             description: "10000x points.",
-            cost:new Decimal('2e5'),
+            cost:new Decimal('2.5e5'),
             unlocked() { return (hasUpgrade(this.layer, 32))},
         },
         34: {
             title:'D14',
             description: "D9 ^2.",
-            cost:new Decimal('3e5'),
+            cost:new Decimal('4e5'),
             unlocked() { return (hasUpgrade(this.layer, 33))},
         },
         35: {
@@ -271,7 +271,7 @@ addLayer("D", {
         52: {
             title:'D22',
             description: "x1e100 pts",
-            cost:new Decimal('1e15280'),
+            cost:new Decimal('1e15300'),
             unlocked() { return (hasUpgrade(this.layer, 51))},
         }
     }

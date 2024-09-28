@@ -892,7 +892,7 @@ addLayer("E", {
                 let cost = Decimal.pow(10, x).times('1e170')
                 return cost
             },
-            purchaseLimit() {let lim=20000
+            purchaseLimit() {let lim=n(20000)
                 if (hasUpgrade('F',45))  lim=Decimal.add(lim,upgradeEffect('F',45)).min('ee300')
                 return lim},
             canAfford() { if (getBuyableAmount(this.layer, this.id).gte(this.purchaseLimit())) return false

@@ -6,11 +6,15 @@ function gcs(a,b,c) {
   return getClickableState(a,b,c)
 }
 
-function hupg(a,b) {
+function scs(a,b,c) {
+  return setClickableState(a,b,c)
+}
+
+function upg(a,b) {
   return hasUpgrade(a,b)
 }
 
-function hmil(a,b) {
+function mil(a,b) {
   return hasMilestone(a,b)
 }
 

@@ -24,7 +24,7 @@ addLayer("C", {
     hotkeys: [
         {key: "c", description: "C: Reset for C points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){  if (player.C.unlocked) return true
+    layerShown(){  if (player[this.layer].unlocked) return true
     else return (hasChallenge("A", 22))},
     gainMult() { 
         mult = new Decimal(1)
@@ -134,13 +134,13 @@ addLayer("C", {
         14: {
             title:'C4',
             description: "B6^1.5.",
-            cost:new Decimal(25),
+            cost:new Decimal(30),
             unlocked() { return (hasUpgrade(this.layer, 13))},
         },
         15: {
             title:'C5',
             description: "200x points.<br>unlock a new chal.",
-            cost:new Decimal(50),
+            cost:new Decimal(60),
             unlocked() { return (hasUpgrade(this.layer, 14))},
         },
         21: {
@@ -220,13 +220,13 @@ addLayer("C", {
         41: {
             title:'C16',
             description: "x1e32 pts",
-            cost:new Decimal('1e58100'),
-            unlocked() { return (hasUpgrade('F', 25))},
+            cost:new Decimal('1e59200'),
+            unlocked() { return (hasUpgrade('F', 31))},
         },
         42: {
             title:'C17',
             description: "x1e80 pts",
-            cost:new Decimal('1e59100'),
+            cost:new Decimal('1e60200'),
             unlocked() { return (hasUpgrade(this.layer, 41))},
         },
     },
@@ -236,17 +236,17 @@ addLayer("C", {
             completionLimit: 1,
             challengeDescription() {return "points ^0.45,C1-C10 are disabled."},
             unlocked() { return (hasUpgrade("D",15))},
-            goalDescription: '1e38 points',
-            canComplete() {return player.points.gte('1e38')},
-            rewardDescription: "x2000 points and ^1.01.",
+            goalDescription: '1e39 points',
+            canComplete() {return player.points.gte('1e39')},
+            rewardDescription: "x2000 and ^1.01 points,unlock new A upg.",
         },
         12: {
             name: "Cc2",
             completionLimit: 1,
             challengeDescription() {return "D1-D5 are disabled."},
             unlocked() { return (hasUpgrade("A",52))},
-            goalDescription: '1e136 points',
-            canComplete() {return player.points.gte('1e136')},
+            goalDescription: '1e139 points',
+            canComplete() {return player.points.gte('1e139')},
             rewardDescription: "x8000 points,A ^1.025.",
         },
     }

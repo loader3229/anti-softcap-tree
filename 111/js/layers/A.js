@@ -111,7 +111,7 @@ addLayer("A", {
         15: {
             title:'A5',
             description: "point/s^1.1.",
-            cost: new Decimal(12),
+            cost: new Decimal(10),
             unlocked() { return (hasUpgrade(this.layer, 14))},
             effect()  {let ef=n(0.1)
                 if (hasUpgrade('B', 32))  ef = Decimal.add(ef,0.05)
@@ -144,7 +144,7 @@ addLayer("A", {
         24: {
             title:'A9',
             description: "lg(points) mults point/s.",
-            cost: new Decimal(180),
+            cost: new Decimal(200),
             unlocked() { return (hasUpgrade(this.layer, 23))},
             effect()  { 
                 let ef = player.points.add(10).log(10)
@@ -167,7 +167,7 @@ addLayer("A", {
         25: {
             title:'A10',
             description: "5x points.",
-            cost:new Decimal(350),
+            cost:new Decimal(400),
             unlocked() { return (hasUpgrade(this.layer, 24))},
         },
         31: {
@@ -179,25 +179,25 @@ addLayer("A", {
         32: {
             title:'A12',
             description: "A9 x5.",
-            cost:new Decimal(1600),
+            cost:new Decimal(2000),
             unlocked() { return (hasUpgrade(this.layer, 31))},
         },
         33: {
             title:'A13',
             description: "A9^1.3.",
-            cost:new Decimal(3600),
+            cost:new Decimal(5000),
             unlocked() { return (hasUpgrade(this.layer, 32))},
         },
         34: {
             title:'A14',
             description: "A9^1.03.",
-            cost:new Decimal(1e4),
+            cost:new Decimal(1.5e4),
             unlocked() { return (hasUpgrade(this.layer, 33))},
         },
         35: {
             title:'A15',
             description: "A^0.2 boost points. unlock B.",
-            cost: new Decimal(1.35e4),
+            cost: new Decimal(2e4),
             unlocked() { return (hasUpgrade(this.layer, 34))},
             effect()  { 
                 let efa15 = 0.2
@@ -216,13 +216,13 @@ addLayer("A", {
             title:'A17',
             description: "A15 ^1.25.",
             cost:new Decimal('1e33'),
-            unlocked() { return (hasUpgrade(this.layer, 41))},
+            unlocked() { return (upg(this.layer, 41))},
         },
         43: {
             title:'A18',
             description: "500x points.",
             cost:new Decimal('2e36'),
-            unlocked() { return (hasChallenge(this.layer, 31))},
+            unlocked() { return (upg(this.layer, 42))},
         },
         44: {
             title:'A19',
@@ -239,13 +239,13 @@ addLayer("A", {
         51: {
             title:'A21',
             description: "4000x points.",
-            cost:new Decimal('1e73'),
+            cost:new Decimal('2e74'),
             unlocked() { return (hasChallenge('C', 11))},
         },
         52: {
             title:'A22',
-            description: "D x2,A9^1.15.",
-            cost:new Decimal('1e76'),
+            description: "D x2,A9^1.15,unlock a chal.",
+            cost:new Decimal('1e78'),
             unlocked() { return (hasUpgrade(this.layer, 51))},
         },
         53: {
@@ -332,9 +332,9 @@ addLayer("A", {
             name: "Ac3",
             completionLimit: 1,
             challengeDescription() {return "points ^0.55"},
-            unlocked() { return (hasUpgrade("B", 32))},
-            goalDescription: '1e11 points',
-            canComplete() {return player.points.gte('1e11')},//3e10
+            unlocked() { return (hasUpgrade("B", 33))},
+            goalDescription: '5e12 points',
+            canComplete() {return player.points.gte('5e12')},//3e10
             rewardDescription: "50x points.",
         },
         22: {
@@ -342,8 +342,8 @@ addLayer("A", {
             completionLimit: 1,
             challengeDescription() {return "A5/A9 are disabled"},
             unlocked() { return (hasUpgrade("B", 35))},
-            goalDescription: '5e17 points',
-            canComplete() {return player.points.gte('5e17')},//5e16
+            goalDescription: '3e18 points',
+            canComplete() {return player.points.gte('3e18')},//5e16
             rewardDescription: "100x points,20x A,10x B.<br>unlock C.",
         },
         31: {
@@ -351,8 +351,8 @@ addLayer("A", {
             completionLimit: 1,
             challengeDescription() {return "points ^0.5 and A5/A9 are disabled"},
             unlocked() { return (hasUpgrade("C", 15))},
-            goalDescription: '1e17 points',
-            canComplete() {return player.points.gte('1e17')},
+            goalDescription: '2e17 points',
+            canComplete() {return player.points.gte('2e17')},
             rewardDescription: "200x points,20x A,2x C.",
         },
         32: {

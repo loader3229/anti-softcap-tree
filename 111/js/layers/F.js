@@ -247,7 +247,7 @@ addLayer("F", {
         23: {
             title:'F8',
             description: "pts boosts F,F5 is 100%,Eb4 x1.1.",
-            cost:new Decimal(30),
+            cost:new Decimal(40),
             effect()  { 
                 let ef = player.points.add(10).log(10).div('4e4').add(1)
                 return ef;
@@ -258,18 +258,18 @@ addLayer("F", {
         24: {
             title:'F9',
             description: "Ec6 eff x1.5,Ec8 eff x1.1.",
-            cost:new Decimal(120),
+            cost:new Decimal(150),
             unlocked() { return (hasUpgrade(this.layer, 23))},
         },
         25: {
             title:'F10',
             description: "1e40x pts,mil 5 applies to all E babs.",
-            cost:new Decimal('1e6'),
+            cost:new Decimal('3e6'),
             unlocked() { return (hasUpgrade(this.layer, 24))},
         },
         31: {
             title:'F11',
-            description: "Bb sc start later based on F.",
+            description: "Bb sc start later based on F,new 2 C/D upg.",
             cost:new Decimal('1.5e8'),
             effect()  { 
                 let ef = player.F.total.add(10).log(10).pow(0.9).mul(2)
@@ -283,7 +283,7 @@ addLayer("F", {
         32: {
             title:'F12',
             description: "1e111x pts,total F boost itself(^0.1)",
-            cost:new Decimal('1e10'),
+            cost:new Decimal('3e10'),
             effect()  { 
                 let exp=n(0.1)
                 if (hasUpgrade('F',33)) exp=Decimal.add(exp,0.1)
@@ -296,7 +296,7 @@ addLayer("F", {
         33: {
             title:'F13',
             description: "F11 x1.25,F12 exp +0.1,F boost Bb5",
-            cost:new Decimal('1e12'),
+            cost:new Decimal('1.2e12'),
             effect()  { 
                 let ef = player.F.total.add(10).log(10).pow(0.25).div(1.5)
                 //if (hasUpgrade('F',42)) sc=Decimal.add(sc,3000)
@@ -309,7 +309,7 @@ addLayer("F", {
         34: {
             title:'F14',
             description: "1e120x pts,Ek mul+0.4,F11 x1.28,nerf Bb scaling,bulk buy x5 Bb/Eb",
-            cost:new Decimal('4e13'),
+            cost:new Decimal('1e14'),
             unlocked() { return (hasUpgrade(this.layer, 33))},
         },
         35: {
@@ -645,7 +645,7 @@ addLayer("F", {
         },
     },
     challenges:{
-        11: {//req F:2e9,9e12,1e17
+        11: {//req F:8e9,1e14,1e18
             name: "Fc1",
             completionLimit: 3,
             challengeDescription: function() {
@@ -654,7 +654,7 @@ addLayer("F", {
             goal(){
                 if (challengeCompletions("F", 11) == 0) return Decimal.pow(10,5840);
                 if (challengeCompletions("F", 11) == 1) return Decimal.pow(10,6940);
-                if (challengeCompletions("F", 11) == 2) return Decimal.pow(10,7020);
+                if (challengeCompletions("F", 11) == 2) return Decimal.pow(10,7050);
             },            
             goalDescription:  function() {return format(this.goal())+' points'},
             canComplete(){return player.points.gte(this.goal())},

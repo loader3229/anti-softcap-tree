@@ -689,7 +689,7 @@ addLayer("ac", {
         },
         234: {
             name: "136.explorer",
-            done() {return (hasUpgrade("G", 123))},
+            done() {return (upg("G", 123))},
             tooltip: "get G58", 
         },
         235: {
@@ -727,9 +727,44 @@ addLayer("ac", {
             done() {return player.G.GGtot.gte('1400')},
             tooltip: "get 1400 GG", 
         },
+        246: {
+            name: "144.not a reality",
+            done() {return player.H.points.gte('1')},
+            tooltip: "get 1 H", 
+        },
+        251: {
+            name: "145.bankrupting",
+            done() {return (upg("G",135))},
+            tooltip: "unlock t28", 
+        },
+        252: {
+            name: "146.for whole tree!",
+            done() {return player.G.GGtot.gte('3300')},
+            tooltip: "get 3300 GG", 
+        },
+        253: {
+            name: "147.chaos",
+            done() {return player.H.harsh.gte('1')},
+            tooltip: "get 1 harsh", 
+        },
+        254: {
+            name: "148.imminent infinity",
+            done() {return player.H.harsh.gte('1.8e308')},
+            tooltip: "get 1.8e308 harsh", 
+        },
+        255: {
+            name: "149.to the F7s",
+            done() {return (upg("H",75))},
+            tooltip: "unlock Hb9", 
+        },
+        256: {
+            name: "150.softcap 1-1",
+            done() {return (upg("H",25))},
+            tooltip: "get H10", 
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/143 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/150 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },
