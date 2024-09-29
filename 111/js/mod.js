@@ -13,11 +13,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.6",
-	name: "layer H",
+	num: "0.6.0.1",
+	name: "layer H fixed",
 }
 
 let changelog = `<h2>Changelog:</h2><br>
+    <h4>v0.6.0.1</h4> (240929)
+		- fix bugs after H and the automation. <br>
     <h4>v0.6</h4> (240928)
 		- add H and harsh,some pre-F fixes. <br>
     <h4>v0.5.10</h4> (240919)

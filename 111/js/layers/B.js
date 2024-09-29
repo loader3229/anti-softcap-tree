@@ -405,7 +405,7 @@ addLayer("B", {
         },
     },
     automate(){
-        if (player.B.auto) {if (hasMilestone("B",2))  buyBuyable("B",11),buyBuyable("B",12),buyBuyable("B",21)
+        if (player.B.auto) {  buyBuyable("B",11),buyBuyable("B",12),buyBuyable("B",21)
             ,buyBuyable("B",22),buyBuyable("B",23) }
     },
     buyables:{

@@ -13,7 +13,7 @@ addLayer("H", {
         return pg
     },
     color: "#747EC8",
-    requires: n('e1.504e8'), 
+    requires: n('e1.5e8'), 
     resource: "H", 
     baseResource: "Gse", 
     baseAmount() {return player.G.Gsetot}, 
@@ -57,7 +57,7 @@ addLayer("H", {
         0: {requirementDescription: "2 H (1",
             done() {return player[this.layer].points.gte('2')}, 
             effectDescription: "autobuy Gsb9,11,12,edit b8 and buy max.",
-            toggles: [ ['H',"auto"] ]
+            toggles: [ ['H',"auto1"] ]
         },
         1: {requirementDescription: "6 H (2",
             done() {return player[this.layer].points.gte('6')}, 
@@ -70,7 +70,7 @@ addLayer("H", {
         3: {requirementDescription: "17 H (4",
             done() {return player[this.layer].points.gte('17')}, 
             effectDescription: "autobuy Hb1,dialte harsh to 1.01,unlock ???.",
-            toggles: [ ['H',"auto"] ]
+            toggles: [ ['H',"auto2"] ]
         },
     },
     microtabs: {
@@ -97,7 +97,7 @@ addLayer("H", {
         11: {
             title:'H1',
             description: "edit GG1 and buy max.",         
-            cost:new Decimal('e1.534e8'),
+            cost:new Decimal('e1.533e8'),
             currencyLocation() {return player.G}, 
             currencyDisplayName: "Gse",
             currencyInternalName: "Gse",
@@ -105,7 +105,7 @@ addLayer("H", {
         12: {
             title:'H2',
             description: "boost t13/17.",         
-            cost:new Decimal('e2.195e8'),
+            cost:new Decimal('e2.191e8'),
             currencyLocation() {return player.G}, 
             currencyDisplayName: "Gse",
             currencyInternalName: "Gse",
@@ -114,7 +114,7 @@ addLayer("H", {
         13: {
             title:'H3',
             description: "max H raise Gs,unlock a new Gt.",         
-            cost:new Decimal('e2.909e8'),
+            cost:new Decimal('e2.902e8'),
             currencyLocation() {return player.G}, 
             currencyDisplayName: "Gse",
             currencyInternalName: "Gse",
@@ -128,9 +128,9 @@ addLayer("H", {
         },
         14: {
             title:'H4',
-            description: "max H div b1-3 scaling,unlock a new Gt [req:e6.61e8 e].",         
+            description: "max H div b1-3 scaling,unlock a new Gt [req:e6.6e8 e].",         
             cost:new Decimal(4),
-            canAfford() {return player.G.Gsetot.gte('e6.61e8')}, 
+            canAfford() {return player.G.Gsetot.gte('e6.6e8')}, 
             effect()  { 
                 let exp=n(0.2)
                 if(mil('G',29)) exp=exp.add(0.025)
@@ -145,7 +145,7 @@ addLayer("H", {
         15: {
             title:'H5',
             description: "keep t20,b11-12 base +0.004.",         
-            cost:new Decimal('e4.85e9'),
+            cost:new Decimal('e4.84e9'),
             currencyLocation() {return player.G}, 
             currencyDisplayName: "Gse",
             currencyInternalName: "Gse",
@@ -154,7 +154,7 @@ addLayer("H", {
         21: {
             title:'H6',
             description: "harsh raise Gs eff.",         
-            cost:new Decimal('e4.453e10'),
+            cost:new Decimal('e4.45e10'),
             currencyLocation() {return player.G}, 
             currencyDisplayName: "Gse",
             currencyInternalName: "Gse",
@@ -263,7 +263,7 @@ addLayer("H", {
         71: {
             title:'H31',
             description: "H raise harsh and Gse,b1 amt ^1.02.",   
-            cost:n('1e1208'),
+            cost:n('5e1186'),//1e1208
             currencyLocation() {return player[this.layer]}, 
             currencyDisplayName: "harsh",
             currencyInternalName: "harsh",
@@ -327,7 +327,7 @@ addLayer("H", {
         },
     },
     automate(){
-        if (player[this.layer].auto) {if (mil("H",3))  buyBuyable("H",11)
+        if (player[this.layer].auto2) {if (mil("H",3))  buyBuyable("H",11)
         }
     },
     buyables:{

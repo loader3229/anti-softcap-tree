@@ -83,7 +83,7 @@ addLayer("E", {
         4: {requirementDescription: "1e25 total E",
             done() {return player[this.layer].total.gte('1e25')}, 
             effectDescription: "autobuy Eb1-3.",
-            toggles: [ ["E","auto"] ]
+            toggles: [ ["E","auto1"] ]
         },
         5: {requirementDescription: "1e31 total E",
             done() {return player[this.layer].total.gte('1e31')}, 
@@ -92,7 +92,7 @@ addLayer("E", {
         6: {requirementDescription: "1e40 total E",
             done() {return player[this.layer].total.gte('1e40')}, 
             effectDescription: "autobuy Eb4.",
-            toggles: [ ["E","auto"] ]
+            toggles: [ ["E","auto2"] ]
         },
         7: {requirementDescription: "1e45 total E",
             done() {return player[this.layer].total.gte('1e45')}, 
@@ -125,7 +125,7 @@ addLayer("E", {
         13: {requirementDescription: "1e111 total E",
             done() {return player[this.layer].total.gte('1e111')}, 
             effectDescription: "autobuy Eb5-7.",
-            toggles: [ ["E","auto"] ]
+            toggles: [ ["E","auto3"] ]
         },
         14: {requirementDescription: "1e132 total E",
             done() {return player[this.layer].total.gte('1e132')}, 
@@ -142,7 +142,7 @@ addLayer("E", {
         17: {requirementDescription: "1e233 total E",
             done() {return player[this.layer].total.gte('1e233')}, 
             effectDescription: "autobuy Eb8-9.",
-            toggles: [ ["E","auto"] ]
+            toggles: [ ["E","auto4"] ]
         },
         18: {requirementDescription: "1e570 total E",
             done() {return player[this.layer].total.gte('1e570')}, 
@@ -151,7 +151,7 @@ addLayer("E", {
         19: {requirementDescription: "1e666 total E",
             done() {return player[this.layer].total.gte('1e666')}, 
             effectDescription: "autobuy Eb10,E47 ^1.6.",
-            toggles: [ ["E","auto"] ]
+            toggles: [ ["E","auto5"] ]
         },
         20: {requirementDescription: "1e981 total E",
             done() {return player[this.layer].total.gte('1e981')}, 
@@ -637,12 +637,11 @@ addLayer("E", {
         },
     },
     automate(){
-        if (player.E.auto) {if (hasMilestone("E",4))  buyBuyable("E",11),buyBuyable("E",12),buyBuyable("E",13)
-            if (hasMilestone("E",6))  buyBuyable("E",21)
-            if (hasMilestone("E",13))  buyBuyable("E",31),buyBuyable("E",32),buyBuyable("E",33)
-            if (hasMilestone("E",17))  buyBuyable("E",41),buyBuyable("E",42)
-            if (hasMilestone("E",19))  buyBuyable("E",22)
-        }
+        if (player.E.auto1)  buyBuyable("E",11),buyBuyable("E",12),buyBuyable("E",13)
+        if (player.E.auto2)  buyBuyable("E",21)
+        if (player.E.auto3)  buyBuyable("E",31),buyBuyable("E",32),buyBuyable("E",33)
+        if (player.E.auto4)  buyBuyable("E",41),buyBuyable("E",42)
+        if (player.E.auto5)  buyBuyable("E",22)
     },
     buyables:{
         11: {

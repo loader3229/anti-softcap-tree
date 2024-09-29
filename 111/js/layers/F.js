@@ -117,12 +117,12 @@ addLayer("F", {
         15: {requirementDescription: "2 tickboost (16",
             done() {return (getBuyableAmount('F',102)>=2)}, 
             effectDescription: "start with 1e30 F1,dimmult per buy +0.15,autobuy dims.",
-            toggles: [["F","auto"]]
+            toggles: [["F","auto1"]]
         },
         16: {requirementDescription: "3 tickboost (17",
             done() {return (getBuyableAmount('F',102)>=3)}, 
             effectDescription: "autobuy tickspeed,bulk buy x10 Bb/Eb.",
-            toggles: [["F","auto"]]
+            toggles: [["F","auto2"]]
         },
         17: {requirementDescription: "6 tickboost (18",
             done() {return (getBuyableAmount('F',102)>=6)}, 
@@ -693,12 +693,11 @@ addLayer("F", {
         },
     },
     automate(){
-        if (player.F.auto) {if (hasMilestone("F",15))  buyBuyable("F",11),buyBuyable("F",12),buyBuyable("F",13),buyBuyable("F",21),
-            buyBuyable("F",22),buyBuyable("F",23),buyBuyable("F",31),buyBuyable("F",32)
-            if (hasMilestone("F",16)) buyBuyable("F",101)
-            if (hasMilestone("G",0)) buyBuyable("F",102)
-            if (hasMilestone("G",9))  buyBuyable("F",111),buyBuyable("F",112),buyBuyable("F",113),buyBuyable("F",121)
-         }
+        if (player.F.auto1)  {buyBuyable("F",11),buyBuyable("F",12),buyBuyable("F",13),buyBuyable("F",21),
+            buyBuyable("F",22),buyBuyable("F",23),buyBuyable("F",31),buyBuyable("F",32)}
+        if (player.F.auto2)  buyBuyable("F",101) 
+        if (player.G.auto1)  buyBuyable("F",102)
+        if (player.G.auto3)  buyBuyable("F",111),buyBuyable("F",112),buyBuyable("F",113),buyBuyable("F",121)
     },
     buyables:{
         11: {
@@ -1123,17 +1122,18 @@ addLayer("F", {
                     player.F.f2d1= player.F.f2d1.add(tar)}},            */
             base(){   let bas = n(25)
                 return bas},
-            effect(x) { // Effects of owning x of the items, x is a decimal
+            effect(x) { 
                 let ef = Decimal.pow(this.base(),x).max(1)
                 ef=Decimal.mul(ef,tmp.F.f2dm)
                 return ef},
-            display() { // Everything else displayed in the buyable button after the title
+            display() { 
                 return "produce F2 \n\
                 Need: " + format(this.cost()) + " G \n\
                 Amount: "+ format(player.F.f2d1) + "(" + player[this.layer].buyables[this.id]  +") \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return hasMilestone('G',8) },
-            style: {'height':'150px','color':'C037A5'},
+            style() {if (this.canAfford()) return {'height':'150px','background-color': '#C037A5' }
+                else return{'height':'150px'}},
         },
         112: {
             title: "F2d2", 
@@ -1163,7 +1163,9 @@ addLayer("F", {
                 Amount: "+ format(player.F.f2d2) + "(" + player[this.layer].buyables[this.id]  +") \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return hasMilestone('G',8) },
-            style: {'height':'150px','color':'C037A5'},
+            //style: {'height':'150px','color':'C037A5'},
+            style() {if (this.canAfford()) return {'height':'150px','background-color': '#C037A5' }
+                else return{'height':'150px'}},
         },
         113: {
             title: "F2d3", 
@@ -1193,7 +1195,8 @@ addLayer("F", {
                 Amount: "+ format(player.F.f2d3) + "(" + player[this.layer].buyables[this.id]  +") \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return hasUpgrade('G',52) },
-            style: {'height':'150px','color':'C037A5'},
+            style() {if (this.canAfford()) return {'height':'150px','background-color': '#C037A5' }
+                else return{'height':'150px'}},
         },
         121: {
             title: "F2d4", 
@@ -1223,7 +1226,8 @@ addLayer("F", {
                 Amount: "+ format(player.F.f2d4) + "(" + player[this.layer].buyables[this.id]  +") \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return hasUpgrade('G',52) },
-            style: {'height':'150px','color':'C037A5'},
+            style() {if (this.canAfford()) return {'height':'150px','background-color': '#C037A5' }
+                else return{'height':'150px'}},        
         },
     },
     tick(){let bas = n(1.05)
