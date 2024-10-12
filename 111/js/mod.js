@@ -8,62 +8,64 @@ let modInfo = {
 	discordName: "",
 	discordLink: "",
 	initialStartPoints: new Decimal (10), // Used for hard resets and new players
-	offlineLimit: 1440,  // In hours
+	offlineLimit: 2400,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.6.0.1",
-	name: "layer H fixed",
+	num: "0.6.1",
+	name: "hyper increasing",
 }
 
 let changelog = `<h2>Changelog:</h2><br>
-    <h4>v0.6.0.1</h4> (240929)
+    <h4>v0.6.1 (241012)</h4>
+		- add hyper and remove sth like 'softcap'.Offline lim is 100d. E:3.194F7 <br>
+    <h4>v0.6.0.1 (240929)</h4>
 		- fix bugs after H and the automation. <br>
-    <h4>v0.6</h4> (240928)
-		- add H and harsh,some pre-F fixes. <br>
-    <h4>v0.5.10</h4> (240919)
-		- add GG and upg tree. <br>
-    <h4>v0.5.9</h4> (240905)
+    <h4>v0.6 (240928)</h4>
+		- add H and harsh,some pre-F fixes. E:2.828F7<br>
+    <h4>v0.5.10 (240919)</h4>
+		- add GG and upg tree.  E:1.676F7<br>
+    <h4>v0.5.9< (240905)/h4>
 		- add Gsi/e and G31-55. <br>
-    <h4>v0.5.8</h4> (240815)
+    <h4>v0.5.8 (240815)</h4>
 		- add Gs,reach F(tetration). <br>
-	<h4>v0.5.7</h4> (240809)
+	<h4>v0.5.7 (240809)</h4>
 		- add F2(ID). <br>
-    <h4>v0.5.6.1</h4> (240807)
+    <h4>v0.5.6.1 (240807)</h4>
 		- rebalance <br>
-    <h4>v0.5.6</h4> (240803)
+    <h4>v0.5.6 (240803)</h4>
 		- add more G chal and G power, massive fixes against inflation. <br>
-    <h4>v0.5.5</h4> (240725)
+    <h4>v0.5.5 (240725)</h4>
 		- add G chal and G power. <br>
-    <h4>v0.5.4</h4> (240721)
+    <h4>v0.5.4 (240721)</h4>
 		- add layer G. <br>
-    <h4>v0.5.3.1</h4> (240719)
+    <h4>v0.5.3.1 (240719)</h4>
 		- rebalance. <br>
-    <h4>v0.5.3</h4> (240718)
+    <h4>v0.5.3 (240718)</h4>
 		- Add tickboost,like AG,etc. <br>
-    <h4>v0.5.2</h4> (240715)
+    <h4>v0.5.2 (240715)</h4>
 		- Add F dim. <br>
-    <h4>v0.5.1</h4> (240713)
+    <h4>v0.5.1 (240713)</h4>
 		- Add F and some powerful upg.<br> And some nerfs for balance. <br>
-    <h4>v0.4.2</h4> (240705)
-		- fix buyable code,a bit rebalance. <br>
-    <h4>v0.4.1</h4> (240701)
+    <h4>v0.4.2 (240705)</h4>
+		- fix buyable code,a bit rebalance. E:1e140300<br>
+    <h4>v0.4.1 (240701)</h4>
 		- Added achievements,Ek,Ec5-8,E31-50,etc.<br> And a TOUGH rebalance. <br>
-    <h4>v0.3.7</h4> (240624)
+    <h4>v0.3.7 (240624)</h4>
 		- Added Em / rebalance <br>
-	<h4>v0.3.6</h4> (240623)
+	<h4>v0.3.6 (240623)</h4>
 		- Added new C/D upg,E11-20<br>
-    <h4>v0.3.5.1</h4> (240622)
+    <h4>v0.3.5.1 (240622)</h4>
 		- rebalance / Ec3-4,E21-28<br>
-    <h4>v0.3.4.1</h4> (240620)
+    <h4>v0.3.4.1 (240620)</h4>
 		- E6-20 rebalance<br>
-	<h4>v0.3.4</h4>(240620)
+	<h4>v0.3.4 (240620)</h4>
 		- Added E chal,E11-20<br>
-	<h4>v0.3.3</h4>(240619)
+	<h4>v0.3.3 (240619)</h4>
 		- Added E6-10<br>
-	<h4>v0.3.2</h4>(240618)
-		- Added layer E.<br> 
+	<h4>v0.3.2 (240618) (release)</h4>
+		- Added layer E. E:1e7100<br> 
 	project started at Mar,2024 `
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
@@ -136,7 +138,7 @@ function getPointGen() {
 	if (hasChallenge("E", 21))  gain = gain.mul(challengeEffect('E',21))
 	if (hasChallenge("E", 22))  gain = gain.mul(challengeEffect('E',22))
 
-	if (hasMilestone("G", 14))  {if (player.points.gte('10^^5')) gain = n(10).pow(n(10).pow(n(10).pow(n(10).pow(gain.log(10).log(10).log(10).log(10).add(tmp.G.gsef)))))}
+	if (hasMilestone("G", 14))  {if (player.points.gte('10^^5')) gain = n(10).pow(n(10).pow(n(10).pow(n(10).pow(gain.log(10).log(10).log(10).log(10).add(tmp.G.gsre)))))}
 
 	return gain
 }
@@ -147,11 +149,11 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() {return "current endgame:2.828F7 points/1e126635 harsh.<br> Too easy? go to play qqqe308's NG-10!"},
+	function() {return "current endgame:3.194F7 points.<br> Too easy? go to play qqqe308's NG-10('aast')!"},
 ]
 // Determines when the game "ends"
 function isEndgame() {
-	return tmp.G.gsef.gte('e5e672')
+	return tmp.G.gsef.gte('ee1212')
 }
 
 //<br> bilibili: @bili_50929957100

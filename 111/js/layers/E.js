@@ -1025,7 +1025,7 @@ addLayer("E", {
                 return "Bb1-2's base are stuck at 2. <br> Completion: " +challengeCompletions("E", 12) + "/3"},
             unlocked() { return (hasMilestone("E", 3))},
             goal(){
-                if (challengeCompletions('E',12) == 0) return Decimal.pow(10,8330);
+                if (challengeCompletions('E',12) == 0) return Decimal.pow(10,8280);
                 if (challengeCompletions('E',12) == 1) return Decimal.pow(10,8850);
                 if (challengeCompletions('E',12) == 2) return Decimal.pow(10,9860);
             },            

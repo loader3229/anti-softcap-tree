@@ -704,7 +704,7 @@ addLayer("ac", {
         },
         241: {
             name: "139.system revolution",
-            done() {return (hasMilestone('G',22))},
+            done() {return (mil('G',22))},
             tooltip: "unlock r5-7 qol",
         },
         242: {
@@ -762,9 +762,39 @@ addLayer("ac", {
             done() {return (upg("H",25))},
             tooltip: "get H10", 
         },
+        261: {
+            name: "151.hyped",
+            done() {return (mil('H',4))},
+            tooltip: "unlock hyper",
+        },
+        262: {
+            name: "152.that speed?",
+            done() {return player.H.harsh.gte('1e10000')},
+            tooltip: "get 1e10000 hyper", 
+        },
+        263: {
+            name: "153.removed softcap^2",
+            done() {return (upg("H",83))},
+            tooltip: "get H38", 
+        },
+        264: {
+            name: "154.a safe boost",
+            done() {return n(getBuyableAmount("H",63)).gte(1)},
+            tooltip: "get Hy6", 
+        },
+        265: {
+            name: "155.remember sb6?",
+            done() {return (upg("H",33))},
+            tooltip: "get H13", 
+        },
+        266: {
+            name: "156.d1l4t3d",
+            done() {return (mil('H',6))},
+            tooltip: "add sb6 limit",
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/150 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/156 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },
