@@ -654,7 +654,7 @@ addLayer("ac", {
         },
         223: {
             name: "129.time dilation?",
-            done() {return player.G.Gse.gte('1e1300')},
+            done() {return player.G.Gsetot.gte('1e1300')},
             tooltip: "get 1e1300 Gse", 
         },
         224: {
@@ -792,9 +792,36 @@ addLayer("ac", {
             done() {return (mil('H',6))},
             tooltip: "add sb6 limit",
         },
+        271: {
+            name: "157.sn4p b4ck t0 r34l1ty",
+            done() {return (mil('G',30))},
+            tooltip: "get 1 GsR",
+        },
+        272: {
+            name: "158.beyond ng+3",
+            done() {return player.G.Gsetot.gte('e1e32')},
+            tooltip: "get e1e32 Gse", 
+        },
+        273: {
+            name: "159.-atomic",
+            done() {return player.G.Gsr.gte('1.8e308')},
+            tooltip: "get 1.8e308 GsR <br>atomic:a AD mod that add a layer after cel7", 
+        },
+        274: {
+            name: "160.superdilating",
+            done() {return function(){let s=n(0)
+                for(let i=0;i<=3;i++) s=s.add(player.H.dh[i])
+                return s.gte(5)}},
+            tooltip: "get 5 dH(any type)", 
+        },
+        275: {
+            name: "161.aleph-1",
+            done() {return player.H.dhp.gte('1.8e308')},
+            tooltip: "get 1.8e308 dH points", 
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/156 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/161 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },

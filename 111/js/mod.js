@@ -13,8 +13,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.6.1",
-	name: "hyper increasing",
+	num: "0.6.2",
+	name: "GsR/dH",
 }
 
 let changelog = `<h2>Changelog:</h2><br>
@@ -61,10 +61,10 @@ let changelog = `<h2>Changelog:</h2><br>
     <h4>v0.3.4.1 (240620)</h4>
 		- E6-20 rebalance<br>
 	<h4>v0.3.4 (240620)</h4>
-		- Added E chal,E11-20<br>
+		- Added E chal,E11-20  E:1e11900<br>
 	<h4>v0.3.3 (240619)</h4>
 		- Added E6-10<br>
-	<h4>v0.3.2 (240618) (release)</h4>
+	<h4>v0.3.2 (240618) (first release)</h4>
 		- Added layer E. E:1e7100<br> 
 	project started at Mar,2024 `
 
@@ -149,11 +149,11 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() {return "current endgame:3.194F7 points.<br> Too easy? go to play qqqe308's NG-10('aast')!"},
+	function() {return "current endgame:3.780F7 points/1e1570 GsR.<br> Too easy? go to play qqqe308's NG-10('aast')!"},
 ]
 // Determines when the game "ends"
 function isEndgame() {
-	return tmp.G.gsef.gte('ee1212')
+	return player.G.Gsr.gte('1e1570')
 }
 
 //<br> bilibili: @bili_50929957100
@@ -167,7 +167,7 @@ var backgroundStyle = {
 
 // You can change this if you have things that can be messed up by long tick lengths
 function maxTickLength() {
-	return(360000) // Default is 100 hour which is just arbitrarily large
+	return(1e8) // Default is 100 hour which is just arbitrarily large
 }
 
 // Use this if you need to undo inflation from an older version. If the version is older than the version that fixed the issue,

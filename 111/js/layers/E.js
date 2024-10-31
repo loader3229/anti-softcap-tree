@@ -182,7 +182,7 @@ addLayer("E", {
                 unlocked() {return (hasMilestone("E", 15))},
                 content: [["display-text", () => "You have <h3 style='color: #177261; text-shadow: 0 0 3px #c2b280'>" + format(player.E.Ek) + "</h3> Ek, Bb scaling start <h3 style='color: #177261; text-shadow: 0 0 3px #c2b280'> " + format(tmp.E.ekf) + " </h3>later.<br>" + "<h4>" + format(tmp.E.Ekeffect) + " Ek/s<h4> <br>"],
                 ["raw-html", () => `<h4 style="opacity:.5">Ek delays Bb1-2 scaling.<br>for balance,Eb9 scaling faster after 10000 </h4>`],
-                ["display-text", () => "Ek mults Bb5 base by <h3 style='color: #177261; text-shadow: 0 0 3px #c2b280'> " + format(tmp.E.ekf2) + " </h3>after upgrade G12.<br>" ],
+                ["display-text", function() {if(upg('G',32)) return "Ek mults Bb5 base by <h3 style='color: #177261; text-shadow: 0 0 3px #c2b280'> " + format(tmp.E.ekf2) + " </h3>after upgrade G12.<br>" }],
                 ["buyables",[4]]]},
         }
     },
