@@ -379,11 +379,21 @@ addLayer("H", {
             currencyInternalName: "Gse",
             unlocked() { return (upg(this.layer,42))},
         },
+        /*44: {
+            title:'H19',
+            description: "???", 
+            cost:new Decimal('???'),
+            canAfford() {return player.G.Gsr.gte('1e1571')}, 
+            currencyLocation() {return player.G}, 
+            currencyDisplayName: "Gse",
+            currencyInternalName: "Gse",
+            unlocked() { return (upg(this.layer,43))},  //v0.6.3 coming soon !
+        },*/
         //harsh upgs
         61: {
             title:'H26',
             description: "Hb1 base exp +0.1.", //  ,remove Gse 2nd nerf      
-            cost:new Decimal('2e183'),
+            cost:new Decimal('1e182'),
             currencyLocation() {return player[this.layer]}, 
             currencyDisplayName: "harsh",
             currencyInternalName: "harsh",
@@ -392,7 +402,7 @@ addLayer("H", {
         62: {
             title:'H27',
             description: "Hb2 cost exp -0.02,unlock a bab.",   
-            cost:new Decimal('1e265'),
+            cost:new Decimal('2e263'),
             currencyLocation() {return player[this.layer]}, 
             currencyDisplayName: "harsh",
             currencyInternalName: "harsh",
@@ -401,7 +411,7 @@ addLayer("H", {
         63: {
             title:'H28',
             description: "Hb7 base +0.005,b5 -0.005,har^1.05.",   
-            cost:new Decimal('1e388'),
+            cost:new Decimal('5e387'),
             currencyLocation() {return player[this.layer]}, 
             currencyDisplayName: "harsh",
             currencyInternalName: "harsh",
@@ -445,7 +455,7 @@ addLayer("H", {
         72: {
             title:'H32',
             description: "GG raise harsh and Gse,b2 exp -0.02.",   
-            cost:n('3e2235'),//1e2221
+            cost:n('1e2221'),//3e2235
             currencyLocation() {return player[this.layer]}, 
             currencyDisplayName: "harsh",
             currencyInternalName: "harsh",
@@ -462,7 +472,7 @@ addLayer("H", {
         73: {
             title:'H33',
             description: "H beyond 12 provide b2,b2 exp -0.04.",   
-            cost:n('1e3022'),
+            cost:n('1e3003'),//1e3022
             currencyLocation() {return player[this.layer]}, 
             currencyDisplayName: "harsh",
             currencyInternalName: "harsh",
@@ -475,7 +485,7 @@ addLayer("H", {
         74: {
             title:'H34',
             description: "b7 exp -0.04 and base +0.005,b4 -0.02,b5 -0.005.",   
-            cost:n('3e3773'),//2e3908
+            cost:n('5e3594'),//3e3773/2e3908
             currencyLocation() {return player[this.layer]}, 
             currencyDisplayName: "harsh",
             currencyInternalName: "harsh",
@@ -484,7 +494,7 @@ addLayer("H", {
         75: {
             title:'H35',
             description: "remove e 2nd nerf,Hb1 base exp +0.2,H31-32 ^1.25,unlock the final bab.",   
-            cost:n('3e4686'),//1e4981
+            cost:n('5e4542'),//3e4686/1e4981
             currencyLocation() {return player[this.layer]}, 
             currencyDisplayName: "harsh",
             currencyInternalName: "harsh",

@@ -809,9 +809,9 @@ addLayer("ac", {
         },
         274: {
             name: "160.superdilating",
-            done() {return function(){let s=n(0)
+            done:  function(){let s=n(0)
                 for(let i=0;i<=3;i++) s=s.add(player.H.dh[i])
-                return s.gte(5)}},
+                return s.gte(5)},
             tooltip: "get 5 dH(any type)", 
         },
         275: {

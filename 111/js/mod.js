@@ -13,11 +13,15 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.6.2",
-	name: "GsR/dH",
+	num: "0.6.2.1",
+	name: "GsR/dH reb",
 }
 
 let changelog = `<h2>Changelog:</h2><br>
+    <h4>v0.6.2.1 (241101)</h4>
+		- fix lots of bugs,edit some description. <br>
+    <h4>v0.6.2 (241031)</h4>
+		- add GsR,dH,dH points.Edit some description. E:3.78F7 <br>
     <h4>v0.6.1 (241012)</h4>
 		- add hyper and remove sth like 'softcap'.Offline lim is 100d. E:3.194F7 <br>
     <h4>v0.6.0.1 (240929)</h4>
