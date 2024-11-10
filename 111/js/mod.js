@@ -13,11 +13,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.6.2.1",
-	name: "GsR/dH reb",
+	num: "0.6.3",
+	name: "more dHs",
 }
 
 let changelog = `<h2>Changelog:</h2><br>
+    <h4>v0.6.3 (241110)</h4>
+		- add more dH and gsr upg. E:5.968F7 <br>
     <h4>v0.6.2.1 (241101)</h4>
 		- fix lots of bugs,edit some description. <br>
     <h4>v0.6.2 (241031)</h4>
@@ -153,11 +155,11 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() {return "current endgame:3.780F7 points/1e1570 GsR.<br> Too easy? go to play qqqe308's NG-10('aast')!"},
+	function() {return "current endgame:5.968F7 points/2338 H.<br> Too easy? go to play qqqe308's NG-10('aast')!"},
 ]
 // Determines when the game "ends"
 function isEndgame() {
-	return player.G.Gsr.gte('1e1570')
+	return player.H.max.gte('2338')
 }
 
 //<br> bilibili: @bili_50929957100

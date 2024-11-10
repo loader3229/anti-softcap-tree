@@ -10,6 +10,10 @@ function scs(a,b,c) {
   return setClickableState(a,b,c)
 }
 
+function gba(a,b) {
+  return getBuyableAmount(a,b)
+}
+
 function upg(a,b) {
   return hasUpgrade(a,b)
 }

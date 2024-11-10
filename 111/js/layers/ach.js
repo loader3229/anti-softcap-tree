@@ -769,7 +769,7 @@ addLayer("ac", {
         },
         262: {
             name: "152.that speed?",
-            done() {return player.H.harsh.gte('1e10000')},
+            done() {return player.H.hyper.gte('1e10000')},
             tooltip: "get 1e10000 hyper", 
         },
         263: {
@@ -809,9 +809,10 @@ addLayer("ac", {
         },
         274: {
             name: "160.superdilating",
-            done:  function(){let s=n(0)
-                for(let i=0;i<=3;i++) s=s.add(player.H.dh[i])
-                return s.gte(5)},
+            // done:  function(){let s=n(0)
+            //     for(let i=0;i<=3;i++) s=s.add(player.H.dh[i])
+            //     return s.gte(5)},
+            done() {return tmp.H.totdh.gte(5)},
             tooltip: "get 5 dH(any type)", 
         },
         275: {
@@ -819,9 +820,46 @@ addLayer("ac", {
             done() {return player.H.dhp.gte('1.8e308')},
             tooltip: "get 1.8e308 dH points", 
         },
+        276: {
+            name: "162.up and down",
+            done:  function(){let m=n(0)
+                for(let i=0;i<=5;i++) m=m.max(player.H.dh[i])
+                return m.gte(10)},
+            tooltip: "get 10 dH of single type", 
+        },
+        281: {
+            name: "163.GooGolplEx",
+            done() {return player.G.Gsetot.gte('e1e100')},
+            tooltip: "get e1e100 Gse", 
+        },
+        282: {
+            name: "164.softcap 3-3",
+            done() {return player.H.dh[4].gte(3)},
+            tooltip: "get 3 dH5", 
+        },
+        283: {
+            name: "165.f3.33f",
+            done() {return player.H.harsh.gte('10^^3.333')},
+            tooltip: "get F3.333 harsh(what it equals to?)", 
+        },
+        284: {
+            name: "166.fast & slow",
+            done() {return player.points.gte('10^^7.602')},
+            tooltip: "get 4F7 points", 
+        },
+        285: {
+            name: "167.3.5 isnt crazy",
+            done() {return player.G.Gs.gte('ee100000')},
+            tooltip: "get ee100000 Gs", 
+        },
+        286: {
+            name: "168.fullyHarshGlitch",
+            done() {return player.H.points.gte('1000')},
+            tooltip: "autobuy Hb3/Hy3", 
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/161 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/168 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },
