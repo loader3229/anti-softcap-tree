@@ -13,11 +13,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.6.3",
-	name: "more dHs",
+	num: "0.6.4",
+	name: "slog inflation",
 }
 
 let changelog = `<h2>Changelog:</h2><br>
+    <h4>v0.6.4 (241119)</h4>
+		- end of row 3. E:1F100 <br>
     <h4>v0.6.3 (241110)</h4>
 		- add more dH and gsr upg. E:5.968F7 <br>
     <h4>v0.6.2.1 (241101)</h4>
@@ -146,6 +148,7 @@ function getPointGen() {
 
 	if (hasMilestone("G", 14))  {if (player.points.gte('10^^5')) gain = n(10).pow(n(10).pow(n(10).pow(n(10).pow(gain.log(10).log(10).log(10).log(10).add(tmp.G.gsre)))))}
 
+	gain=gain.min(tmp.H.php)
 	return gain
 }
 
@@ -155,11 +158,11 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() {return "current endgame:5.968F7 points/2338 H.<br> Too easy? go to play qqqe308's NG-10('aast')!"},
+	function() {return "current endgame:reach F100 hardcap.<br> Too easy? go to play qqqe308's NG-10('aast')!"},//<br> points is hardcapped at 1F100.
 ]
 // Determines when the game "ends"
 function isEndgame() {
-	return player.H.max.gte('2338')
+	return player.points.gte('10^^100')
 }
 
 //<br> bilibili: @bili_50929957100

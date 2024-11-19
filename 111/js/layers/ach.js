@@ -857,9 +857,29 @@ addLayer("ac", {
             done() {return player.H.points.gte('1000')},
             tooltip: "autobuy Hb3/Hy3", 
         },
+        291: {
+            name: "169.hypedHyper",
+            done() {return player.H.hyper.gte('ee1000000')},
+            tooltip: "get ee1000000 hyper", 
+        },
+        292: {
+            name: "170.cursed",
+            done() {return tmp.H.totdh.gte(6666)},
+            tooltip: "get 6666 dH(any type)", 
+        },
+        293: {
+            name: "171.1e10 static?",
+            done() {return player.H.points.gte('1e10')},
+            tooltip: "get 1e10 H", 
+        },
+        294: {
+            name: "172.almost here",
+            done() {return player.points.gte('10^^8')},
+            tooltip: "get 1F8 points", 
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/168 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/172 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },

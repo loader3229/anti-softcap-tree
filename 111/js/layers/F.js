@@ -675,9 +675,9 @@ addLayer("F", {
                 return "pts exp ^0.8. <br> Completion: " +challengeCompletions("F", 12) + "/3"},
             unlocked() { return (hasUpgrade("F", 53))},
             goal(){
-                if (challengeCompletions("F", 12) == 0) return Decimal.pow(10,2e8);
-                if (challengeCompletions("F", 12) == 1) return Decimal.pow(10,3e8);
-                if (challengeCompletions("F", 12) == 2) return Decimal.pow(10,4e8);
+                if (challengeCompletions("F", 12) == 0) return Decimal.pow(10,1e7);
+                if (challengeCompletions("F", 12) == 1) return Decimal.pow(10,1e8);
+                if (challengeCompletions("F", 12) == 2) return Decimal.pow(10,1e9);//edit at v0.6.4
             },            
             goalDescription:  function() {return format(this.goal())+' points'},
             canComplete(){return player.points.gte(this.goal())},
