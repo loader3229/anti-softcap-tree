@@ -311,6 +311,10 @@ VERSION.withoutName = "v" + VERSION.num + (VERSION.pre ? " Pre-Release " + VERSI
 VERSION.withName = VERSION.withoutName + (VERSION.name ? ": " + VERSION.name : "")
 
 
+function toggleShift() {
+	shiftDown = !shiftDown
+}
+
 function autobuyUpgrades(layer){
 	if (!tmp[layer].upgrades) return
 	for (id in tmp[layer].upgrades)

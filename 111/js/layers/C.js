@@ -9,7 +9,7 @@ addLayer("C", {
     passiveGeneration(){    let pg=1
         if (hasMilestone("D", 2))  pg=pg*100
         if (hasMilestone("B", 5))  pg=pg*100
-        return (hasMilestone("D", 1))?pg:0},
+        return (mil("D", 1)||mil('I',1))?pg:0},
     color: "#A73E16",
     requires: new Decimal(2e36), 
     resource: "C", 
@@ -32,6 +32,8 @@ addLayer("C", {
         mult = mult.mul(hasUpgrade('C',21)?10:1)
         mult = mult.mul(hasUpgrade('C',25)?5:1)
         mult = mult.mul(hasUpgrade('D',31)?5:1)
+        mult = mult.mul(mil("I", 0)?5:1)
+
         mult = mult.mul(hasUpgrade('A',61)?upgradeEffect('A',61):1)
         mult = mult.mul(buyableEffect("E",13))
         mult = mult.mul(hasUpgrade("E",95)?upgradeEffect("E",95):1)
@@ -81,9 +83,15 @@ addLayer("C", {
     doReset(layer){
         if (layer=="F") {        
             let keep = [];
-            if (hasMilestone("F", 1)) keep.push("upgrades")
-            if (hasMilestone("F", 1)) keep.push("milestones")
-            if (hasMilestone("F", 2)) keep.push("challenges")
+            if (mil("F", 1)) keep.push("upgrades")
+            if (mil("F", 1)) keep.push("milestones")
+            if (mil("F", 2)) keep.push("challenges")
+            layerDataReset(this.layer, keep)}
+        if (layer=="I") {        
+            let keep = []
+            if(gcs('I',11)) keep.push("milestones")
+            if(gcs('I',12)) keep.push("challenges")
+            if(gcs('I',14)) keep.push("upgrades")
             layerDataReset(this.layer, keep)}
     },
     upgrades: {

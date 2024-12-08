@@ -8,7 +8,7 @@ addLayer("A", {
     }},
     passiveGeneration(){
         let pg=0
-        if (hasUpgrade("B",23)) pg=Decimal.add(pg,1)
+        if (hasUpgrade("B",23)||mil('I',1)) pg=Decimal.add(pg,1)
         if (hasMilestone("C", 1))  pg=Decimal.mul(pg,100)
         if (hasMilestone("C", 2))  pg=Decimal.mul(pg,100)
         if (hasMilestone("D", 1))  pg=Decimal.mul(pg,100)
@@ -20,7 +20,7 @@ addLayer("A", {
     baseResource: "points", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.5, // Prestige currency exponent
+    exponent: n(0.5), // Prestige currency exponent
     gainExp() {// Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
@@ -37,7 +37,10 @@ addLayer("A", {
         mult = mult.pow(hasChallenge("C", 12)?1.025:1)
         mult = mult.mul(buyableEffect("B",11))
         mult = mult.mul(buyableEffect("E",11))
-        mult = mult.mul(hasMilestone("F", 0)?10:1)
+        mult = mult.mul(mil("F",0)?10:1)
+        mult = mult.mul(mil("I",0)?5:1)
+        //if (mil('G',14)&&mult.gte('10^^4'))  mult=n(10).pow(n(10).pow(n(10).pow(n(10).pow(mult.log(10).log(10).log(10).log(10).add(tmp.G.gsre)))))
+        if(mil('G',14)) mult=mult.mul(player.points)
         return mult
     },
     softcap(){return new Decimal(Infinity)},
@@ -45,8 +48,13 @@ addLayer("A", {
     doReset(layer){
         if (layer=="F") {        
             let keep = [];
-            if (hasMilestone("F", 0)) keep.push("challenges")
-            if (hasMilestone("F", 0)) keep.push("upgrades")
+            if(mil("F", 0)) keep.push("challenges")
+            if(mil("F", 0)) keep.push("upgrades")
+            layerDataReset(this.layer, keep)}
+        if (layer=="I") {        
+            let keep = []
+            if(gcs('I',12)) keep.push("challenges")
+            if(gcs('I',13)) keep.push("upgrades")
             layerDataReset(this.layer, keep)}
     },
     microtabs: {
@@ -66,26 +74,24 @@ addLayer("A", {
         ["blank", "25px"],
     ],
     upgrades: {
-
         11: {
             title:'A1',
             description: function() {return '2x points <br> layer A total: <br> '+ format(this.effect()) +'x'},
             effect(){
-                let ef=1
-                if(hasUpgrade("A",11)) ef=ef*2
-                if(hasUpgrade("A",12)) ef=ef*2
-                if(hasUpgrade("A",13)) ef=ef*2
-                if(hasUpgrade("A",14)) ef=ef*2
-                if(hasUpgrade("A",21)) ef=ef*3
-                if(hasUpgrade("A",23)) ef=ef*3
-                if(hasUpgrade("A",25)) ef=ef*5
-                if(hasUpgrade("A",41)) ef=ef*300
-                if(hasUpgrade("A",43)) ef=ef*500
-                if(hasUpgrade("A",45)) ef=ef*1000
-                if(hasUpgrade("A",51)) ef=ef*4000
-                if(hasUpgrade("A",54)) ef=ef*3e4
-
-                ef=Decimal.pow(ef,buyableEffect("B",22))
+                let ef=n(1)
+                if(hasUpgrade("A",11)) ef=ef.mul(2)
+                if(hasUpgrade("A",12)) ef=ef.mul(2)
+                if(hasUpgrade("A",13)) ef=ef.mul(2)
+                if(hasUpgrade("A",14)) ef=ef.mul(2)
+                if(hasUpgrade("A",21)) ef=ef.mul(3)
+                if(hasUpgrade("A",23)) ef=ef.mul(3)
+                if(hasUpgrade("A",25)) ef=ef.mul(5)
+                if(hasUpgrade("A",41)) ef=ef.mul(300)
+                if(hasUpgrade("A",43)) ef=ef.mul(500)
+                if(hasUpgrade("A",45)) ef=ef.mul(1000)
+                if(hasUpgrade("A",51)) ef=ef.mul(4000)
+                if(hasUpgrade("A",54)) ef=ef.mul(3e4)
+                ef=ef.pow(buyableEffect("B",22))
                 return ef
             },
             cost:new Decimal(1),
@@ -114,9 +120,9 @@ addLayer("A", {
             cost: new Decimal(10),
             unlocked() { return (hasUpgrade(this.layer, 14))},
             effect()  {let ef=n(0.1)
-                if (hasUpgrade('B', 32))  ef = Decimal.add(ef,0.05)
-                if (hasUpgrade('B', 35))  ef = Decimal.add(ef,0.05)                
-                if (inChallenge("A", 12))  ef = Decimal.mul(ef,0.25)
+                if (hasUpgrade('B', 32))  ef = ef.add(0.05)
+                if (hasUpgrade('B', 35))  ef = ef.add(0.05)                
+                if (inChallenge("A", 12))  ef = ef.mul(0.25)
                 if (inChallenge("A", 22))  ef = n(0)
                 if (inChallenge("A", 31))  ef = n(0)
                 return player.points.pow(ef).add(1);          
@@ -200,9 +206,9 @@ addLayer("A", {
             cost: new Decimal(2e4),
             unlocked() { return (hasUpgrade(this.layer, 34))},
             effect()  { 
-                let efa15 = 0.2
-                if (hasUpgrade('A', 42))  efa15 = efa15*1.5               
-                return player[this.layer].points.add(1).pow(efa15);          
+                let ef=n(0.2)
+                if (hasUpgrade('A', 42))  ef=ef.mul(1.5)              
+                return player[this.layer].points.add(1).pow(ef);          
             },
             effectDisplay() { return format(this.effect())+"x" }, 
         },
@@ -281,8 +287,8 @@ addLayer("A", {
             description: "mult to B26 based on Bb1 eff.",
             cost:new Decimal('1e2020'),
             effect()  { 
-                let efa27 = buyableEffect('B',11).add(10).log(10).pow(1.2)
-                return efa27;},
+                let ef = buyableEffect('B',11).add(10).log(10).pow(1.2)
+                return ef;},
             effectDisplay() { return format(this.effect())+"x" }, 
             unlocked() { return (hasUpgrade(this.layer, 61))},
         },
@@ -297,8 +303,8 @@ addLayer("A", {
             description: "mult to D based on Bb1 eff.",
             cost:new Decimal('1e2488'),
             effect()  { 
-                let efa29 = buyableEffect('B',11).pow(0.006).times(buyableEffect('B',11).add(10).log(10).pow(1.25))
-                return efa29;},
+                let ef = buyableEffect('B',11).pow(0.006).times(buyableEffect('B',11).add(10).log(10).pow(1.25))
+                return ef;},
             effectDisplay() { return format(this.effect())+"x" }, 
             unlocked() { return (hasUpgrade(this.layer, 63))},
         },
@@ -313,7 +319,7 @@ addLayer("A", {
         11: {
             name: "Ac1",
             completionLimit: 1,
-            challengeDescription() {return "points ^0.75"},
+            challengeDescription() {return "points ^0.75"},//+format(tmp.A.baseAmount)
             unlocked() { return (hasUpgrade("B", 25))},
             goalDescription: '5e12 points',
             canComplete() {return player.points.gte('5e12')},//1e12

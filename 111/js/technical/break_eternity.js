@@ -22,6 +22,9 @@ function mil(a,b) {
   return hasMilestone(a,b)
 }
 
+function ch(a,b) {
+  return hasChallenge(a,b)
+}
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :

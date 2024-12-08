@@ -23,11 +23,18 @@ addLayer("H", {
     baseResource: "Gse", 
     baseAmount() {return player.G.Gsetot}, 
     type: "static", 
-    resetsNothing(){return mil('H',1)},
+    resetsNothing(){return mil('H',1)||mil('I',1)},
     exponent() {
         let exp = n('1.8')
         exp=exp.add(player.H.points.sub(2).max(0).pow(0.5).div(5))
-        if(player.H.points.gte(15)) exp=player.H.points.sub(6).min(5000)
+        let min=n(5000)
+        if(gcs('I',121)) min=min.sub(500)
+        if(gcs('I',122)) min=min.sub(500)
+        if(gcs('I',123)) min=min.sub(1000)
+        if(gcs('I',132)) min=min.sub(500)//2500
+        if(mil('I',9)) min=min.sub(1000)
+        if(mil('I',11)) min=min.sub(500)//1000
+        if(player.H.points.gte(15)) exp=player.H.points.sub(6).min(min)
         if(upg('G',144)) exp=exp.div(tmp.H.dhef[1])
         return exp
     },
@@ -43,8 +50,7 @@ addLayer("H", {
     hotkeys: [
         {key: "h", description: "H: Reset for H points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){  if (player[this.layer].unlocked) return true
-    else return (hasUpgrade("G", 133))},
+    layerShown(){return ((upg('G',133))||player[this.layer].unlocked)},
     gainMult() { 
         mult = n(1)
         return mult
@@ -59,11 +65,25 @@ addLayer("H", {
         if(upg('G',155)) ef=player.H.max.add(1).log(10).pow(0.5).mul(4)
         return ef
     },
+    doReset(layer){
+        if (layer=="I") {        
+            let keep = []
+            layerDataReset(this.layer, keep)
+            if(gcs('I',21))  {player[this.layer].milestones=[0,1]
+                player[this.layer].upgrades=[11,81]}
+            if(gcs('I',26))  player[this.layer].milestones.push(13,14)
+            if(gcs('I',46))  player[this.layer].milestones.push(5,6,7,8)
+            if(gcs('I',46))  player[this.layer].milestones.push(9,10,15)
+            if(n(challengeCompletions('I',22)).gte(3))  player[this.layer].milestones.push(18)
+            if(gcs('I',86))  player[this.layer].upgrades.push(12,13,14,15,21,22,23,24,25,31,32,33,34,35,41,42,43,44)
+        }
+    },
+    autoUpgrade() {return (gcs('I',103))},
     effectDescription() {
         return "which boost b6/9 hardcap by <h2 style='color: #747EC8; text-shadow: 0 0 2px #c2b280'>+"+format(tmp.H.effect)+"</h2> (based on max)(at most 20)"
     },
     canBuyMax(){return mil('H',17)},
-    autoPrestige() { return (mil("H", 9)&&player.H.auto7) },
+    autoPrestige() { return ((mil("H", 9)&&player.H.auto7)||mil('I',1)) },
     milestones: {
         0: {requirementDescription: "2 H (1",
             done() {return player[this.layer].points.gte('2')}, 
@@ -80,12 +100,12 @@ addLayer("H", {
         },
         3: {requirementDescription: "17 H (4",
             done() {return player[this.layer].points.gte('17')}, 
-            effectDescription: "autobuy Hb1,dialte harsh to 1.01,unlock hyper.",
+            effectDescription: "autobuy Hb1,dilate harsh to 1.01,unlock hyper.",
             toggles: [ ['H',"auto2"] ]
         },
         4: {requirementDescription: "1e140000 harsh (5",
             done() {return player[this.layer].harsh.gte('e140000')}, 
-            effectDescription: "autobuy Hy1,dialte harsh to 1.01.",
+            effectDescription: "autobuy Hy1,dilate harsh to 1.01.",
             toggles: [ ['H',"auto3"] ]
         },
         5: {requirementDescription: "e1e10 harsh (6",
@@ -142,14 +162,26 @@ addLayer("H", {
             done() {return player[this.layer].points.gte(4000)}, 
             effectDescription: "buy max b3/y3.",   
         },
-        17: {requirementDescription: "5000 H (18",
-            done() {return player[this.layer].points.gte(5000)}, 
-            effectDescription: "buy max H,dhp4 exp is 1.5.<br>TIPS:base H req exp is capped at 5000.",   
+        17: {requirementDescription: function(){let s="5000 H (18"
+            if(mil('I',2)) s=s+' (reduced to '+format(tmp.H.m17r)+')'
+            return s},
+            done() {return player[this.layer].points.gte(tmp.H.m17r)}, 
+            effectDescription: "buy max H,dhp4 exp is 1.5.<br>tips:base H req exp is capped at 5000.",   
         },
         18: {requirementDescription: "2e6 H (19",
             done() {return player[this.layer].points.gte(2e6)}, 
             effectDescription: "buy max dHs,G mil 36 is 0.05 at 7e6.",   
         },
+    },
+    m17r(){
+        let r=n(5000)
+        if(gcs('I',111)) r=r.sub(2000)
+        if(gcs('I',112)) r=r.sub(1000)
+        if(gcs('I',113)) r=r.sub(500)
+        if(gcs('I',132)) r=r.sub(500)
+        if(ch('I',21)) r=r.mul(challengeEffect('I',21))
+        if(mil('I',9)) r=r.mul(buyableEffect('I',33)).ceil()
+        return r
     },
     microtabs: {
         stuff: {       
@@ -329,7 +361,7 @@ addLayer("H", {
                 return ef;
             },
             effectDisplay() { return '+'+format(this.effect()) },
-            unlocked() { return (upg(this.layer, 85))},
+            unlocked() { return (upg(this.layer, 85)||mil('I',8))},
         },
         32: {
             title:'H12',
@@ -643,7 +675,8 @@ addLayer("H", {
             style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#00FFE6":"#BF8F8F"}},
             canClick() {return player.G.Gsr.gte(tmp.H.dhreq[0])},
             onClick() {player.H.dh[0]=player.H.dh[0].add(1)
-                if(mil('H',18)) player.H.dh[0]=player.G.Gsr.max(1).log(10).div(6).pow(0.5).sub(1).ceil().max(player.H.dh[0])
+                if(mil('H',18)&&!gcs('I',73)) player.H.dh[0]=player.G.Gsr.max(1).log(10).div(6).pow(0.5).sub(1).ceil().max(player.H.dh[0])
+                if(gcs('I',73)) player.H.dh[0]=player.G.Gsr.max(1).log(10).div(6).pow(5/9).sub(1).ceil().max(player.H.dh[0])
             },
             unlocked() {return mil('G',31)},
         },
@@ -659,8 +692,9 @@ addLayer("H", {
             style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#2EDEC4":"#BF8F8F"}},
             canClick() {return player.H.hyper.gte(tmp.H.dhreq[1])},
             onClick() {player.H.dh[1]=player.H.dh[1].add(1)
-                if(mil('H',18)) {player.H.dh[1]=player.H.hyper.max(1).log(10).max(1).log(10).div(2).pow(1/1.58).sub(1).ceil().min(6000).max(player.H.dh[1])
+                if(mil('H',18)&&!gcs('I',73)) {player.H.dh[1]=player.H.hyper.max(1).log(10).max(1).log(10).div(2).pow(1/1.58).sub(1).ceil().min(6000).max(player.H.dh[1])
                 player.H.dh[1]=player.H.hyper.max(1).log(10).max(1).log(10).div(2).pow(1/1.7).sub(1).ceil().max(player.H.dh[1])}
+                if(gcs('I',73)) player.H.dh[1]=player.H.hyper.max(1).log(10).max(1).log(10).div(2).pow(1/1.55).sub(1).ceil().max(player.H.dh[1])
             },
             unlocked() {return upg('G',144)},
         },
@@ -746,7 +780,7 @@ addLayer("H", {
                 if(player.G.GGtot.gte(tmp.H.dhreq[3])) player.H.dh[3]=player.H.dh[3].add(1)
                 if(player.G.Gsetot.gte(tmp.H.dhreq[4])) player.H.dh[4]=player.H.dh[4].add(1)
                 if(n(buyableEffect('G',33)).gte(tmp.H.dhreq[5])) player.H.dh[5]=player.H.dh[5].add(1)},
-            unlocked() {return mil('H',14)},
+            unlocked() {return (mil('H',14)||(mil('I',0)))},
         },
     },
     automate(){
@@ -758,6 +792,14 @@ addLayer("H", {
         if (player[this.layer].auto7)  buyBuyable("H",81),buyBuyable("H",82)
         if (player[this.layer].auto8)  buyBuyable("H",13),buyBuyable("H",53)
         //if (player[this.layer].auto9)  clickClickable("H",31)
+        if(player.I.auto1) {if(player.G.Gsr.gte(tmp.H.dhreq[0])) player.H.dh[0]=player.H.dh[0].add(1)
+            if(player.H.hyper.gte(tmp.H.dhreq[1])) player.H.dh[1]=player.H.dh[1].add(1)
+            if(n(gba('G',31)).gte(tmp.H.dhreq[2])) player.H.dh[2]=player.H.dh[2].add(1)
+            if(player.G.GGtot.gte(tmp.H.dhreq[3])) player.H.dh[3]=player.H.dh[3].add(1)
+            if(player.G.Gsetot.gte(tmp.H.dhreq[4])) player.H.dh[4]=player.H.dh[4].add(1)
+            if(n(buyableEffect('G',33)).gte(tmp.H.dhreq[5])) player.H.dh[5]=player.H.dh[5].add(1)}
+        if(gcs('I',104))  buyBuyable("H",32),buyBuyable("H",62)
+        if(gcs('I',114))  buyBuyable("H",83),buyBuyable("H",84)
     },
     buyables:{
         11: {
@@ -909,6 +951,7 @@ addLayer("H", {
                 b=b.add(buyableEffect('H',32))
                 b=b.add(buyableEffect('H',61)[1])
                 b=b.add(buyableEffect('H',84)[1])
+                if(gcs('I',74)) b=b.mul(1.1)
                 return b},
             effect(x) { // Effects of owning x of the items, x is a decimal
                 let exp=n(1)
@@ -1304,6 +1347,8 @@ addLayer("H", {
                 let b=n(0.004)
                 b=b.add(buyableEffect('H',62)[0])
                 b=b.add(buyableEffect('H',84)[1])
+                if(mil('I',9)) b=b.add(buyableEffect('I',31))
+                if(gcs('I',74)) b=b.mul(1.1)
                 return b},
             base2(){   
                 let b=n(0.03)
@@ -1634,6 +1679,9 @@ addLayer("H", {
         if(mil('H',4)) ef=n(10).pow(ef.add(10).log(10).pow(1.01))
         if(mil('G',35)) ef=n(10).pow(ef.add(10).log(10).pow(1.01))
         if(upg('H',63)) ef=ef.pow(1.05)
+        if(mil('I',0)) ef=ef.pow(1.1)
+        if(gcs('I',71)) ef=ef.mul(10)
+        if(n(challengeCompletions('I',22)).gte(3)) ef=ef.mul(1e10)
         if(upg('H',71)) ef=ef.pow(upgradeEffect('H',71))
         if(upg('H',72)) ef=ef.pow(upgradeEffect('H',72))
         if(upg('H',24)) ef=ef.pow(upgradeEffect('H',24))
@@ -1645,6 +1693,7 @@ addLayer("H", {
         if (mil("G",30)) ef=ef.pow(tmp.G.gsref2)
         ef=ef.pow(tmp.H.dhef[2])
         if(upg('H',44)) ef=ef.pow(upgradeEffect('H',44))
+        if(mil('I',8)&&ef.gte(10)) ef=n(10).tetrate(ef.slog(10).add(0.002))
         ef=ef.min(tmp.H.php)
         return ef
     },
@@ -1654,23 +1703,28 @@ addLayer("H", {
         ef=ef.pow(n(1).add(buyableEffect('H',52)[0]))
         ef=n(10).pow(ef.add(10).log(10).pow(n(1).add(buyableEffect('H',53)[0])))
         if(mil('G',35)) ef=n(10).pow(ef.add(10).log(10).pow(1.01))
+        if(gcs('I',71)) ef=ef.mul(10)
+        if(n(challengeCompletions('I',22)).gte(3)) ef=ef.mul(1e10)
+        if(mil('I',0)) ef=ef.pow(1.1)
         if(upg('H',82)) ef=ef.pow(upgradeEffect('H',71))
         if(upg('H',82)) ef=ef.pow(upgradeEffect('H',72))
         if(upg('H',34)) ef=ef.pow(upgradeEffect('H',34))
         if(upg('H',84)) ef=ef.mul(upgradeEffect('H',84))
         if(mil("G",30)) ef=ef.pow(tmp.G.gsref2)
         if(upg('H',44)) ef=ef.pow(upgradeEffect('H',44))
-        if(mil("G",31)) {if(ef.gte(10)) ef=n(10).tetrate(ef.slog(10).add(0.001))}
+        if(mil("G",31)&&ef.gte(10))  ef=n(10).tetrate(ef.slog(10).add(0.001))
         //if(ef.gte('ee1.5e6')) ef=n(10).pow(n(10).pow(ef.log(10).log(10).div('1.5e6').pow(0.85).mul('1.5e6')))
         ef=ef.min(tmp.H.php)
         return ef
     },
     hyef(){
         let e=n(0.7)
+        if(gcs('I',72)) e=e.add(0.1)
         e=e.add(buyableEffect('H',63)[1])
         if(upg('H',85)) e=e.add(0.05)
         if(upg('H',35)) e=e.add(0.05)
         let ef=player.H.hyper.max(1).log(10).add(10).log(10).pow(e).div(20).add(0.95).max(1)
+        if(gcs('I',72)) ef=player.H.hyper.max(1).log(10).add(10).log(10).pow(e).div(10).add(0.9).max(1)
         return ef
     },
     dhreq(){
@@ -1685,6 +1739,7 @@ addLayer("H", {
         if(player.H.dh[2].gte(30)) e[2]=e[2].add(0.1)
         if(player.H.dh[3].gte(30)) e[3]=e[3].add(0.2)
         if(player.H.dh[4].gte(3)) e[4]=e[4].add(0.2)
+        if(gcs('I',73)) {e[0]=n(1.8),e[1]=n(1.55)}
         if(mil('G',34)) {if(player.G.Gsetot.gte('e1.48e480')) e[4]=e[4].sub(0.6)//2.1
             if(player.G.Gsetot.gte('e2.86e603')) e[4]=e[4].sub(0.6)}//1.5
         let ef=[n(0),n(0),n(0),n(0),n(0)]
@@ -1711,6 +1766,7 @@ addLayer("H", {
     dhbs(){let b=[n(5),n(15),n(5),n(25),n(100),n(100)]
         if(mil('H',8)) {b[0]=n(10),b[2]=n(10)}
         for(let i=0;i<=5;i++) b[i]=b[i].add(buyableEffect('H',84)[0])
+        if(mil('I',6))  for(let i=0;i<=5;i++) b[i]=b[i].mul(buyableEffect('I',23))
         return b},
     dhef(){
         let e=[n(1.11),n(0.45),n(1.05),n(0.5),n(0.32),n(0.4)]

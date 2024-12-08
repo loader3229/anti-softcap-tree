@@ -877,9 +877,24 @@ addLayer("ac", {
             done() {return player.points.gte('10^^8')},
             tooltip: "get 1F8 points", 
         },
+        295: {
+            name: "173.I CANT BALANCE IT!!",
+            done() {return player.points.gte('10^^9')},
+            tooltip: "get 1F9 points", 
+        },
+        296: {
+            name: "174.collapsed",
+            done() {return player.I.points.gte(1)},
+            tooltip: "get 1 I", 
+        },
+        301: {
+            name: "175.GG^2 at 4",
+            done() {return mil('I',2)},
+            tooltip: "unlock Qol points", 
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/172 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/174 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },

@@ -3,7 +3,7 @@ let modInfo = {
 	id: "mymod",
 	author: "2^32",
 	pointsName: "points",
-	modFiles: ["layers/A.js", "layers/B.js","layers/C.js","layers/D.js","layers/E.js","layers/F.js","layers/G.js","layers/H.js","layers/ach.js","tree.js",],
+	modFiles: ["layers/A.js", "layers/B.js","layers/C.js","layers/D.js","layers/E.js","layers/F.js","layers/G.js","layers/H.js","layers/I.js","layers/ach.js","tree.js",],
 
 	discordName: "",
 	discordLink: "",
@@ -13,11 +13,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.6.4",
-	name: "slog inflation",
+	num: "0.7",
+	name: "grand restart!",
 }
 
 let changelog = `<h2>Changelog:</h2><br>
+    <h4>v0.7 (241207)</h4>
+		- add row 4 reset and tons of qol. E:1F100 too <br>
     <h4>v0.6.4 (241119)</h4>
 		- end of row 3. E:1F100 <br>
     <h4>v0.6.3 (241110)</h4>
@@ -142,12 +144,19 @@ function getPointGen() {
 	if (hasUpgrade("F", 14))  gain = gain.pow(1.0012)
 	if (hasUpgrade("F", 52))  gain = gain.pow(1.002)
 	if (hasUpgrade("F", 65))  gain = gain.pow(1.006)
+	if (mil("I",0))  gain = gain.pow(1.01)
+	if (mil("I",1))  gain = gain.pow(1.02)
+	if (mil('I',3))  gain = gain.pow(buyableEffect('I',12))
+	if(n(challengeCompletions('I',22)).gte(1))  gain = gain.pow(1.25)
 
 	if (hasChallenge("E", 21))  gain = gain.mul(challengeEffect('E',21))
 	if (hasChallenge("E", 22))  gain = gain.mul(challengeEffect('E',22))
 
-	if (hasMilestone("G", 14))  {if (player.points.gte('10^^5')) gain = n(10).pow(n(10).pow(n(10).pow(n(10).pow(gain.log(10).log(10).log(10).log(10).add(tmp.G.gsre)))))}
-
+	if (mil('G',14)&&gain.gte('10^^4'))  gain=n(10).pow(n(10).pow(n(10).pow(n(10).pow(gain.log(10).log(10).log(10).log(10).add(tmp.G.gsre)))))
+	if (gcs('I',124)&&gain.gte('10^^10'))  gain=n(10).tetrate(gain.max(10).slog().add(0.3))
+	if (gcs('I',125)&&gain.gte('10^^10'))  gain=n(10).tetrate(gain.max(10).slog().add(0.5))
+	if (gcs('I',135)&&gain.gte('10^^10'))  gain=n(10).tetrate(gain.max(10).slog().add(1))
+//
 	gain=gain.min(tmp.H.php)
 	return gain
 }
@@ -158,7 +167,10 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	function() {return "current endgame:reach F100 hardcap.<br> Too easy? go to play qqqe308's NG-10('aast')!"},//<br> points is hardcapped at 1F100.
+	function() {
+		let s='current endgame:reach F100 hardcap.<br> Too easy? go to play  NG-10(aast) by qqqe308!'
+		if(upg('G',155)||mil('I',0)) s=s+"<br><h4 style='color: #C52C14'>points gain is hardcapped at "+format(tmp.H.php)+"."
+		return s},//<br> points is hardcapped at 1F100.
 ]
 // Determines when the game "ends"
 function isEndgame() {

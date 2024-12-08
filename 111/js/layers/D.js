@@ -7,7 +7,7 @@ addLayer("D", {
 		points: new Decimal(0),
     }},
     passiveGeneration(){    let d_pg=100
-        return (hasMilestone("B", 5))?d_pg:0},
+        return (mil("B", 5)||mil('I',1))?d_pg:0},
     color: "#720202",
     requires: new Decimal('1e13'), 
     resource: "D", 
@@ -32,6 +32,7 @@ addLayer("D", {
         mult = mult.mul(hasUpgrade('A',52)?2:1)
         mult = mult.mul(hasUpgrade('A',64)?upgradeEffect('A',64):1)
         mult = mult.mul(buyableEffect("E",13))
+        mult = mult.mul(mil("I", 0)?5:1)
 
         return mult
     },
@@ -81,6 +82,11 @@ addLayer("D", {
             let keep = [];
             if (hasMilestone("F", 1)) keep.push("upgrades")
             if (hasMilestone("F", 1)) keep.push("milestones")
+            layerDataReset(this.layer, keep)}
+        if (layer=="I") {        
+            let keep = []
+            if(gcs('I',11)) keep.push("milestones")
+            if(gcs('I',14)) keep.push("upgrades")
             layerDataReset(this.layer, keep)}
     },
     upgrades: {

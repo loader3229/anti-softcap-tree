@@ -9,7 +9,7 @@ addLayer("E", {
         Ek: new Decimal(0),
     }},
     passiveGeneration(){    let pg=0
-        if (hasMilestone('E',9)) pg=Decimal.add(pg,1)
+        if (mil('E',9)||mil('I',1)) pg=Decimal.add(pg,1)
         if (hasMilestone('F',0)) pg=Decimal.add(pg,1)
         if (hasMilestone('E',10)) pg=Decimal.mul(pg,10)
         if (hasMilestone('E',11)) pg=Decimal.mul(pg,10)
@@ -51,6 +51,7 @@ addLayer("E", {
         mult = mult.mul(hasMilestone("E",11)?tmp.E.emf:1)
         mult = mult.mul(hasMilestone("E",20)?2024:1)
         mult = mult.mul(hasMilestone("F", 0)?10:1)
+        mult = mult.mul(mil("I", 0)?5:1)
         mult = mult.mul(hasUpgrade("E",71)?upgradeEffect("E",71):1)
         mult = mult.mul(hasUpgrade("E",102)?upgradeEffect("E",102):1)
         mult = mult.mul(hasUpgrade("F",12)?upgradeEffect("F",12):1)
@@ -64,53 +65,53 @@ addLayer("E", {
 	softcapPower(){return new Decimal(1)},
     branches: ['A','B','D'],
     milestones: {
-        0: {requirementDescription: "1500 total E",
+        0: {requirementDescription: "1500 total E (1",
             done() {return player[this.layer].total.gte('1500')}, 
             effectDescription: "unlock E buyable.",
         },
-        1: {requirementDescription: "40000 total E",
+        1: {requirementDescription: "40000 total E (2",
             done() {return player[this.layer].total.gte('40000')}, 
             effectDescription: "unlock Eb3,E2 exp+0.5.",
         },
-        2: {requirementDescription: "1e6 total E",
+        2: {requirementDescription: "1e6 total E (3",
             done() {return player[this.layer].total.gte('1e6')}, 
             effectDescription: "unlock E chal.",
         },
-        3: {requirementDescription: "1e16 total E",
+        3: {requirementDescription: "1e16 total E (4",
             done() {return player[this.layer].total.gte('1e16')}, 
             effectDescription: "E12 ^1.5,unlock another chal.",
         },
-        4: {requirementDescription: "1e25 total E",
+        4: {requirementDescription: "1e25 total E (5",
             done() {return player[this.layer].total.gte('1e25')}, 
             effectDescription: "autobuy Eb1-3.",
             toggles: [ ["E","auto1"] ]
         },
-        5: {requirementDescription: "1e31 total E",
+        5: {requirementDescription: "1e31 total E (6",
             done() {return player[this.layer].total.gte('1e31')}, 
             effectDescription: "Eb3 base +1,unlock another buyable.",
         },
-        6: {requirementDescription: "1e40 total E",
+        6: {requirementDescription: "1e40 total E (7",
             done() {return player[this.layer].total.gte('1e40')}, 
             effectDescription: "autobuy Eb4.",
             toggles: [ ["E","auto2"] ]
         },
-        7: {requirementDescription: "1e45 total E",
+        7: {requirementDescription: "1e45 total E (8",
             done() {return player[this.layer].total.gte('1e45')}, 
             effectDescription: "unlock 2 new chal.",
         },
-        8: {requirementDescription: "1e49 total E",
+        8: {requirementDescription: "1e49 total E (9",
             done() {return player[this.layer].total.gte('1e49')}, 
             effectDescription: "unlock new upg,B26 ^1.05.",
         },
-        9: {requirementDescription: "1e53 total E",
+        9: {requirementDescription: "1e53 total E (10",
             done() {return player[this.layer].total.gte('1e53')}, 
             effectDescription: "1x E passive. Finally!",
         },
-        10: {requirementDescription: "2e68 total E",
+        10: {requirementDescription: "2e68 total E (11",
             done() {return player[this.layer].total.gte('2e68')},
             effectDescription: "10x E passive,B26 ^1.05.",
         },
-        11: {requirementDescription: "1e71 total E",
+        11: {requirementDescription: "1e71 total E (12",
             done() {return player[this.layer].total.gte('1e71')},
             effectDescription: "10x E passive again,unlock Em.",
         },
@@ -118,42 +119,42 @@ addLayer("E", {
         //    done() {return player.E.Em.total.gte('1e9')},
         //    effectDescription: "10x E passive again.",
         //},
-        12: {requirementDescription: "1e90 total E",
+        12: {requirementDescription: "1e90 total E (13",
             done() {return player[this.layer].total.gte('1e90')},
             effectDescription: "Em eff exp +0.02.",
         },
-        13: {requirementDescription: "1e111 total E",
+        13: {requirementDescription: "1e111 total E (14",
             done() {return player[this.layer].total.gte('1e111')}, 
             effectDescription: "autobuy Eb5-7.",
             toggles: [ ["E","auto3"] ]
         },
-        14: {requirementDescription: "1e132 total E",
+        14: {requirementDescription: "1e132 total E (15",
             done() {return player[this.layer].total.gte('1e132')}, 
             effectDescription: "unlock 2 new chal.",
         },
-        15: {requirementDescription: "1e166 total E",
+        15: {requirementDescription: "1e166 total E (16",
             done() {return player[this.layer].total.gte('1e166')},
             effectDescription: "10x E passive,Bb1-2 sc start 100 later,unlock Ek.",
         },
-        16: {requirementDescription: "1e209 total E",
+        16: {requirementDescription: "1e209 total E (17",
             done() {return player[this.layer].total.gte('1e209')}, 
             effectDescription: "unlock final 2 chal.",
         },
-        17: {requirementDescription: "1e233 total E",
+        17: {requirementDescription: "1e233 total E (18",
             done() {return player[this.layer].total.gte('1e233')}, 
             effectDescription: "autobuy Eb8-9.",
             toggles: [ ["E","auto4"] ]
         },
-        18: {requirementDescription: "1e570 total E",
+        18: {requirementDescription: "1e570 total E (19",
             done() {return player[this.layer].total.gte('1e570')}, 
             effectDescription: "unlock the final buyable.",
         },
-        19: {requirementDescription: "1e666 total E",
+        19: {requirementDescription: "1e666 total E (20",
             done() {return player[this.layer].total.gte('1e666')}, 
             effectDescription: "autobuy Eb10,E47 ^1.6.",
             toggles: [ ["E","auto5"] ]
         },
-        20: {requirementDescription: "1e981 total E",
+        20: {requirementDescription: "1e981 total E (21",
             done() {return player[this.layer].total.gte('1e981')}, 
             effectDescription: "x2024 E,unlock the next layer.",
         },
@@ -195,14 +196,20 @@ addLayer("E", {
     doReset(layer){
         if (layer=="F") {        
             let keep = []
-            if (hasMilestone("F",1)) keep.push("milestones")
-            if (hasMilestone("F",4)) keep.push("upgrades")
-            if (hasMilestone("F",5)) keep.push("challenges")
+            if (mil("F",1)) keep.push("milestones")
+            if (mil("F",4)) keep.push("upgrades")
+            if (mil("F",5)) keep.push("challenges")
             //if (hasMilestone("F",2)) player.E.challenges.push('11','12','21','22')
             //if (hasMilestone("F",2)) keep.push(chal)
             layerDataReset(this.layer, keep)}
+        if (layer=="I") {        
+            let keep = []
+            if(gcs('I',12)) keep.push("challenges")
+            if(gcs('I',14)) keep.push("upgrades")
+            if(gcs('I',15)) keep.push("milestones")
+            layerDataReset(this.layer, keep)}
     },
-    autoUpgrade() { if (hasMilestone("F",3)) return true},
+    autoUpgrade() {return (mil("F",3))},
     upgrades: {
         11: {
             title:'E1',
