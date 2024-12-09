@@ -140,9 +140,9 @@ addLayer("H", {
             done() {return player[this.layer].dhp.gte('1e5904')}, 
             effectDescription: "boost dH1 eff,dilate GsR base to 1.05 at 2e3536 GsR,dilate dhpts to 1.05 at 1e6569 dhpts,nerf ??? at e9e500 hyper.",   
         },
-        12: {requirementDescription: "e1.425e1886 harsh (13",
-            done() {return player[this.layer].harsh.gte('e1.425e1886')}, 
-            effectDescription: "dilate b2/y2 by 1.05,i eff +0.003(0.004/0.006/0.008/0.01 at e1.6e2085/e3.36e2113/e3.12e3054/e4.04e3148).",   
+        12: {requirementDescription: "e1.42e1886 harsh (13",
+            done() {return player[this.layer].harsh.gte('e1.42e1886')}, 
+            effectDescription: "dilate b2/y2 by 1.05,i eff +0.003(0.004/0.006/0.008/0.01 at e1.6e2085/e3.36e2113/e3.12e3054/e4.04e3148).",//,sb9-10 lim +200/5 at 681 H  
         },
         13: {requirementDescription: "1000 H (14",
             done() {return player[this.layer].points.gte(1000)}, 
@@ -150,8 +150,8 @@ addLayer("H", {
             toggles: [ ['H',"auto8"] ]
         },
         14: {requirementDescription: "1400 H (15",
-            done() {return player[this.layer].points.gte(1400)}, 
-            effectDescription: "unlock buy all dH,reduce y4/6 sc BUT remove -1dH button,e nerf +0.02 at 1470.",   
+            done() {return player[this.layer].points.gte(1400)}, //1440
+            effectDescription: "unlock buy all dH,reduce y4/6 sc BUT remove -1dH button,e nerf +0.02 at 1470.",   //1550
         },
         15: {requirementDescription: "2600 H (16",
             done() {return player[this.layer].points.gte(2600)}, 

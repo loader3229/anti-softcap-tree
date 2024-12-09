@@ -892,9 +892,44 @@ addLayer("ac", {
             done() {return mil('I',2)},
             tooltip: "unlock Qol points", 
         },
+        302: {
+            name: "176.waitttttt",
+            done() {return player.I.qolpoints.gte(1e5)},
+            tooltip: "get 1e5 Qol points", 
+        },
+        303: {
+            name: "177.clickkkkkk",
+            done() {return tmp.I.comp.gte(1)},
+            tooltip: "complete a speedrun", 
+        },
+        304: {
+            name: "178.get it max",
+            done() {return gcs('I',16)},
+            tooltip: "get kp9", 
+        },
+        305: {
+            name: "179.iniskiped",
+            done() {return n(challengeCompletions('I',11)).gte(10)},
+            tooltip: "complete Ic1x10", 
+        },
+        306: {
+            name: "180.shift",
+            done() {return n(challengeCompletions('I',22)).gte(1)},
+            tooltip: "complete Ic4x1", 
+        },
+        311: {
+            name: "181.secgros",
+            done() {return !player.I.m[0].gte(120)},
+            tooltip: "row4 reset 1n 120s", 
+        },
+        312: {
+            name: "182.r4 is easy",
+            done() {return tmp.I.comp.gte(35)},
+            tooltip: "complete all speedruns", 
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/174 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/182 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },

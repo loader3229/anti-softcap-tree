@@ -195,10 +195,10 @@ addLayer("G", {
         },
         33: {requirementDescription: "e9.918e118 total Gse (34",
             done() {return player.G.Gsetot.gte('e9.918e118')},
-            effectDescription: "nerf r1/dhp2,remove sb6 lim,boost dH5 at 4 dH5,boost dHs at 2e6935/5e7628 GsR.",
+            effectDescription: "nerf r1/dhp2,remove sb6 lim,boost dH5 at 4 dH5,boost dHs at 2e6935/5e7628 GsR.",//,GG sc slower at 1e14030
         },
-        34: {requirementDescription: "e1e415 total Gse (35",
-            done() {return player.G.Gsetot.gte('e1e415')},
+        34: {requirementDescription: "e1.7e199 total Gse (35",
+            done() {return player.G.Gsetot.gte('e1.7e199')},//ee415
             effectDescription: "autobuy sb6,hb1/y1 sc -0.01,nerf dH5 threshold at e1.48e480(again at e2.93e495/e2.86e603).<br>TIPS:sb6 cost jumps at 2000(10^10^x^2.25)",
             toggles: [ ['G',"auto8"] ] 
         },
@@ -2246,6 +2246,7 @@ addLayer("G", {
             purchaseLimit() {let lim=n(60)
                 if(mil('G',30)) lim=lim.add(5)
                 if(mil('H',8)) lim=lim.add(10)
+                //if(player.H.max.gte(681)) lim=lim.add(5)
                 return lim},
             canAfford() { return player[this.layer].Gse.gte(this.cost()) },
             buy() { if(!mil('G',27)) {player[this.layer].Gse = player[this.layer].Gse.sub(this.cost())}
@@ -2370,7 +2371,8 @@ addLayer("G", {
                 if (hasUpgrade('G',121))  cost=cost.div('1e6045').pow(0.8).mul('1e6045')
                 if (x.gte(200)) cost=cost.mul(n(10).pow(n(10).pow(x.sub(180).pow(0.28)).mul(5)))
                 if (x.gte(500)) cost=cost.pow(n(1.25).add(x.sub(500).pow(0.35).div(50)))
-                if (hasUpgrade('H',11)) cost=cost.min(n(10).pow(n(2).pow(x.add(135).pow(this.sc2()).mul(3))))
+                if (hasUpgrade('H',11)) cost=n(10).pow(n(2).pow(x.add(135).pow(this.sc2()).mul(3)))
+                //if(player.G.Gsr.gte('1e14030')) cost=n(10).pow(n(2).pow(x.pow(this.sc2()).mul(3)))
                 return cost
             },
             sce(){
@@ -2383,13 +2385,14 @@ addLayer("G", {
             },
             sc2(){
                 let e=n(0.3)
-                //if(gba(this.layer, this.id).gte('2e11')) e=e.add(0.02)
+                //if(player.G.Gsr.gte('1e14030')) e=e.sub(0.002)
                 return e
             },
             canAfford() { return player[this.layer].Gse.gte(this.cost()) },
             bulk(){
                 let t=n(0)
-                if(upg('H',11))  t=t.max(player[this.layer].Gse.add(10).log(10).max(1).log(2).div(3).pow(this.sc2().pow(-1)).sub(135).sub(getBuyableAmount(this.layer, this.id)).sub(1).ceil().max(1))
+                if(upg('H',11))  t=t.max(player[this.layer].Gse.add(10).log(10).max(1).log(2).div(3).pow(this.sc2().pow(-1)).sub(135).sub(gba(this.layer, this.id)).sub(1).ceil().max(1))
+                //if(player.G.Gsr.gte('1e14030')) t=t.max(player[this.layer].Gse.add(10).log(10).max(1).log(2).div(3).pow(this.sc2().pow(-1)).sub(gba(this.layer, this.id)).sub(1).ceil().max(1))
                 //if(!gba(this.layer, this.id).gte('2e11')||gba(this.layer, this.id).add(t).gte('2e11')) t=t.min(n('2e11').sub(gba(this.layer, this.id))).max(0)
                 let c = this.cost(gba(this.layer, this.id).add(t))
                 if (player[this.layer].Gse.gte(c)) {setBuyableAmount(this.layer, this.id,gba(this.layer, this.id).add(t))
@@ -2409,7 +2412,7 @@ addLayer("G", {
                 let ef = n(x)
                 return ef},
             display() { 
-                return "gain 1 GG  \n\
+                return "gain " + format(this.am()) + " GG  \n\
                 Cost: " + format(this.cost()) + " Gse \n\
                 Amount: " + player[this.layer].buyables[this.id]  +" \n\
                 Effect: +" + format(this.effect())},
@@ -2937,7 +2940,7 @@ addLayer("G", {
         if(upg('G',145)) sc5=sc5.add(0.003)
         if(mil('H',8)) sc5=sc5.add(0.0045)//0.98
         if(mil('H',12)) {sc5=sc5.add(0.003)
-            if(player.H.harsh.gte('e1.6e2085')) sc5=sc5.add(0.001)
+            if(player.H.harsh.gte('e1.5e2085')) sc5=sc5.add(0.001)
             if(player.H.harsh.gte('e3.36e2113')) sc5=sc5.add(0.002)
             if(player.H.harsh.gte('e3.12e3054')) sc5=sc5.add(0.002)
             if(player.H.harsh.gte('e4.04e3148')) sc5=sc5.add(0.002)}//0.99
@@ -3011,7 +3014,7 @@ addLayer("G", {
             scx[1]=scx[1].add(0.01)}
         if(upg('G',153)) {scx[0]=scx[0].add(0.02)//0.78
             scx[1]=scx[1].add(0.01)}
-        if(player.H.max.gte('1470')) scx[1]=scx[1].add(0.02)
+        if(player.H.max.gte('1470')) scx[1]=scx[1].add(0.02)//1550
         if(upg('H',45)) scx[0]=scx[0].add(0.03)
         if(mil('G',35)) {scx[0]=scx[0].add(0.03)
             if(player.G.Gsetot.gte('ee767')) scx[0]=scx[0].add(0.01)
