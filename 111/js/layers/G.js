@@ -208,7 +208,7 @@ addLayer("G", {
         },
         36: {requirementDescription: "e1e1580 total Gse (37",
             done() {return player.G.Gsetot.gte('e1e1580')},
-            effectDescription: "buy max r2/4,e nerf is 0.87/0.9/0.94 at e8e1583/ee1658/ee2010,and FINALLY REMOVE it with G75.",//
+            effectDescription: "buy max r2/4,e nerf is 0.87/0.9/0.94 at e7.5e1581/ee1658/ee2010,and FINALLY REMOVE it with G75.",//
         },
         37: {requirementDescription: "e1e2125 total Gse (38",
             done() {return player.G.Gsetot.gte('e1e2125')},
@@ -3019,7 +3019,7 @@ addLayer("G", {
         if(mil('G',35)) {scx[0]=scx[0].add(0.03)
             if(player.G.Gsetot.gte('ee767')) scx[0]=scx[0].add(0.01)
             if(player.H.max.gte('7e6')) scx[0]=scx[0].add(0.01)}//0.86
-        if(player.G.Gsetot.gte('e8e1583')) scx[0]=scx[0].add(0.01)
+        if(player.G.Gsetot.gte('e7.5e1581')) scx[0]=scx[0].add(0.01)
         if(player.G.Gsetot.gte('ee1658')) scx[0]=scx[0].add(0.03)
         if(player.G.Gsetot.gte('ee2010')) scx[0]=scx[0].add(0.04)//0.95
         if(upg('G',155)) scx[0]=scx[0].add(0.06)//1!!!
