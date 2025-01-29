@@ -3,7 +3,7 @@ let modInfo = {
 	id: "mymod",
 	author: "2^32",
 	pointsName: "points",
-	modFiles: ["layers/A.js", "layers/B.js","layers/C.js","layers/D.js","layers/E.js","layers/F.js","layers/G.js","layers/H.js","layers/I.js","layers/ach.js","tree.js",],
+	modFiles: ["layers/A.js", "layers/B.js","layers/C.js","layers/D.js","layers/E.js","layers/F.js","layers/G.js","layers/H.js","layers/I.js","layers/J.js","layers/ach.js","tree.js",],
 
 	discordName: "",
 	discordLink: "",
@@ -13,11 +13,16 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.7",
-	name: "grand restart!",
+	num: "0.7.1",
+	name: "break infinity and hello 2025!",
 }
 
 let changelog = `<h2>Changelog:</h2><br>
+    <h4>v0.7.1 (250129)</h4>
+		- add layer J,break infinity and challenge'curse' E:1F32768+. <br>
+    <h4>--HAPPY NEW 2025---<h4><br>
+    <h4>v0.7.0.1 (241209)</h4>
+		- fix dH part's bug and achievements bug. <br>
     <h4>v0.7 (241207)</h4>
 		- add row 4 reset and tons of qol. E:1F100 too <br>
     <h4>v0.6.4 (241119)</h4>
@@ -153,9 +158,15 @@ function getPointGen() {
 	if (hasChallenge("E", 22))  gain = gain.mul(challengeEffect('E',22))
 
 	if (mil('G',14)&&gain.gte('10^^4'))  gain=n(10).pow(n(10).pow(n(10).pow(n(10).pow(gain.log(10).log(10).log(10).log(10).add(tmp.G.gsre)))))
-	if (gcs('I',124)&&gain.gte('10^^10'))  gain=n(10).tetrate(gain.max(10).slog().add(0.3))
-	if (gcs('I',125)&&gain.gte('10^^10'))  gain=n(10).tetrate(gain.max(10).slog().add(0.5))
-	if (gcs('I',135)&&gain.gte('10^^10'))  gain=n(10).tetrate(gain.max(10).slog().add(1))
+		
+	let tet=n(0)
+	if(gcs('I',124))  tet=tet.add(0.3)
+	if(gcs('I',125))  tet=tet.add(0.5)
+	if(gcs('I',135))  tet=tet.add(1)
+	if(mil('J',8)) tet=tet.mul(2)
+	if(gcs('I',311)) {if(gain.gte('10^^25')&&mil('I',21)) gain=n(10).tetrate(gain.max(10).slog().add(tet))
+		else gain=n(10).tetrate(gain.max(10).slog().sub(tmp.I.resv[0]).max(0))}
+	else{if(gain.gte('10^^10'))  gain=n(10).tetrate(gain.max(10).slog().add(tet))}
 //
 	gain=gain.min(tmp.H.php)
 	return gain

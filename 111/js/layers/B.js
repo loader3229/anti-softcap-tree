@@ -19,17 +19,14 @@ addLayer("B", {
     baseAmount() {return player.A.points}, 
     type: "normal", 
     exponent: 0.2, 
-    gainExp() {
-        return new Decimal(1)
-    },
+    gainExp() {return n(1)},
     row: 0, 
     hotkeys: [
         {key: "b", description: "B: Reset for B points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){  if (player.B.unlocked) return true
-        else return (hasUpgrade("A", 35))},
+    layerShown(){ return (upg('A',35)||player[this.layer].unlocked)},
     gainMult() { 
-        mult = new Decimal(1)
+        mult = n(1)
         mult = mult.mul(hasUpgrade(this.layer,14)?2:1)
         mult = mult.mul(hasUpgrade(this.layer,15)?1.5:1)
         mult = mult.mul(hasUpgrade(this.layer,22)?2:1)
@@ -52,8 +49,7 @@ addLayer("B", {
         mult = mult.mul(mil("F", 0)?10:1)
         mult = mult.mul(mil("I", 0)?5:1)
         mult = mult.pow(hasUpgrade("E", 65)?1.004:1)
-        if (inChallenge('F',11)) mult=Decimal.pow(mult,0.25)
-
+        if (inChallenge('F',11)) mult=mult.pow(0.25)
         return mult
     },
     softcap(){return new Decimal(Infinity)},

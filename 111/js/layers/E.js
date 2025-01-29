@@ -29,8 +29,7 @@ addLayer("E", {
     hotkeys: [
         {key: "e", description: "E: Reset for E points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){  if (player[this.layer].unlocked) return true
-    else return (hasMilestone("B", 7))},
+    layerShown(){ return ((mil('B',7))||player[this.layer].unlocked)},
     gainMult() {
         //let emxp=0.25
         //if (hasMilestone('E',12))  emxp=emxp+0.02
@@ -1136,7 +1135,7 @@ addLayer("E", {
                 if (challengeCompletions('E',32) == 1) return Decimal.pow(10,13700);
                 if (challengeCompletions('E',32) == 2) return Decimal.pow(10,14850);
                 if (challengeCompletions('E',32) == 3) return Decimal.pow(10,20000);
-                if (challengeCompletions('E',32) == 4) return Decimal.pow(10,25930);
+                if (challengeCompletions('E',32) == 4) return Decimal.pow(10,25850);
             },      
             nerf() { return player.E.Em.add(10).log(10).pow(-0.2)},       
             goalDescription:  function() {return format(this.goal())+' points'},
@@ -1159,10 +1158,10 @@ addLayer("E", {
             unlocked() { return (hasMilestone("E", 16))},
             goal(){
                 if (challengeCompletions('E',41) == 0) return Decimal.pow(10,36300);
-                if (challengeCompletions('E',41) == 1) return Decimal.pow(10,60400);
+                if (challengeCompletions('E',41) == 1) return Decimal.pow(10,60250);//60400
                 if (challengeCompletions('E',41) == 2) return Decimal.pow(10,66600);
                 if (challengeCompletions('E',41) == 3) return Decimal.pow(10,84800);
-                if (challengeCompletions('E',41) == 4) return Decimal.pow(10,106100);
+                if (challengeCompletions('E',41) == 4) return Decimal.pow(10,106500);
             },            
             goalDescription:  function() {return format(this.goal())+' points'},
             canComplete(){return player.points.gte(this.goal())},
@@ -1185,7 +1184,7 @@ addLayer("E", {
             unlocked() { return (hasMilestone("E", 16))},
             goal(){
                 if (challengeCompletions('E',42) == 0) return Decimal.pow(10,29800);
-                if (challengeCompletions('E',42) == 1) return Decimal.pow(10,50500);
+                if (challengeCompletions('E',42) == 1) return Decimal.pow(10,50200);
                 if (challengeCompletions('E',42) == 2) return Decimal.pow(10,60100);
                 if (challengeCompletions('E',42) == 3) return Decimal.pow(10,69870);
                 if (challengeCompletions('E',42) == 4) return Decimal.pow(10,88000);

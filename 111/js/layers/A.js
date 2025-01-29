@@ -323,7 +323,7 @@ addLayer("A", {
             unlocked() { return (hasUpgrade("B", 25))},
             goalDescription: '5e12 points',
             canComplete() {return player.points.gte('5e12')},//1e12
-            rewardDescription: "B ^1.1.",
+            rewardDescription: "^1.1 B.",
         },
         12: {
             name: "Ac2",
@@ -332,7 +332,7 @@ addLayer("A", {
             unlocked() {  return (hasChallenge(this.layer, 11))},
             goalDescription: '2e13 points',
             canComplete() {return player.points.gte('2e13')},//4e12
-            rewardDescription: "B x10.",
+            rewardDescription: "x10 B.",
         },
         21: {
             name: "Ac3",
@@ -341,7 +341,7 @@ addLayer("A", {
             unlocked() { return (hasUpgrade("B", 33))},
             goalDescription: '5e12 points',
             canComplete() {return player.points.gte('5e12')},//3e10
-            rewardDescription: "50x points.",
+            rewardDescription: "x50 points.",
         },
         22: {
             name: "Ac4",
@@ -350,7 +350,7 @@ addLayer("A", {
             unlocked() { return (hasUpgrade("B", 35))},
             goalDescription: '3e18 points',
             canComplete() {return player.points.gte('3e18')},//5e16
-            rewardDescription: "100x points,20x A,10x B.<br>unlock C.",
+            rewardDescription: "x100 points,x20 A,x10 B.<br>unlock C.",
         },
         31: {
             name: "Ac5",
@@ -359,7 +359,7 @@ addLayer("A", {
             unlocked() { return (hasUpgrade("C", 15))},
             goalDescription: '2e17 points',
             canComplete() {return player.points.gte('2e17')},
-            rewardDescription: "200x points,20x A,2x C.",
+            rewardDescription: "x200 points,x20 A,x2 C.",
         },
         32: {
             name: "Ac6",

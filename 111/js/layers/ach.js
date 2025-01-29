@@ -927,9 +927,39 @@ addLayer("ac", {
             done() {return tmp.I.comp.gte(35)},
             tooltip: "complete all speedruns", 
         },
+        313: {
+            name: "183.10th layer!",
+            done() {return player.J.best.gte(1)},
+            tooltip: "get 1 J", 
+        },
+        314: {
+            name: "184.well break",
+            done() {return player.J.bp.gte('1e308')},
+            tooltip: "get 1e308 break points", 
+        },
+        315: {
+            name: "185.great weaken",
+            done() {return player.I.hi.gte('10')},
+            tooltip: "get 10 harden I", 
+        },
+        316: {
+            name: "186.year but +1",//'any difference?' initially,at F1000 pts
+            done() {return player.points.gte('10^^2025')},
+            tooltip: "get 1F2025 points", 
+        },
+        321: {
+            name: "187.d1_l4_t3_d..",
+            done() {return player.J.bp.gte('e1e6')},
+            tooltip: "get e1e6 break points <br>And its the No.destruction 3,2,1 achievement!", 
+        },
+        322: {
+            name: "188.empirical impossible",
+            done() {return player.I.hi.gte('150')},
+            tooltip: "get 150 harden I", 
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/182 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/188 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },

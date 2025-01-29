@@ -499,7 +499,7 @@ addLayer("F", {
             title:'F31',
             description: "F upg boost F dims.<br>(need Gc1).",
             cost:n('1e848'),
-            canAfford() {return (inChallenge('G',11)||gcs('I',43))}, 
+            canAfford() {return inChallenge('G',11)||gcs('I',43)==1}, //
             effect()  { 
                 let a=player[this.layer].upgrades.length
                 let ef=n(1.075).pow(a)
@@ -516,7 +516,7 @@ addLayer("F", {
             title:'F32',
             description: "tickspeed mult x1.01,log G mults itself.(need Gc1).",
             cost:n('1e895'),
-            canAfford() {return (inChallenge('G',11)||gcs('I',43))}, 
+            canAfford() {return (inChallenge('G',11)||gcs('I',43)==1)}, 
             effect()  { 
                 let ef = player.G.total.add(10).log(10)
                 return ef;          
@@ -531,7 +531,7 @@ addLayer("F", {
             title:'F33',
             description: "F1 eff exp ^1.2,Gb1 mults Fds.(need Gc1).",
             cost:n('1e1030'),
-            canAfford() {return (inChallenge('G',11)||gcs('I',43))}, 
+            canAfford() {return (inChallenge('G',11)||gcs('I',43)==1)}, 
             effect()  { 
                 let t = n(getBuyableAmount('G',11))
                 let ef=n(5).pow(t)
@@ -547,7 +547,7 @@ addLayer("F", {
             title:'F34',
             description: "Gb2 amt boost its base,Gc1p mults G.(need Gc1).",
             cost:n('1e1155'),
-            canAfford() {return (inChallenge('G',11)||gcs('I',43))}, 
+            canAfford() {return (inChallenge('G',11)||gcs('I',43)==1)}, 
             effect()  { 
                 let t=n(getBuyableAmount('G',12))
                 let ef1=t.mul(0.06)
@@ -564,7 +564,7 @@ addLayer("F", {
             title:'F35',
             description: "Gb3 amt boost its base,F31 ^2,unlock next G chal.(need Gc1).",
             cost:n('1e1615'),//1e1300
-            canAfford() {return (inChallenge('G',11)||gcs('I',43))}, 
+            canAfford() {return (inChallenge('G',11)||gcs('I',43)==1)}, 
             effect()  { 
                 let t = n(getBuyableAmount('G',13))
                 let ef=t.mul(0.08)
@@ -583,7 +583,7 @@ addLayer("F", {
             currencyDisplayName: "F1",
             currencyInternalName: "F1",
             cost:n('1e1290'),
-            canAfford() {return (inChallenge('G',12)||gcs('I',43))}, 
+            canAfford() {return (inChallenge('G',12)||gcs('I',43)==1)}, 
             effect()  { 
                 let exp=n(0.15)
                 let ef= Decimal.pow(upgradeEffect('E',55),exp)
@@ -599,7 +599,7 @@ addLayer("F", {
             currencyDisplayName: "F1",
             currencyInternalName: "F1",
             cost:n('e6000'),
-            canAfford() {return (inChallenge('G',12)||gcs('I',43))}, 
+            canAfford() {return (inChallenge('G',12)||gcs('I',43)==1)}, 
             effect()  { 
                 let exp=n(0.33)
                 let ef=player.G.Gc1p.add(10).log(10).pow(exp)
@@ -615,7 +615,7 @@ addLayer("F", {
             currencyDisplayName: "F1",
             currencyInternalName: "F1",
             cost:n('e8600'),
-            canAfford() {return (inChallenge('G',12)||gcs('I',43))}, 
+            canAfford() {return (inChallenge('G',12)||gcs('I',43)==1)}, 
             unlocked() { return (hasUpgrade(this.layer, 82))},
         },
         84: {
@@ -625,7 +625,7 @@ addLayer("F", {
             currencyDisplayName: "F1",
             currencyInternalName: "F1",
             cost:n('e112000'),
-            canAfford() {return (inChallenge('G',21)||gcs('I',43))}, 
+            canAfford() {return (inChallenge('G',21)||gcs('I',43)==1)}, 
             effect()  { 
                 let exp=n(0.5)
                 let ef=player.G.Gc2p.add(10).log(10).pow(exp)
@@ -641,7 +641,7 @@ addLayer("F", {
             currencyDisplayName: "F1",
             currencyInternalName: "F1",
             cost:n('e1.865e8'),
-            canAfford() {return (inChallenge('G',21)||gcs('I',43))}, 
+            canAfford() {return (inChallenge('G',21)||gcs('I',43)==1)}, 
             unlocked() { return (hasUpgrade(this.layer, 83))},
         },
     },
@@ -1257,7 +1257,7 @@ addLayer("F", {
         if (mil('F',14))  ef=Decimal.mul(ef,10)
         if (inChallenge('G', 11))  ef=Decimal.pow(ef,0.8)
         if (mil('G',8))  ef=Decimal.pow(ef,tmp.F.F2f)
-        if (mil('I',0))  ef=ef.pow(1.05).mul(1e5)
+        if (mil('I',0))  ef=ef.pow(1.05).mul(1e10)
         if (mil('I',1))  ef=ef.pow(1.05).mul(1e10)
         if (gcs('I',31))  ef=ef.pow(1.12)
         if (mil('I',3))  ef=ef.pow(buyableEffect('I',11))

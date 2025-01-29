@@ -24,8 +24,7 @@ addLayer("C", {
     hotkeys: [
         {key: "c", description: "C: Reset for C points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){  if (player[this.layer].unlocked) return true
-    else return (hasChallenge("A", 22))},
+    layerShown(){ return ((ch('A',22))||player[this.layer].unlocked)},
     gainMult() { 
         mult = new Decimal(1)
         mult = mult.pow(hasUpgrade('A',45)?1.1:1)

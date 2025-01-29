@@ -74,6 +74,7 @@ addLayer("H", {
             if(gcs('I',26))  player[this.layer].milestones.push(13,14)
             if(gcs('I',46))  player[this.layer].milestones.push(5,6,7,8)
             if(gcs('I',46))  player[this.layer].milestones.push(9,10,15)
+            if(mil('I',21))  player[this.layer].milestones.push(2,3,4,12,16)
             if(n(challengeCompletions('I',22)).gte(3))  player[this.layer].milestones.push(18)
             if(gcs('I',86))  player[this.layer].upgrades.push(12,13,14,15,21,22,23,24,25,31,32,33,34,35,41,42,43,44)
         }
@@ -150,8 +151,8 @@ addLayer("H", {
             toggles: [ ['H',"auto8"] ]
         },
         14: {requirementDescription: "1400 H (15",
-            done() {return player[this.layer].points.gte(1400)}, //1440
-            effectDescription: "unlock buy all dH,reduce y4/6 sc BUT remove -1dH button,e nerf +0.02 at 1470.",   //1550
+            done() {return player[this.layer].points.gte(1400)}, //1440 //BUT remove -1dH button
+            effectDescription: "unlock buy all dH,reduce y4/6 sc,e nerf +0.02 at 1470.",   //1550
         },
         15: {requirementDescription: "2600 H (16",
             done() {return player[this.layer].points.gte(2600)}, 
@@ -208,7 +209,8 @@ addLayer("H", {
                 ,["display-text", function() {if(upg('G',151)) return "dH5-current: <h3 style='color: #5EA794; text-shadow: 0 0 2px #c2b280'>" + format(player.H.dh[4]) + "</h3> (best:"+ format(player.H.dhmax[4]) + ")(next at "+ format(tmp.H.dhreq[4])+" Gse) reduce further e nerf by +<h3 style='color: #5EA794; text-shadow: 0 0 2px #c2b280'>" + format(tmp.H.dhef[4],4) +"<h4>"}]
                 ,["display-text", function() {if(upg('G',154)) return "dH6-current: <h3 style='color: #339999; text-shadow: 0 0 2px #c2b280'>" + format(player.H.dh[5]) + "</h3> (best:"+ format(player.H.dhmax[5]) + ")(next at "+ format(tmp.H.dhreq[5])+" Gsb6 eff) div hb3/y3 scaling by /<h3 style='color: #339999; text-shadow: 0 0 2px #c2b280'>" + format(tmp.H.dhef[5],3) +"<h4>"}]
                 ,["display-text",() => "total dH:"+format(tmp.H.totdh)]
-                ,["clickables",[1,2,10]]]},  
+                ,["display-text", function() {if(gcs('I',311)&&mil('I',18)) return "<h4 style='color: #C52C14; text-shadow: 0 0 2px #c2b280'>the curse make dHs effective count ^" + format(tmp.I.resv[3]) }]
+                ,["clickables",[1,10]]]},  
             "dH points":{
                 unlocked() {return (mil("G",31))},
                 content: [["display-text", () => "You have <h3 style='color: #3D3A3F; text-shadow: 0 0 2px #c2b280'>" + format(player.H.dhp) + "</h3> dH points,boost GsR by x<h3 style='color: #3D3A3F; text-shadow: 0 0 2px #c2b280'>" + format(tmp.H.dhpef) +"<h4>"+ format(tmp.H.dhp) + " dH points/s <h4>"]
@@ -671,8 +673,8 @@ addLayer("H", {
     },
     clickables:{
         11:{
-            display(){return "+1 dH1"},//'height':'80px','width':'80px',
-            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#00FFE6":"#BF8F8F"}},
+            display(){return "+1 dH1"},
+            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#00FFE6":"#BF8F8F",'height':'80px','min-height':'80px','width':'80px'}},
             canClick() {return player.G.Gsr.gte(tmp.H.dhreq[0])},
             onClick() {player.H.dh[0]=player.H.dh[0].add(1)
                 if(mil('H',18)&&!gcs('I',73)) player.H.dh[0]=player.G.Gsr.max(1).log(10).div(6).pow(0.5).sub(1).ceil().max(player.H.dh[0])
@@ -680,16 +682,16 @@ addLayer("H", {
             },
             unlocked() {return mil('G',31)},
         },
+        // 12:{
+        //     display(){return "-1 dH1"},
+        //     style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#00FFE6":"#BF8F8F"}},
+        //     canClick() {return player.H.dh[0].gte(1)},
+        //     onClick() {player.H.dh[0]=player.H.dh[0].sub(1).max(0)},
+        //     unlocked() {return (mil('G',31)&&!mil('H',14))},
+        // },
         12:{
-            display(){return "-1 dH1"},
-            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#00FFE6":"#BF8F8F"}},
-            canClick() {return player.H.dh[0].gte(1)},
-            onClick() {player.H.dh[0]=player.H.dh[0].sub(1).max(0)},
-            unlocked() {return (mil('G',31)&&!mil('H',14))},
-        },
-        13:{
             display(){return "+1 dH2"},//'height':'80px','width':'80px',
-            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#2EDEC4":"#BF8F8F"}},
+            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#2EDEC4":"#BF8F8F",'height':'80px','min-height':'80px','width':'80px'}},
             canClick() {return player.H.hyper.gte(tmp.H.dhreq[1])},
             onClick() {player.H.dh[1]=player.H.dh[1].add(1)
                 if(mil('H',18)&&!gcs('I',73)) {player.H.dh[1]=player.H.hyper.max(1).log(10).max(1).log(10).div(2).pow(1/1.58).sub(1).ceil().min(6000).max(player.H.dh[1])
@@ -698,80 +700,80 @@ addLayer("H", {
             },
             unlocked() {return upg('G',144)},
         },
-        14:{
-            display(){return "-1 dH2"},
-            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#2EDEC4":"#BF8F8F"}},
-            canClick() {return player.H.dh[1].gte(1)},
-            onClick() {player.H.dh[1]=player.H.dh[1].sub(1).max(0)},
-            unlocked() {return (upg('G',144)&&!mil('H',14))},
-        },
-        15:{
+        // 14:{
+        //     display(){return "-1 dH2"},
+        //     style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#2EDEC4":"#BF8F8F"}},
+        //     canClick() {return player.H.dh[1].gte(1)},
+        //     onClick() {player.H.dh[1]=player.H.dh[1].sub(1).max(0)},
+        //     unlocked() {return (upg('G',144)&&!mil('H',14))},
+        // },
+        13:{
             display(){return "+1 dH3"},
-            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#4E40B6":"#BF8F8F"}},
+            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#4E40B6":"#BF8F8F",'height':'80px','min-height':'80px','width':'80px'}},
             canClick() {return n(getBuyableAmount('G',31)).gte(tmp.H.dhreq[2])},
             onClick() {player.H.dh[2]=player.H.dh[2].add(1)
                 if(mil('H',18)) player.H.dh[2]=n(getBuyableAmount('G',31)).max(1).log(10).div(3).pow(1/1.7).sub(1).ceil().max(player.H.dh[2])
             },
             unlocked() {return upg('G',145)},
         },
-        16:{
-            display(){return "-1 dH3"},
-            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#4E40B6":"#BF8F8F"}},
-            canClick() {return player.H.dh[2].gte(1)},
-            onClick() {player.H.dh[2]=player.H.dh[2].sub(1).max(0)},
-            unlocked() {return (upg('G',145)&&!mil('H',14))},
-        },
-        21:{
+        // 16:{
+        //     display(){return "-1 dH3"},
+        //     style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#4E40B6":"#BF8F8F"}},
+        //     canClick() {return player.H.dh[2].gte(1)},
+        //     onClick() {player.H.dh[2]=player.H.dh[2].sub(1).max(0)},
+        //     unlocked() {return (upg('G',145)&&!mil('H',14))},
+        // },
+        14:{
             display(){return "+1 dH4"},
-            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#9BFFBD":"#BF8F8F"}},
+            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#9BFFBD":"#BF8F8F",'height':'80px','min-height':'80px','width':'80px'}},
             canClick() {return player.G.GGtot.gte(tmp.H.dhreq[3])},
             onClick() {player.H.dh[3]=player.H.dh[3].add(1)
                 if(mil('H',18)) player.H.dh[3]=player.G.GGtot.div(7500).pow(1/2.2).sub(3).ceil().max(player.H.dh[3])
             },
             unlocked() {return upg('G',145)},
         },
-        22:{
-            display(){return "-1 dH4"},
-            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#9BFFBD":"#BF8F8F"}},
-            canClick() {return player.H.dh[3].gte(1)},
-            onClick() {player.H.dh[3]=player.H.dh[3].sub(1).max(0)},
-            unlocked() {return (upg('G',145)&&!mil('H',14))},
-        },
-        23:{
+        // 22:{
+        //     display(){return "-1 dH4"},
+        //     style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#9BFFBD":"#BF8F8F"}},
+        //     canClick() {return player.H.dh[3].gte(1)},
+        //     onClick() {player.H.dh[3]=player.H.dh[3].sub(1).max(0)},
+        //     unlocked() {return (upg('G',145)&&!mil('H',14))},
+        // },
+        15:{
             display(){return "+1 dH5"},
-            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#5EA794":"#BF8F8F"}},
+            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#5EA794":"#BF8F8F",'height':'80px','min-height':'80px','width':'80px'}},
             canClick() {return player.G.Gsetot.gte(tmp.H.dhreq[4])},
             onClick() {player.H.dh[4]=player.H.dh[4].add(1)
                 if(upg('G',155)) player.H.dh[4]=player.G.Gsetot.max(1).log(10).max(1).log(10).div(2).pow(2/3).sub(1).ceil().max(player.H.dh[4])
             },
             unlocked() {return upg('G',151)},
         },
-        24:{
-            display(){return "-1 dH5"},
-            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#5EA794":"#BF8F8F"}},
-            canClick() {return player.H.dh[4].gte(1)},
-            onClick() {player.H.dh[4]=player.H.dh[4].sub(1).max(0)},
-            unlocked() {return (upg('G',151)&&!mil('H',14))},
-        },
-        25:{
+        // 24:{
+        //     display(){return "-1 dH5"},
+        //     style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#5EA794":"#BF8F8F"}},
+        //     canClick() {return player.H.dh[4].gte(1)},
+        //     onClick() {player.H.dh[4]=player.H.dh[4].sub(1).max(0)},
+        //     unlocked() {return (upg('G',151)&&!mil('H',14))},
+        // },
+        16:{
             display(){return "+1 dH6"},
-            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#339999":"#BF8F8F"}},
+            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#339999":"#BF8F8F",'height':'80px','min-height':'80px','width':'80px'}},
             canClick() {return n(buyableEffect('G',33)).gte(tmp.H.dhreq[5])},
             onClick() {player.H.dh[5]=player.H.dh[5].add(1)
                 if(upg('G',155)) player.H.dh[5]=n(buyableEffect('G',33)).div(5).pow(20/27).ceil().max(player.H.dh[5])
             },
             unlocked() {return upg('G',154)},
         },
-        26:{
-            display(){return "-1 dH6"},
-            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#339999":"#BF8F8F"}},
-            canClick() {return player.H.dh[5].gte(1)},
-            onClick() {player.H.dh[5]=player.H.dh[5].sub(1).max(0)},
-            unlocked() {return (upg('G',154)&&!mil('H',14))},
-        },
+        // 26:{
+        //     display(){return "-1 dH6"},
+        //     style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#339999":"#BF8F8F"}},
+        //     canClick() {return player.H.dh[5].gte(1)},
+        //     onClick() {player.H.dh[5]=player.H.dh[5].sub(1).max(0)},
+        //     unlocked() {return (upg('G',154)&&!mil('H',14))},
+        // },
         101:{
             display(){return "+1 all dHs"},
-            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#F3FF34":"#BF8F8F"}},
+            style() {return {'background-color': layers[this.layer].clickables[this.id].canClick()?"#F3FF34":"#BF8F8F",'height':'80px','min-height':'80px','width':'80px'}},
             canClick() {return true},
             onClick() {
                 if(player.G.Gsr.gte(tmp.H.dhreq[0])) player.H.dh[0]=player.H.dh[0].add(1)
@@ -1770,28 +1772,31 @@ addLayer("H", {
         return b},
     dhef(){
         let e=[n(1.11),n(0.45),n(1.05),n(0.5),n(0.32),n(0.4)]
+        let c=[n(0),n(0),n(0),n(0),n(0),n(0)]
+        for(let i=0;i<=5;i++) c[i]=player.H.dh[i]     //4th curse effect(v0.7.1)
+        if(gcs('I',311)) {for(let i=0;i<=5;i++) c[i]=player.H.dh[i].pow(tmp.I.resv[3])}
         if(upg('G',152)) {e[0]=n(1.2),e[1]=n(0.55),e[3]=n(0.55)}
         if(mil('G',33)) {if(player.G.Gsr.gte('2e6935')) e[0]=e[0].add(0.05),e[2]=n(1.25),e[3]=n(0.6)
             if(player.G.Gsr.gte('5e7628')) e[0]=e[0].add(0.05)}
-        let ef=[n(0),n(0),n(0),n(0),n(0)]
-        ef[0]=n(10).pow(player.H.dh[0].pow(e[0]).mul(6))
-        if(mil('H',11)) {e[0]=e[0].add(0.05),ef[0]=n(10).pow(player.H.dh[0].pow(e[0]).mul(10))}//1.25 
+        let ef=[n(0),n(0),n(0),n(0),n(0),n(0)]
+        ef[0]=n(10).pow(c[0].pow(e[0]).mul(6))//player.H.dh[0]
+        if(mil('H',11)) {e[0]=e[0].add(0.05),ef[0]=n(10).pow(c[0].pow(e[0]).mul(10))}//1.25 
         if(upg('H',45)) ef[0]=n(10).pow(ef[0].add(10).log(10).pow(1.1))
-        ef[1]=player.H.dh[1].add(1).pow(e[1])//.div(2).add(0.5)
+        ef[1]=c[1].add(1).pow(e[1])//.div(2).add(0.5)
         //let e2s=n(0.5)
         //if(upg('G',155)) e2s=e2s.add(0.05)
         if(ef[1].gte(35)) ef[1]=ef[1].div(35).pow(0.5).mul(35)
-        ef[2]=n(1.6).pow(player.H.dh[2].pow(e[2]))
-        if(upg('G',152)) ef[2]=n(2).pow(player.H.dh[2].pow(e[2]))
-        ef[3]=player.H.dh[3].add(1).pow(e[3]).div(25).add(0.96)
+        ef[2]=n(1.6).pow(c[2].pow(e[2]))
+        if(upg('G',152)) ef[2]=n(2).pow(c[2].pow(e[2]))
+        ef[3]=c[3].add(1).pow(e[3]).div(25).add(0.96)
         //if(ef[3].gte(3.5)) ef[3]=ef[3].div(3.5).pow(0.5).mul(3.5)
-        ef[4]=player.H.dh[4].pow(e[4]).div(1000)
-        if(mil('G',33)&&player.H.dh[4].gte(4)) {e[4]=n(0.35),ef[4]=player.H.dh[4].pow(e[4]).div(800)}
+        ef[4]=c[4].pow(e[4]).div(1000)
+        if(mil('G',33)&&player.H.dh[4].gte(4)) {e[4]=n(0.35),ef[4]=c[4].pow(e[4]).div(800)}
         if(mil('G',34)) {if(player.G.Gsetot.gte('e2.86e603')) e[4]=e[4].add(0.1)
             if(player.G.Gsetot.gte('e2.93e495')) e[4]=e[4].add(0.05)
-            if(player.G.Gsetot.gte('e1.48e480')) e[4]=e[4].add(0.05),ef[4]=player.H.dh[4].pow(e[4]).div(400)}
+            if(player.G.Gsetot.gte('e1.48e480')) e[4]=e[4].add(0.05),ef[4]=c[4].pow(e[4]).div(400)}
         ef[4]=ef[4].min(0.5)
-        ef[5]=player.H.dh[5].add(1).pow(e[5]).div(40).add(0.975)
+        ef[5]=c[5].add(1).pow(e[5]).div(40).add(0.975)
         return ef
     },
     dhp(){
@@ -1817,6 +1822,7 @@ addLayer("H", {
     },
     php(){
         let ef=n(100)
+        ef=ef.add(tmp.J.bpef)
         let r=n(10).tetrate(ef)
         return r
     },

@@ -22,8 +22,7 @@ addLayer("D", {
     hotkeys: [
         {key: "d", description: "D: Reset for D points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){  if (player.D.unlocked) return true
-    else return (hasMilestone("C", 3))},
+    layerShown(){ return ((mil('C',3))||player[this.layer].unlocked)},
     gainMult() { 
         mult = new Decimal(1)
         mult = mult.mul(hasUpgrade(this.layer,12)?2:1)
