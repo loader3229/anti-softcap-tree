@@ -1822,7 +1822,7 @@ addLayer("H", {
     },
     php(){
         let ef=n(100)
-        ef=ef.add(tmp.J.bpef)
+        if(player.J.best.gte(1)) ef=ef.add(tmp.J.bpef)
         let r=n(10).tetrate(ef)
         return r
     },
