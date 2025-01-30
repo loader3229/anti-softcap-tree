@@ -179,13 +179,13 @@ function addedPlayerData() { return {
 // Display extra things at the top of the page
 var displayThings = [
 	function() {
-		let s='current endgame:reach F100 hardcap.<br> Too easy? go to play  NG-10(aast) by qqqe308!'
+		let s='current endgame:1F32768 hardcap.<br> Too easy? go to play  NG-10(aast) by qqqe308!'
 		if(upg('G',155)||mil('I',0)) s=s+"<br><h4 style='color: #C52C14'>points gain is hardcapped at "+format(tmp.H.php)+"."
 		return s},//<br> points is hardcapped at 1F100.
 ]
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte('10^^100')
+	return tmp.H.php.gte('10^^32768')
 }
 
 //<br> bilibili: @bili_50929957100
