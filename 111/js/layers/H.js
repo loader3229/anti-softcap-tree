@@ -1541,7 +1541,7 @@ addLayer("H", {
                 if (player[this.layer].dhp.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)
             },
             canAfford() { return player[this.layer].dhp.gte(this.cost()) },
-            buy() { player[this.layer].dhp = player[this.layer].dhp.sub(this.cost())
+            buy() { if(!mil('I',3)) player[this.layer].dhp = player[this.layer].dhp.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   
                 let e=n(0.25)
@@ -1578,7 +1578,7 @@ addLayer("H", {
                 if (player[this.layer].dhp.gte(c)) player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(tar)
             },
             canAfford() { return player[this.layer].dhp.gte(this.cost()) },
-            buy() { player[this.layer].dhp = player[this.layer].dhp.sub(this.cost())
+            buy() { if(!mil('I',3)) player[this.layer].dhp = player[this.layer].dhp.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   
                 let e=n(0.65)
@@ -1610,7 +1610,7 @@ addLayer("H", {
                 return e
             },
             canAfford() { return player[this.layer].dhp.gte(this.cost()) },
-            buy() { player[this.layer].dhp = player[this.layer].dhp.sub(this.cost())
+            buy() { if(!mil('I',3)) player[this.layer].dhp = player[this.layer].dhp.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   
                 let e=[n(0.3),n(1.1)]
@@ -1647,7 +1647,7 @@ addLayer("H", {
                 return e
             },
             canAfford() { return player[this.layer].dhp.gte(this.cost()) },
-            buy() { player[this.layer].dhp = player[this.layer].dhp.sub(this.cost())
+            buy() { if(!mil('I',3)) player[this.layer].dhp = player[this.layer].dhp.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   
                 let e=n(0.35)
