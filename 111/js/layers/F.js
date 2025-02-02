@@ -1232,21 +1232,23 @@ addLayer("F", {
                 else return{'height':'150px'}},        
         },
     },
-    tick(){let bas = n(1.05)
-        let exp=n(1.08)
+    tick(){let bas=n(1.05)
+        let e=n(1.08)
         let expc4=n(1.5)
-        if(hasUpgrade('G',52))  expc4=expc4.add(0.5)
-        if(hasUpgrade('G',33)) exp=exp.add(0.005)
-        if(gcs('I',34)) exp=exp.add(0.001)
-        if (hasChallenge('G',22)) exp=exp.add(challengeEffect('G',22))
-        if (getBuyableAmount('F',102)==n(1)) bas =n(1.065)
-        if (getBuyableAmount('F',102)==n(2)) bas =n(1.08)
-        if (getBuyableAmount('F',102).gte(3)) bas =Decimal.pow(exp,getBuyableAmount('F',102)).mul(0.3).add(0.73)
-        if (hasUpgrade('F',72))  bas=Decimal.mul(bas.sub(1),1.01).add(1)
+        let ef=[n(1.065),n(1.08),e.pow(getBuyableAmount('F',102)).mul(0.3).add(0.73)]
+        if(upg('G',52))  expc4=expc4.add(0.5)
+        if(upg('G',33)) e=e.add(0.005)
+        if(gcs('I',34)) e=e.add(0.001)
+        if (hasChallenge('G',22)) e=e.add(challengeEffect('G',22))
+        if(getBuyableAmount('F',102).gte(1)) bas=ef[n(getBuyableAmount('F',102)).min(2)]
+        // if (getBuyableAmount('F',102)==n(1)) bas=n(1.065)
+        // if (getBuyableAmount('F',102)==n(2)) bas=n(1.08)
+        // if (getBuyableAmount('F',102).gte(3)) bas=e.pow(getBuyableAmount('F',102)).mul(0.3).add(0.73)
+        if(upg('F',72))  bas=Decimal.mul(bas.sub(1),1.01).add(1)
         if (hasChallenge('G',12))  bas=Decimal.mul(bas.sub(1),challengeEffect('G',12)).add(1)
-        if(hasUpgrade('G',54)) bas=Decimal.mul(bas.sub(1),upgradeEffect('G',54)).add(1)
-        if(hasMilestone('G',14)) bas=Decimal.pow(bas,tmp.G.gsef)
-        if (inChallenge('G',22)) bas = n(1.05).add(getBuyableAmount('F',102).pow(expc4).div(100))
+        if(upg('G',54)) bas=Decimal.mul(bas.sub(1),upgradeEffect('G',54)).add(1)
+        if(mil('G',14)) bas=Decimal.pow(bas,tmp.G.gsef)
+        if (inChallenge('G',22)) bas=n(1.05).add(getBuyableAmount('F',102).pow(expc4).div(100))
         //if (bas.gte(2)) bas=Decimal.pow(10,bas.div(2).log(10).pow(0.96)).mul(2)
         return bas},
     F1effect() {
