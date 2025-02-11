@@ -111,7 +111,7 @@ addLayer("C", {
                 if (hasUpgrade('E',64)) exp=exp.add(0.1)
                 if (hasUpgrade('E',72)) exp=exp.add(0.1)
                 if (hasUpgrade('F',21)) exp=exp.add(0.4)
-                if (hasUpgrade('E',61)) ef=Decimal.pow(ef,n(buyableEffect("E",21).sub(1).mul(exp).add(1)))
+                if (hasUpgrade('E',61)) ef=ef.pow(n(buyableEffect("E",21).sub(1).mul(exp).add(1)))
                 return ef;          
             },
             cost:new Decimal(1),

@@ -7,6 +7,7 @@ addLayer("I", {
 		points:n(0),
         qolpoints:n(0),
         time:n(0),
+        resetamt:n(0),
         m:[n('1e308'),n(0)],//min and max
         mpr:n(1),
         chalbest:[n('1e308'),n('1e308'),n('1e308'),n('1e308')],
@@ -119,7 +120,7 @@ addLayer("I", {
         },
         14: {requirementDescription: "90 total I (15",
             done() {return player[this.layer].total.gte(90)}, 
-            effectDescription: "autobuy Ib1-9,Ib9 limit is x0.1.",
+            effectDescription: "autobuy Ib1-9 and remove linear cost,Ib9 limit is x0.1.",
             toggles: [ ['I',"auto1"] ]
         },
         15: {requirementDescription: "get 2 I at once (16",
@@ -146,9 +147,26 @@ addLayer("I", {
             done() {return player[this.layer].total.gte(2024)}, 
             effectDescription: "edit HI eff and unlock next eff.",
         },
-        21: {requirementDescription: "150 harden I (22",
+        21: {requirementDescription: "150 harden I (22",//167
             done() {return player.I.hi.gte(150)}, 
             effectDescription: "keep all G-H milestones(except G13/H17) at I reset. Auto slog and ignore option 1 at 1F25 in the curse.",
+        },
+        22: {requirementDescription: "167 harden I (23",
+            done() {return player.I.hi.gte(167)}, 
+            effectDescription: "unlock next 3 BP bab,r1^/r2^ amt ^1.05.",
+        },
+        23: {requirementDescription: "1e7 total I (24",
+            done() {return player[this.layer].total.gte(1e7)}, 
+            effectDescription: "unlock 3 SS babs and an HI eff,nerf cop1-3.",
+        },
+        24: {requirementDescription: "1e10 total I (25",
+            done() {return player[this.layer].total.gte(1e10)}, 
+            effectDescription: "unlock 2 SS babs and an HI eff(starts at 200),nerf cop1-4,again.",
+        },
+        25: {requirementDescription: "233 harden I (26",
+            done() {return player.I.hi.gte(233)}, 
+            effectDescription: "r1^,r2^,b2b+,Gs^ is much cheaper.r^2 base +0.01,edit ss1/4,autobuy r1^,r2^,cop3 x0.7.",
+            toggles: [ ['I',"auto2"] ]
         },
     },
     m10ef(){
@@ -197,7 +215,10 @@ addLayer("I", {
                     s=s+"raise QP gain by ^<h3 style='color: #9B1F41; text-shadow: 0 0 2px #c2b280'>" + format(tmp.I.hief[0],3) + "</h3><br>"
                     if(mil('I',18)) s=s+"BP formula exp +<h3 style='color: #9B1F41; text-shadow: 0 0 2px #c2b280'>" + format(tmp.I.hief[1],3) + "</h3><br>"
                     if(mil('I',20)) s=s+"SI exp +<h3 style='color: #9B1F41; text-shadow: 0 0 2px #c2b280'>" + format(tmp.I.hief[2],3) + "</h3><br>"
-                    s=s+"current options value: <h4>" + format(tmp.I.ressum)
+                    if(mil('J',12)) s=s+"BP formula exp x<h3 style='color: #9B1F41; text-shadow: 0 0 2px #c2b280'>" + format(tmp.I.hief[3],3) + "</h3><br>"
+                    if(mil('I',23)) s=s+"pts slog speed x<h3 style='color: #9B1F41; text-shadow: 0 0 2px #c2b280'>" + format(tmp.I.hief[4],3) + "</h3><br>"
+                    if(mil('I',24)) s=s+"BP/SS slog +<h3 style='color: #9B1F41; text-shadow: 0 0 2px #c2b280'>" + format(tmp.I.hief[5],3) + "</h3><br>"
+                    s=s+"<h4>current options value:" + format(tmp.I.ressum)
                     return s}]
                     ,["display-text", function() {return " <br>1.points slog -" + format(tmp.I.resv[0])+" (level "+ format(player.I.res[0])+"/"+ format(tmp.I.reslim[0])+")(count as "+ format(tmp.I.resq[0])+") <h4>"}],["clickables",[21]]
                     ,["display-text", function() {return " <br>2.Gs slog -" + format(tmp.I.resv[1])+" (level "+ format(player.I.res[1])+"/"+ format(tmp.I.reslim[1])+")(count as "+ format(tmp.I.resq[1])+") <h4>"}],["clickables",[22]]
@@ -208,20 +229,20 @@ addLayer("I", {
                 unlocked() {return mil('I',2)},
                 content: [["display-text", function() { 
                     let s="You have <h3 style='color: #5FFF9B; text-shadow: 0 0 2px #c2b280'>" + format(player.I.qolpoints) + "</h3> Qol points "+ "<h4>" + format(tmp.I.qb) + " Qol points/s <h4>"
-                    s=s+"<br><h4>QP gain formula(without boosts):4^(reset amt-3)^0.85"
-                    s=s+"<br><h4 style='color: #C52C14'>QP prod is halted after 1e4 sec reset time."
-                    if(player.I.time.gte(1e4)) s=s+"<br><h4 style='color: #C52C14'>QP prod is currently halted."
+                    s=s+"<br><h4>QP gain formula(without boosts):4^(total I)^0.85"
+                    // s=s+"<br><h4 style='color: #C52C14'>QP prod is halted after 1e4 sec reset time."
+                    // if(player.I.time.gte(1e4)) s=s+"<br><h4 style='color: #C52C14'>QP prod is currently halted."
                     return s}]
-                ,["clickables",[1,2,3,4,5,6,7,8,11,12,13]]]},
+                ,["clickables",[1,2,3,4,5,6,7,8,10,11,12,13]]]},
         }
     },
     tabFormat: [
         "main-display",
         "prestige-button",
         ["display-text", function(){
-            let tot='total I:'+format(player.I.total)+'<br>you get '+format(player.I.mpr)+' I in a reset at best<br>'
-            let t='current reset time:'+format(player.I.time)+'s<br>'
-            let m='fastest:'+format(player.I.m[0])+'s   longest:'+format(player.I.m[1])+'s<br>'
+            let tot='total I:'+format(player.I.total)+'<br>You have reset '+format(player.I.resetamt)+' times<br>'//you get '+format(player.I.mpr)+' I in a reset at best<br>'
+            let t='Current reset time:'+format(player.I.time)+'s<br>'
+            let m='Fastest:'+format(player.I.m[0])+'s   Longest:'+format(player.I.m[1])+'s<br>'
             let s=tot+t+m
             if(mil('I',16)) s=s+'You have ' + format(player.I.si) + ' slog integral (based on pts on each reset)(+'+ format(tmp.I.sig) + '/s)'//tmp.I.sig
             return s
@@ -234,6 +255,7 @@ addLayer("I", {
         player.I.m[0]=player.I.m[0].min(player.I.time)
         player.I.m[1]=player.I.m[1].max(player.I.time)
         player.I.time=n(0)
+        player.I.resetamt=player.I.resetamt.add(1)
         //mpr=mpr.max(player.points.max(10).slog().div(100).max(1).pow(0.75).ceil())
     },
     sig(){
@@ -1093,7 +1115,7 @@ addLayer("I", {
             style() {return {'background-color':gcs(this.layer,this.id)?"#C52C14":"#9B1F41",'width':'160px','height':'160px'}},
             canClick() {return true},  //1 is in the curse
             onClick() {
-                if(gcs(this.layer,this.id)){if(player.points.gte('10^^100')) {player.I.hi=player.I.hi.max(tmp.I.ressum)}
+                if(gcs(this.layer,this.id)){if(gba('J',101).gte(23)?player.G.Gsetot.gte('10^^5'):player.points.gte('10^^100')) {player.I.hi=player.I.hi.max(tmp.I.ressum)}
                     scs(this.layer,this.id,0)}
                 else scs(this.layer,this.id,1) 
                 doReset('I')
@@ -1118,18 +1140,16 @@ addLayer("I", {
         11: {
             title: "Ib1", 
             cost(x) { 
-                let cost = n(2).pow(x)
-                return cost
+                let c = n(2).pow(x)
+                return c
             },
             canAfford() { return player[this.layer].qolpoints.gte(this.cost()) },
             buy() {setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
-            bulk(){let t=n(0)
-                let c=n(0)
-                if(player[this.layer].auto1&&(mil('I',14))) {
-                    t=player[this.layer].qolpoints.max(1).log(2).sub(1).ceil().max(gba(this.layer, this.id))
-                    c=this.cost(t)
-                    if(player[this.layer].qolpoints.gte(c)) setBuyableAmount(this.layer,this.id,t)}    
-                },
+            bulk(){
+                let t=player[this.layer].qolpoints.max(1).log(2).sub(1).ceil().max(gba(this.layer,this.id))
+                let c=this.cost(t)
+                if(player[this.layer].auto1) setBuyableAmount(this.layer,this.id,t) 
+            },//if(player[this.layer].qolpoints.gte(c))
             base(){   
                 let b=n(1.04)
                 if(mil('I',8)) b=b.add(0.01)
@@ -1142,26 +1162,25 @@ addLayer("I", {
             display() { 
                 return "QP x"+ format(this.base()) + "(dont spend) \n\
                 Cost: " + format(this.cost()) + " QP \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return mil('I',3) }
         },
         12: {
             title: "Ib2", 
             cost(x) { 
-                let cost = n(2).pow(x).mul(100)
-                return cost
+                let c=n(2).pow(x).mul(100)
+                if(mil('I',14)) c=n(2).pow(x)
+                return c
             },
             canAfford() { return player[this.layer].qolpoints.gte(this.cost()) },
             buy() { if(!mil('I',6)) player[this.layer].qolpoints = player[this.layer].qolpoints.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
-            bulk(){let t=n(0)
-                let c=n(0)
-                if(player[this.layer].auto1&&(mil('I',14))) {
-                    t=player[this.layer].qolpoints.div(100).max(1).log(2).sub(1).ceil().max(gba(this.layer, this.id))
-                    c=this.cost(t)
-                    if(player[this.layer].qolpoints.gte(c)) setBuyableAmount(this.layer,this.id,t)}    
-                },
+            bulk(){
+                let t=player[this.layer].qolpoints.max(1).log(2).sub(1).ceil().max(gba(this.layer,this.id))
+                let c=this.cost(t)
+                if(player[this.layer].auto1) setBuyableAmount(this.layer,this.id,t) 
+            },
             base(){   
                 let b=n(1.01)
                 if(mil('I',8)) b=b.add(0.01)
@@ -1174,25 +1193,24 @@ addLayer("I", {
             display() { 
                 return "points ^"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " QP \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: ^" + format(this.effect(),3)},
             unlocked() { return mil('I',3) }
         },
         13: {
             title: "Ib3", 
             cost(x) { 
-                let cost = n(3).pow(x).mul(100)
-                return cost
+                let c = n(3).pow(x).mul(100)
+                if(mil('I',14)) c=n(3).pow(x)
+                return c
             },
             canAfford() { return player[this.layer].qolpoints.gte(this.cost()) },
             buy() {if(!mil('I',9)) player[this.layer].qolpoints = player[this.layer].qolpoints.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
-            bulk(){let t=n(0)
-                let c=n(0)
-                if(player[this.layer].auto1&&(mil('I',14))) {
-                    t=player[this.layer].qolpoints.div(100).max(1).log(3).sub(1).ceil().max(gba(this.layer, this.id))
-                    c=this.cost(t)
-                    if(player[this.layer].qolpoints.gte(c)) setBuyableAmount(this.layer,this.id,t)}    
+            bulk(){
+                let t=player[this.layer].qolpoints.max(1).log(3).sub(1).ceil().max(gba(this.layer,this.id))
+                let c=this.cost(t)
+                if(player[this.layer].auto1) setBuyableAmount(this.layer,this.id,t)   
                 },
             base(){   
                 let b=n(1.01)
@@ -1206,25 +1224,24 @@ addLayer("I", {
             display() { 
                 return "F1 ^"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " QP \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: ^" + format(this.effect(),3)},
             unlocked() { return mil('I',3) }
         },
         21: {
             title: "Ib4", 
             cost(x) { 
-                let cost = n(5).pow(x).mul(1e3)
-                return cost
+                let c = n(5).pow(x).mul(1e3)
+                if(mil('I',14)) c=n(5).pow(x)
+                return c
             },
             canAfford() { return player[this.layer].qolpoints.gte(this.cost()) },
             buy() {if(!mil('I',11)) player[this.layer].qolpoints = player[this.layer].qolpoints.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
-            bulk(){let t=n(0)
-                let c=n(0)
-                if(player[this.layer].auto1&&(mil('I',14))) {
-                    t=player[this.layer].qolpoints.div(1e3).max(1).log(5).sub(1).ceil().max(gba(this.layer, this.id))
-                    c=this.cost(t)
-                    if(player[this.layer].qolpoints.gte(c)) setBuyableAmount(this.layer,this.id,t)}    
+            bulk(){
+                let t=player[this.layer].qolpoints.max(1).log(5).sub(1).ceil().max(gba(this.layer,this.id))
+                let c=this.cost(t)
+                if(player[this.layer].auto1) setBuyableAmount(this.layer,this.id,t) 
                 },
             base(){   
                 let b=n(0.005)
@@ -1236,7 +1253,7 @@ addLayer("I", {
             display() { 
                 return "Gc3-4p gain exp +"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " QP \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect(),3)},
             unlocked() { return mil('I',6) }
         },
@@ -1244,17 +1261,16 @@ addLayer("I", {
             title: "Ib5", 
             cost(x) { 
                 let cost = n(4).pow(x).mul(1e3)
+                if(mil('I',14)) c=n(4).pow(x)
                 return cost
             },
             canAfford() { return player[this.layer].qolpoints.gte(this.cost()) },
             buy() {if(!mil('I',11)) player[this.layer].qolpoints = player[this.layer].qolpoints.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
-            bulk(){let t=n(0)
-                let c=n(0)
-                if(player[this.layer].auto1&&(mil('I',14))) {
-                    t=player[this.layer].qolpoints.div(1e3).max(1).log(4).sub(1).ceil().max(gba(this.layer, this.id))
-                    c=this.cost(t)
-                    if(player[this.layer].qolpoints.gte(c)) setBuyableAmount(this.layer,this.id,t)}    
+            bulk(){
+                let t=player[this.layer].qolpoints.max(1).log(4).sub(1).ceil().max(gba(this.layer,this.id))
+                let c=this.cost(t)
+                if(player[this.layer].auto1) setBuyableAmount(this.layer,this.id,t)  
                 },
             base(){   
                 let b=n(1.05)
@@ -1268,25 +1284,24 @@ addLayer("I", {
             display() { 
                 return "Gse gain ^"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " QP \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: ^" + format(this.effect(),3)},
             unlocked() { return mil('I',6) }
         },
         23: {
             title: "Ib6", 
             cost(x) { 
-                let cost = n(3).pow(x).mul(1e3)
-                return cost
+                let c = n(3).pow(x).mul(1e3)
+                if(mil('I',14)) c=n(3).pow(x)
+                return c
             },
             canAfford() { return player[this.layer].qolpoints.gte(this.cost()) },
             buy() {if(!mil('I',11)) player[this.layer].qolpoints = player[this.layer].qolpoints.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
-            bulk(){let t=n(0)
-                let c=n(0)
-                if(player[this.layer].auto1&&(mil('I',14))) {
-                    t=player[this.layer].qolpoints.div(1e3).max(1).log(3).sub(1).ceil().max(gba(this.layer, this.id))
-                    c=this.cost(t)
-                    if(player[this.layer].qolpoints.gte(c)) setBuyableAmount(this.layer,this.id,t)}    
+            bulk(){
+                let t=player[this.layer].qolpoints.max(1).log(3).sub(1).ceil().max(gba(this.layer,this.id))
+                let c=this.cost(t)
+                if(player[this.layer].auto1) setBuyableAmount(this.layer,this.id,t)    
                 },
             base(){   
                 let b=n(1.02)
@@ -1300,25 +1315,24 @@ addLayer("I", {
             display() { 
                 return "dH base to dHp x"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " QP \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: ^" + format(this.effect(),3)},
             unlocked() { return mil('I',6) }
         },
         31: {
             title: "Ib7", 
             cost(x) { 
-                let cost = n(6).pow(x).mul(1e6)
-                return cost
+                let c = n(6).pow(x).mul(1e6)
+                if(mil('I',14)) c=n(6).pow(x)
+                return c
             },
             canAfford() { return player[this.layer].qolpoints.gte(this.cost()) },
             buy() {if(!n(challengeCompletions('I',22)).gte(5)) player[this.layer].qolpoints = player[this.layer].qolpoints.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
-            bulk(){let t=n(0)
-                let c=n(0)
-                if(player[this.layer].auto1&&(mil('I',14))) {
-                    t=player[this.layer].qolpoints.div(1e6).max(1).log(6).sub(1).ceil().max(gba(this.layer, this.id))
-                    c=this.cost(t)
-                    if(player[this.layer].qolpoints.gte(c)) setBuyableAmount(this.layer,this.id,t)}    
+            bulk(){
+                let t=player[this.layer].qolpoints.max(1).log(6).sub(1).ceil().max(gba(this.layer,this.id))
+                let c=this.cost(t)
+                if(player[this.layer].auto1) setBuyableAmount(this.layer,this.id,t)     
                 },
             base(){   
                 let b=n(0.0005)
@@ -1329,25 +1343,24 @@ addLayer("I", {
             display() { 
                 return "hy3 base +"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " QP \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect(),4)},
             unlocked() { return mil('I',9) }
         },
         32: {
             title: "Ib8", 
             cost(x) { 
-                let cost = n(3).pow(x).mul(1e7)
-                return cost
+                let c = n(3).pow(x).mul(1e7)
+                if(mil('I',14)) c=n(3).pow(x)
+                return c
             },
             canAfford() { return player[this.layer].qolpoints.gte(this.cost()) },
             buy() {if(!n(challengeCompletions('I',22)).gte(5)) player[this.layer].qolpoints = player[this.layer].qolpoints.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
-            bulk(){let t=n(0)
-                let c=n(0)
-                if(player[this.layer].auto1&&(mil('I',14))) {
-                    t=player[this.layer].qolpoints.div(1e7).max(1).log(3).sub(1).ceil().max(gba(this.layer, this.id))
-                    c=this.cost(t)
-                    if(player[this.layer].qolpoints.gte(c)) setBuyableAmount(this.layer,this.id,t)}    
+            bulk(){
+                let t=player[this.layer].qolpoints.max(1).log(3).sub(1).ceil().max(gba(this.layer,this.id))
+                let c=this.cost(t)
+                if(player[this.layer].auto1) setBuyableAmount(this.layer,this.id,t)     
                 },
             base(){   
                 let b=n(1.01)
@@ -1360,7 +1373,7 @@ addLayer("I", {
             display() { 
                 return "GsR gain ^"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " QP \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: ^" + format(this.effect(),3)},
             unlocked() { return mil('I',9) }
         },
@@ -1368,17 +1381,16 @@ addLayer("I", {
             title: "Ib9", 
             cost(x) { 
                 let cost = n(4).pow(x).mul(1e7)
+                if(mil('I',14)) c=n(4).pow(x)
                 return cost
             },
             canAfford() { return player[this.layer].qolpoints.gte(this.cost()) },
             buy() {if(!n(challengeCompletions('I',22)).gte(5)) player[this.layer].qolpoints = player[this.layer].qolpoints.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
-            bulk(){let t=n(0)
-                let c=n(0)
-                if(player[this.layer].auto1&&(mil('I',14))) {
-                    t=player[this.layer].qolpoints.div(1e7).max(1).log(4).sub(1).ceil().max(gba(this.layer, this.id))
-                    c=this.cost(t)
-                    if(player[this.layer].qolpoints.gte(c)) setBuyableAmount(this.layer,this.id,t)}    
+            bulk(){
+                let t=player[this.layer].qolpoints.max(1).log(4).sub(1).ceil().max(gba(this.layer,this.id))
+                let c=this.cost(t)
+                if(player[this.layer].auto1) setBuyableAmount(this.layer,this.id,t)      
                 },
             base(){   
                 let b=n(0.96)
@@ -1393,7 +1405,7 @@ addLayer("I", {
             display() { 
                 return "bulk H req x"+ format(this.base()) + "(capped at "+ format(this.hardcap()) + ") \n\
                 Cost: " + format(this.cost()) + " QP \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect(),3)},
             unlocked() { return mil('I',9) }
         },
@@ -1402,13 +1414,17 @@ addLayer("I", {
                 let s=''
                 if(gba(this.layer,this.id).gte(80)) s='sc '
                 if(gba(this.layer,this.id).gte(100)) s='sc2 '
+                if(gba(this.layer,this.id).gte(180)) s='sc3 '
+                if(gba(this.layer,this.id).gte(320)) s='sc4 '
                 s=s+'Ib10'
                 return s
             },  
             cost(x) { 
                 let c=n(10).pow(x.add(40).pow(3).div(160))
-                if(x.gte(80)) c=c=n(10).pow(n(10).pow(x.sub(30).pow(0.33)).mul(3))
-                if(x.gte(100)) c=c=n(10).pow(n(10).pow(x.sub(70).pow(0.45)))
+                if(x.gte(80)) c=n(10).pow(n(10).pow(x.sub(30).pow(0.33)).mul(3))
+                if(x.gte(100)) c=n(10).pow(n(10).pow(x.sub(70).pow(0.45)))
+                if(x.gte(180)) c=n(10).pow(n(10).pow(x.sub(10).pow(0.55).div(2)))
+                if(x.gte(320)) c=n(10).pow(n(10).pow(x.pow(0.83).div(10)))
                 return c
             },
             canAfford() { return player[this.layer].qolpoints.gte(this.cost()) },
@@ -1429,8 +1445,7 @@ addLayer("I", {
             display() { 
                 return "I gain x"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " QP \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
-                Effect: x" + format(this.effect())},
+                 Amount: " + format(player[this.layer].buyables[this.id])  +" \n\                Effect: x" + format(this.effect())},
             unlocked() {return player.I.hi.gte(34)}
         },
     },
@@ -1590,6 +1605,7 @@ addLayer("I", {
         if(mil('I',2)&&player.I.total.gte(3)) ef=n(4).pow(player.I.total.sub(3).pow(0.85))
         let b=n(3)
         if(mil('J',0)) b=b.add(0.2)
+        if(gba('J',101).gte(20)) b=b.add(buyableEffect('J',41))
         if(mil('I',12)) ef=ef.max(n(b).pow(player.I.total.pow(0.9)))
         if(n(challengeCompletions('I',22)).gte(4)) ef=ef.pow(1.05)
         if(mil('I',3))  ef=ef.mul(buyableEffect('I',11))
@@ -1600,13 +1616,20 @@ addLayer("I", {
     },
     resv(){
         let ef=[n(0),n(0),n(0),n(0)]
-        let e=[n(1.05),n(0.8),n(0.75),n(-1)]
+        let e=[n(1.05),n(0.8),n(0.75),n(0.55)]
         let m=[n(0.2),n(0.1),n(0.07),n(2)]
         if(mil('J',4)) e[0]=e[0].sub(0.05),m[0]=m[0].sub(0.02)
+        if(mil('I',24)) e[3]=e[3].sub(0.15)
         if(player.I.res[1].gte(10)) e[1]=e[1].add(player.I.res[1].sub(10).div(100))
         if(player.I.res[2].gte(10)) e[2]=e[2].add(player.I.res[2].sub(10).div(100))
         for(let i=0;i<=2;i++) ef[i]=player.I.res[i].pow(e[i]).mul(m[i])
-        ef[3]=n(0.5).pow(player.I.res[3].pow(0.55))
+        ef[3]=n(0.5).pow(player.I.res[3].pow(e[3]))
+        if(mil('I',23)) for(let i=0;i<=2;i++) ef[i]=ef[i].mul(0.9)//e[1]=e[1].mul(0.9),e[2]=e[2].mul(0.9)
+        if(mil('I',24)) for(let i=0;i<=2;i++) ef[i]=ef[i].mul(0.9)
+        if(gba('J',101).gte(11)) for(let i=0;i<=2;i++) ef[i]=ef[i].div(buyableEffect('J',34))
+        if(gba('J',101).gte(23)) ef[1]=ef[1].mul(0.7)
+        if(mil('J',25)) ef[2]=ef[2].mul(0.7)
+        ef[3]=ef[3].mul(buyableEffect('J',34))
         return ef
     },
     reslim(){
@@ -1614,6 +1637,8 @@ addLayer("I", {
         if(mil('I',19)) for(let i=0;i<=3;i++) ef[i]=ef[i].add(5)
         if(mil('J',5)) for(let i=0;i<=3;i++) ef[i]=ef[i].add(10)
         if(mil('J',10)) for(let i=0;i<=3;i++) ef[i]=ef[i].add(5)
+        if(gba('J',101).gte(11)) for(let i=0;i<=3;i++) ef[i]=ef[i].add(5)
+        if(gba('J',101).gte(27)) for(let i=0;i<=1;i++) ef[i]=ef[i].add(5)
         return ef
     },
     resq(){
@@ -1626,12 +1651,18 @@ addLayer("I", {
         return b
     },
     hief(){
-        let ef=[n(0),n(0),n(0)]
-        let e=[n(0.85),n(0.7),n(1.1)]
+        let ef=[n(0),n(0),n(0),n(0),n(0),n(0)]
+        let e=[n(0.85),n(0.7),n(1.1),n(4),n(1.1),n(0.8)]
         if(mil('I',20)) {e[0]=n(0.9),e[1]=n(0.75)}
+        if(mil('J',12)) e[1]=n(0.9)
+        if(gba('J',101).gte(3)) {e[0]=n(0.925),e[1]=n(1),e[3]=n(4.2)}
+        if(gba('J',101).gte(17)) e[0]=n(0.99)
         ef[0]=player.I.hi.max(0).pow(e[0]).div(20).add(1)
         ef[1]=player.I.hi.max(0).pow(e[1]).div(10)
         ef[2]=player.I.hi.max(0).pow(e[2]).div(200)
+        ef[3]=player.I.hi.add(2).log(2).pow(e[3]).div(5000).add(1).max(1)
+        ef[4]=player.I.hi.max(0).pow(e[4]).div(50).add(1)
+        ef[5]=player.I.hi.sub(200).max(0).pow(e[5]).div(1e3)
         return ef
     },
     update(diff){
@@ -1641,6 +1672,6 @@ addLayer("I", {
         if (inChallenge('I',12)&&upg('G',55))  player.I.chalbest[1]=player.I.chalbest[1].min(player.I.time)
         if (inChallenge('I',21)&&player.H.max.gte('17'))  player.I.chalbest[2]=player.I.chalbest[2].min(player.I.time)
         if (inChallenge('I',22)&&upg('G',155))  player.I.chalbest[3]=player.I.chalbest[3].min(player.I.time)
-        if (mil('I',2)&&!player.I.time.gte(10000))  player.I.qolpoints = player.I.qolpoints.add(tmp.I.qb.mul(diff))
-    },
+        if (mil('I',2))  player.I.qolpoints = player.I.qolpoints.add(tmp.I.qb.mul(diff))
+    },//&&!player.I.time.gte(10000)
 })

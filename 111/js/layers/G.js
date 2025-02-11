@@ -1160,7 +1160,7 @@ addLayer("G", {
             },
             effect(){
                 let exp=n(4)
-                if(gcs('G',32)==1)  exp=exp.mul(1.15)
+                if(gcs('G',32))  exp=exp.mul(1.15)
                 if (player.G.Gsetot.gte('1e13144')) exp=exp.mul(1.5)
                 if (player.G.Gsetot.gte('1e49180')) exp=exp.mul(3)
                 let ef=player.G.Gs.add(10).log(10).pow(exp)
@@ -1204,8 +1204,8 @@ addLayer("G", {
             },
             effect(){
                 let d=n(400)
-                if(gcs('G',43)==1)  d=d.mul(0.8)
-                if(gcs('G',51)==1)  d=d.mul(0.8)
+                if(gcs('G',43))  d=d.mul(0.8)
+                if(gcs('G',51))  d=d.mul(0.8)
                 let exp=n(0.85)
                 if(hasUpgrade('G',131)) exp=exp.add(0.03)
                 let ef=player.G.GGtot.pow(exp).div(d).add(1)
@@ -1231,7 +1231,7 @@ addLayer("G", {
             title(){return "Gt6"},
             display(){return "Gsi eff nerf is weaker <br> cost: 20 GG "},
             style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(20)&&gcs(this.layer,this.id)!==1&&(gcs(this.layer,31)==1|| gcs(this.layer,32)==1|| gcs(this.layer,33)==1)},
+            canClick() {return player.G.GG.gte(20)&&!gcs(this.layer,this.id)&&(gcs(this.layer,31)|| gcs(this.layer,32)|| gcs(this.layer,33))},
             onClick() {if (!mil('G',27)) {player.G.Gtc=player.G.Gtc.add(20)}
                 setClickableState(this.layer,this.id,1)
             },
@@ -1241,8 +1241,8 @@ addLayer("G", {
         43: {
             title(){return "Gt7"},
             display(){return "total GG nerf b4 scaling,t4 x1.2 <br> cost: 18 GG <br> eff:/"+format(this.effect(),4)},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(18)&&gcs(this.layer,this.id)!==1&&(gcs(this.layer,31)==1|| gcs(this.layer,32)==1|| gcs(this.layer,33)==1)},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(18)&&!gcs(this.layer,this.id)&&(gcs(this.layer,31)|| gcs(this.layer,32)|| gcs(this.layer,33))},
             onClick() {if (!hasMilestone('G',27)) {player.G.Gtc=player.G.Gtc.add(18)}
                 setClickableState(this.layer,this.id,1)
             },
@@ -1256,15 +1256,15 @@ addLayer("G", {
         44: {
             title(){return "Gt13"},
             display(){return "Gse raise Gs,b2-3 scaling is weaker <br> cost: 26 GG <br> eff:^"+format(this.effect(),4)},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(26)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,21)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(26)&&!gcs(this.layer,this.id)&&gcs(this.layer,21)},
             onClick() {if (!hasMilestone('G',27)) {player.G.Gtc=player.G.Gtc.add(26)}
                 setClickableState(this.layer,this.id,1)
             },
             effect(){
                 let ef=player.G.Gsetot.add(10).log(10).add(10).log(10).pow(2.5).div(90).add(89/90)
                 if(hasUpgrade('H',12)) ef=player.G.Gsetot.add(10).log(10).add(10).log(10).pow(2.6).div(80).add(79/80)
-                if (gcs('G',82)==1)  ef=ef.pow('1.2')
+                if (gcs('G',82))  ef=ef.pow('1.2')
                 return ef
             },
             unlocked() {return hasUpgrade('G',125)},
@@ -1273,8 +1273,8 @@ addLayer("G", {
         51: {
             title(){return "Gt8"},
             display(){return "nerf b4/5/7/8 scaling,t4 x1.2 again <br> cost: 18 GG "},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(18)&&gcs(this.layer,this.id)!==1&&(gcs(this.layer,41)==1|| gcs(this.layer,42)==1|| gcs(this.layer,43)==1)},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(18)&&!gcs(this.layer,this.id)&&(gcs(this.layer,41)|| gcs(this.layer,42)|| gcs(this.layer,43))},
             onClick() {if (!hasMilestone('G',25)) {player.G.Gtc=player.G.Gtc.add(18)}
                 setClickableState(this.layer,this.id,1)
             },
@@ -1284,8 +1284,8 @@ addLayer("G", {
         61: {
             title(){return "Gt9"},
             display(){return "Gse raise itself (base on max) <br> cost: 36 GG <br> eff:^"+format(this.effect(),4)},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(36)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,51)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(36)&&!gcs(this.layer,this.id)&&gcs(this.layer,51)},
             onClick() {player.G.Gtc=player.G.Gtc.add(36)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1300,8 +1300,8 @@ addLayer("G", {
         62: {
             title(){return "Gt10"},
             display(){return "Gsi raise itself (base on max) <br> cost: 39 GG <br> eff:^"+format(this.effect(),4)},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(39)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,51)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(39)&&!gcs(this.layer,this.id)&&gcs(this.layer,51)},
             onClick() {player.G.Gtc=player.G.Gtc.add(39)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1316,8 +1316,8 @@ addLayer("G", {
         63: {
             title(){return "Gt16"},
             display(){return "Gs raise itself (base on max) <br> cost: 32 GG <br> eff:^"+format(this.effect(),4)},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(32)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,51)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(32)&&!gcs(this.layer,this.id)&&gcs(this.layer,51)},
             onClick() {player.G.Gtc=player.G.Gtc.add(32)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1334,8 +1334,8 @@ addLayer("G", {
         71: {
             title(){return "Gt11"},
             display(){return "b4 eff boost Gse(hardcap at e5e6) <br> cost: 15 GG <br> eff:x"+format(this.effect())},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(15)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,61)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(15)&&!gcs(this.layer,this.id)&&gcs(this.layer,61)},
             onClick() {player.G.Gtc=player.G.Gtc.add(15)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1360,8 +1360,8 @@ addLayer("G", {
             display(){
                 if(player.G.Gsetot.gte('e260000')) return "b7 eff raise Gsi <br> cost: 15 GG <br> eff:^"+format(this.effect()[1],3)
                 else return "b7 eff boost Gsi <br> cost: 15 GG <br> eff:x"+format(this.effect()[0])},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(15)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,62)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(15)&&!gcs(this.layer,this.id)&&gcs(this.layer,62)},
             onClick() {player.G.Gtc=player.G.Gtc.add(15)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1380,8 +1380,8 @@ addLayer("G", {
         73: {
             title(){return "Gt17"},
             display(){return "b1 eff raise Gs <br> cost: 13 GG <br> eff:^"+format(this.effect(),3)},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(13)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,63)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(13)&&!gcs(this.layer,this.id)&&gcs(this.layer,63)},
             onClick() {player.G.Gtc=player.G.Gtc.add(13)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1400,8 +1400,8 @@ addLayer("G", {
         81: {
             title(){return "Gt14"},
             display(){return "dilate b4 to 1.05.b7 to 1.01,t11 ^1.2 <br> cost: 40 GG "},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(40)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,71)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(40)&&!gcs(this.layer,this.id)&&gcs(this.layer,71)},
             onClick() {player.G.Gtc=player.G.Gtc.add(40)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1411,8 +1411,8 @@ addLayer("G", {
         82: {
             title(){return "Gt15"},
             display(){return "Gsi nerf is weaker,t13 ^1.2 <br> cost: 40 GG "},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(40)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,72)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(40)&&!gcs(this.layer,this.id)&&gcs(this.layer,72)},
             onClick() {player.G.Gtc=player.G.Gtc.add(40)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1422,8 +1422,8 @@ addLayer("G", {
         83: {
             title(){return "Gt18"},
             display(){return "b11 base +0.0025,b12 base +0.0015 <br> cost: 40 GG "},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(40)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,73)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(40)&&!gcs(this.layer,this.id)&&gcs(this.layer,73)},
             onClick() {player.G.Gtc=player.G.Gtc.add(40)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1433,8 +1433,8 @@ addLayer("G", {
         91: {
             title(){return "Gt19"},
             display(){return "Gse gain exp x1.2,buff t11,12,16,17 <br> cost: 160 GG "},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(160)&&gcs(this.layer,this.id)!==1&&(gcs(this.layer,81)==1|| gcs(this.layer,82)==1|| gcs(this.layer,83)==1)},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(160)&&!gcs(this.layer,this.id)&&(gcs(this.layer,81)|| gcs(this.layer,82)|| gcs(this.layer,83))},
             onClick() {if(!mil('G',28)) {player.G.Gtc=player.G.Gtc.add(160)}
                 setClickableState(this.layer,this.id,1)
             },
@@ -1444,8 +1444,8 @@ addLayer("G", {
         101: {
             title(){return "Gt20"},
             display(){return "b11-12 are stronger,reduce e eff nerf <br> cost: 80 GG "},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(80)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,91)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(80)&&!gcs(this.layer,this.id)&&gcs(this.layer,91)},
             onClick() {if(!mil('H',15)) {player.G.Gtc=player.G.Gtc.add(80)}
                 setClickableState(this.layer,this.id,1)
             },
@@ -1456,8 +1456,8 @@ addLayer("G", {
             title(){return "Gt21"},
             display(){ if(hasMilestone('G',25)) return "total GG add b6/9 hardcap and ^1.005 Gse after mil25 <br> cost: 120 GG <br> eff:+"+format(this.effect(),4)
                 else return "total GG add b6/9 hardcap <br> cost: 120 GG <br> eff:+"+format(this.effect(),4)},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(120)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,91)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(120)&&!gcs(this.layer,this.id)&&gcs(this.layer,91)},
             onClick() {player.G.Gtc=player.G.Gtc.add(120)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1474,8 +1474,8 @@ addLayer("G", {
             title(){return "Gt22"},
             display(){ if(hasMilestone('G',25)) return "Gs add b6/9 hardcap(max 0.6) and ^1.004 Gse after mil25 <br> cost: 110 GG <br> eff:+"+format(this.effect(),4)
                 else return "Gs add b6/9 hardcap(max 0.6) <br> cost: 110 GG <br> eff:+"+format(this.effect(),4)},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(110)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,91)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(110)&&!gcs(this.layer,this.id)&&gcs(this.layer,91)},
             onClick() {player.G.Gtc=player.G.Gtc.add(110)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1493,8 +1493,8 @@ addLayer("G", {
         112: {
             title(){return "Gt23"},
             display(){return "Gs raise itself(stronger) <br> cost: 110 GG <br> eff:^"+format(this.effect())},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(110)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,91)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(110)&&!gcs(this.layer,this.id)&&gcs(this.layer,91)},
             onClick() {player.G.Gtc=player.G.Gtc.add(110)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1511,8 +1511,8 @@ addLayer("G", {
         121: {
             title(){return "Gt24"},
             display(){return "b6/9 hp x1.06,exp +0.07 <br> cost: 200 GG "},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(200)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,111)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(200)&&!gcs(this.layer,this.id)&&gcs(this.layer,111)},
             onClick() {player.G.Gtc=player.G.Gtc.add(200)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1522,8 +1522,8 @@ addLayer("G", {
         122: {
             title(){return "Gt25"},
             display(){return "boost r5,s^1.8,i^1.5,e^1.01 <br> cost: 200 GG "},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(200)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,112)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(200)&&!gcs(this.layer,this.id)&&gcs(this.layer,112)},
             onClick() {player.G.Gtc=player.G.Gtc.add(200)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1533,8 +1533,8 @@ addLayer("G", {
         103: {
             title(){return "Gt26"},
             display(){return "t22 x2 applies to b10,Gse nerf is weaker. <br> cost: 800 GG "},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(800)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,91)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(800)&&!gcs(this.layer,this.id)&&gcs(this.layer,91)},
             onClick() {player.G.Gtc=player.G.Gtc.add(800)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1544,8 +1544,8 @@ addLayer("G", {
         104: {
             title(){return "Gt27"},
             display(){return "b6-9 nerf is even weaker(+0.02) <br> cost: 600 GG "},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(600)&&gcs(this.layer,this.id)!==1&&gcs(this.layer,91)==1},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(600)&&!gcs(this.layer,this.id)&&gcs(this.layer,91)},
             onClick() {player.G.Gtc=player.G.Gtc.add(600)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1555,8 +1555,8 @@ addLayer("G", {
         131: {
             title(){return "Gt28"},
             display(){return "dilate s/i/e by 1.008/1.003/1.0008 <br> cost: 900 GG "},
-            style() { return { 'background-color': gcs(this.layer,this.id)==1?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
-            canClick() {return player.G.GG.gte(900)&&gcs(this.layer,this.id)!==1&&(gcs(this.layer,121)==1||gcs(this.layer,122)==1)},
+            style() { return { 'background-color': gcs(this.layer,this.id)?"#77BF5F":layers.G.clickables[this.id].canClick()?"#695735":"#BF8F8F"}},
+            canClick() {return player.G.GG.gte(900)&&!gcs(this.layer,this.id)&&(gcs(this.layer,121)||gcs(this.layer,122))},
             onClick() {player.G.Gtc=player.G.Gtc.add(900)
                 setClickableState(this.layer,this.id,1)
             },
@@ -1606,7 +1606,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "give G a x"+ format(this.base()) + " mult \n\
                 Cost: " + format(this.cost()) + " G \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return hasUpgrade('G',25) }
         },
@@ -1645,7 +1645,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "give F dim a x"+ format(this.base()) + " mult \n\
                 Cost: " + format(this.cost()) + " G \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return hasUpgrade('G',25) }
         },
@@ -1682,7 +1682,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "give Bb5/Eb10 a x"+ format(this.base()) + " mult \n\
                 Cost: " + format(this.cost()) + " G \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return hasUpgrade('G',25) }
         },
@@ -1749,7 +1749,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "Gs gain base x"+ format(this.base()) + "  \n\
                 Cost: " + format(this.cost()) + " Gs \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" + "+ format(this.extra())+" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" + "+ format(this.extra())+" \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return hasMilestone('G',14) }
         },
@@ -1780,7 +1780,7 @@ addLayer("G", {
                 if (hasUpgrade('G',113))  e=e.sub(0.02)
                 if (hasUpgrade('G',121))  e=e.sub(0.02)
                 if (player.G.Gsetot.gte('1e13144')) e=e.sub(0.01)
-                if(gcs('G',44)==1)  e=e.sub(0.01)
+                if(gcs('G',44))  e=e.sub(0.01)
                 if(hasMilestone('G',21)) e=n(0.45)
                 if(hasMilestone('G',22)) e=n(0.435)
                 if(hasMilestone('G',26)) e=n(0.43)
@@ -1812,7 +1812,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "Gs gain exp +"+ format(this.base()) + "  \n\
                 Cost: " + format(this.cost()) + " Gs \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             unlocked() { return (hasUpgrade('G',63)) }
         },
@@ -1834,7 +1834,7 @@ addLayer("G", {
             },
             sce(){
                 let e=n(0.65)
-                if(gcs('G',44)==1)  e=e.sub(0.025)
+                if(gcs('G',44))  e=e.sub(0.025)
                 if(hasMilestone('G',22)) e=n(0.61)
                 if(hasMilestone('G',25)) e=n(0.604)
                 if(hasMilestone('G',26)) e=n(0.6)
@@ -1861,7 +1861,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "Gs eff exp +"+ format(this.base()) + "  \n\
                 Cost: " + format(this.cost()) + " Gs \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             unlocked() { return (hasUpgrade('G',72)) }
         },
@@ -1924,7 +1924,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "Gsi gain base x"+ format(this.base()) + "  \n\
                 Cost: " + format(this.cost()) + " Gsi \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" + "+ format(this.extra())+" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" + "+ format(this.extra())+" \n\
                 Effect: x" + format(this.effect())},
             style() {if (this.canAfford()) return {'background-color': '#FF00F1' }},
             unlocked() { return (hasUpgrade('G',83)) }
@@ -1946,7 +1946,7 @@ addLayer("G", {
             },
             sce(){
                 let e=n(0.6)
-                if(gcs('G',51)==1) e=e.sub(0.03)
+                if(gcs('G',51)) e=e.sub(0.03)
                 if (hasMilestone('G',25)) e=e.sub(0.04)
                 return e
             },
@@ -1973,7 +1973,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "Gsi gain exp +"+ format(this.base()) + "  \n\
                 Cost: " + format(this.cost()) + " Gsi \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             style() {if (this.canAfford()) return {'background-color': '#FF00F1' }},
             unlocked() { return (hasUpgrade('G',83)) }
@@ -2067,7 +2067,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "Gsi eff exp +"+ format(this.base(),3)  + "(hardcap at "+format(this.hardcap(),3)+" eff and "+format(this.purchaseLimit())+" purchases)  \n\
                 Cost: " + format(this.cost()) + " Gsi \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             style() {if (this.canAfford()&&(!getBuyableAmount(this.layer, this.id).gte(this.purchaseLimit()))) return {'background-color': '#FF00F1' }},
             unlocked() { return (hasUpgrade('G',83)) }
@@ -2081,7 +2081,7 @@ addLayer("G", {
                 if (hasMilestone('G',19))  bas=bas.sub(1.5)
                 let e=n(1.45)
                 if (x.gte(500)) e=e.add(0.1)
-                if(gcs('G',51)==1) e=e.sub(0.04)
+                if(gcs('G',51)) e=e.sub(0.04)
                 let cost = Decimal.pow(bas, x.pow(e)).times('200')
                 if (x.gte(800)) cost = cost.mul(n(10).pow(n(2).pow(x.sub(750).pow(this.sce())).mul(2)))
                 if(mil('G',25)) cost=cost.min(n(10).pow(n(2).pow(x.pow(this.sce()))))//||gcs('I',21)
@@ -2118,7 +2118,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "Gse gain base x"+ format(this.base()) + "  \n\
                 Cost: " + format(this.cost()) + " Gse \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" + "+ format(this.extra())+" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" + "+ format(this.extra())+" \n\
                 Effect: x" + format(this.effect())},
             style() {if (this.canAfford()) return {'background-color': '#14FFF3' }},
             unlocked() { return (hasUpgrade('G',101)) }
@@ -2129,7 +2129,7 @@ addLayer("G", {
                 let bas=n(4000)
                 let e=n(1.95)
                 if (x.gte(20)) e=e.add(0.15)
-                if(gcs('G',51)==1) e=e.sub(0.08)
+                if(gcs('G',51)) e=e.sub(0.08)
                 if (hasMilestone('G',17))  bas=n(1000)
                 if (hasUpgrade('G',112))  bas=n(200)
                 if (hasMilestone('G',19))  bas=n(100)
@@ -2167,7 +2167,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "Gse gain exp +"+ format(this.base()) + "  \n\
                 Cost: " + format(this.cost()) + " Gse \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             style() {if (this.canAfford()) return {'background-color': '#14FFF3' }},
             unlocked() { return (hasUpgrade('G',101)) }
@@ -2209,7 +2209,7 @@ addLayer("G", {
             base(){   let base = player.G.Gsi.add(10).log(10).pow(0.38).div(750)
                 let sc=n(0.7)
                 if (base.gte(0.02)) base=base.div(0.02).pow(sc).mul(0.02) 
-                if(getClickableState('G',31)==1)  base=base.mul(1.02)
+                if(getClickableState('G',31))  base=base.mul(1.02)
                 base=base.min(this.hardcap())
                 return base},
             hardcap(){
@@ -2238,7 +2238,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "Gse 1st eff exp +"+ format(this.base(),3) + "(hardcap at "+format(this.hardcap(),3)+")  \n\
                 Cost: " + format(this.cost()) + " Gse \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             style() {if (this.canAfford()&&(!getBuyableAmount(this.layer, this.id).gte(this.purchaseLimit()))) return {'background-color': '#14FFF3' }},
             unlocked() { return (hasUpgrade('G',101)) }
@@ -2289,7 +2289,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "Gse 2nd eff mult +"+ format(this.base(),3) + "(hardcap at "+format(this.hardcap(),3)+" eff and "+format(this.purchaseLimit())+" purchases)  \n\
                 Cost: " + format(this.cost()) + " Gse \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             style() {if (this.canAfford()&&(!getBuyableAmount(this.layer, this.id).gte(this.purchaseLimit()))) return {'background-color': '#14FFF3' }},
             unlocked() { return (hasUpgrade('G',111)) }
@@ -2330,7 +2330,7 @@ addLayer("G", {
             display() {
                 return "raise Gs gain to ^"+ format(this.base(),4) + "  \n\
                 Cost: " + format(this.cost()) + " Gse \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: ^" + format(this.effect(),3)},
             style() {if (this.canAfford()) return {'background-color': '#14FFF3' }},
             unlocked() { return (hasMilestone('G',19)) }
@@ -2360,7 +2360,7 @@ addLayer("G", {
             buy() { if(!mil('G',27)) {player[this.layer].Gse = player[this.layer].Gse.sub(this.cost())}
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))},
             base(){   let base = n(1.0085) 
-                if(getClickableState('G',32)==1)  base=base.add(0.002)
+                if(getClickableState('G',32))  base=base.add(0.002)
                 if(gcs('G',83))  base=base.add(0.0015)
                 if(gcs('G',101))  base=base.add(0.004)
                 if(upg('H',15))  base=base.add(0.004)
@@ -2371,9 +2371,9 @@ addLayer("G", {
             display() {
                 return "raise Gsi gain to ^"+ format(this.base(),4) + "  \n\
                 Cost: " + format(this.cost()) + " Gse \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: ^" + format(this.effect(),3)},
-            style() {if (this.canAfford()) return {'background-color': '#14FFF3' }},
+            style() {if (this.canAfford()) return {'background-color':'#14FFF3'}},
             unlocked() { return (hasMilestone('G',19)) }
         },
         61: {
@@ -2426,7 +2426,7 @@ addLayer("G", {
             display() { 
                 return "gain " + format(this.am()) + " GG  \n\
                 Cost: " + format(this.cost()) + " Gse \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             unlocked() { return (hasUpgrade('G',115)) }
         },
@@ -2466,7 +2466,7 @@ addLayer("G", {
             display() { 
                 return "gain " + format(this.am()) + " GG  \n\
                 Cost: " + format(this.cost()) + " points \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             unlocked() { return (mil('G',24)&&!upg('G',155)) }
         },
@@ -2514,7 +2514,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "GsR gain base x"+ format(this.base()) + "  \n\
                 Cost: " + format(this.cost()) + " GsR \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" + "+ format(this.extra())+" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" + "+ format(this.extra())+" \n\
                 Effect: x" + format(this.effect())},
             style() {if (this.canAfford()) return {'background-color': '#6DA462'}},
             unlocked() { return (mil('G',30)) }
@@ -2557,7 +2557,7 @@ addLayer("G", {
             display() { // Everything else displayed in the buyable button after the title
                 return "div h1/y1 exp by "+ format(this.base(),4) + "^x^"+format(this.efxp())+"  \n\
                 Cost: " + format(this.cost()) + " GsR \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: /" + format(this.effect(),4)},
             style() {if (this.canAfford()) return {'background-color': '#6DA462'}},
             unlocked() { return (mil('G',30)) }
@@ -2598,7 +2598,7 @@ addLayer("G", {
             display() { 
                 return "GsR gain exp +"+ format(this.base()) + "  \n\
                 Cost: " + format(this.cost()) + " GsR \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             style() {if (this.canAfford()) return {'background-color': '#6DA462'}},
             unlocked() { return (mil('G',30)) }
@@ -2639,7 +2639,7 @@ addLayer("G", {
             display() {
                 return "GsR eff exp +"+ format(this.base()) + " and r3 base +"+ format(this.base2()) + " \n\
                 Cost: " + format(this.cost()) + " GsR \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: eff +" + format(this.effect()[0],3)+",r3 +"+ format(this.effect()[1],3)},
             style() {if (this.canAfford()) return {'background-color': '#6DA462'}},
             unlocked() { return player.H.dhmax[1].gte(1) }
@@ -2658,6 +2658,8 @@ addLayer("G", {
                 if (challengeCompletions("G", 11) == 2) return Decimal.pow(10,1080);
                 if (challengeCompletions("G", 11) == 3) return Decimal.pow(10,1220);
                 if (challengeCompletions("G", 11) == 4) return Decimal.pow(10,1670);
+                let a=[n('e780'),n('e880'),n('e1080'),n('e1220'),n('e1670'),n('e1670')]
+                return a[n(challengeCompletions(this.layer,this.id))]
             },            
             goalDescription:  function() {return format(this.goal())+' F1'},
             canComplete(){return player.F.F1.gte(this.goal())},
@@ -2678,11 +2680,13 @@ addLayer("G", {
                 return "dim mult per buy ^0.5. <br> Completion: " +challengeCompletions("G", 12) + "/5"},
             unlocked() { return (hasUpgrade("F", 75))},
             goal(){
-                if (challengeCompletions("G", 12) == 0) return Decimal.pow(10,1260);
-                if (challengeCompletions("G", 12) == 1) return Decimal.pow(10,1570);
-                if (challengeCompletions("G", 12) == 2) return Decimal.pow(10,3050);
-                if (challengeCompletions("G", 12) == 3) return Decimal.pow(10,7000);
-                if (challengeCompletions("G", 12) == 4) return Decimal.pow(10,11500);
+                // if (challengeCompletions("G", 12) == 0) return Decimal.pow(10,1260);
+                // if (challengeCompletions("G", 12) == 1) return Decimal.pow(10,1570);
+                // if (challengeCompletions("G", 12) == 2) return Decimal.pow(10,3050);
+                // if (challengeCompletions("G", 12) == 3) return Decimal.pow(10,7000);
+                // if (challengeCompletions("G", 12) == 4) return Decimal.pow(10,11500);
+                let a=[n('e1260'),n('e1570'),n('e3050'),n('e6100'),n('e11500'),n('e11500')]//7000
+                return a[n(challengeCompletions(this.layer,this.id))]
             },            
             goalDescription:  function() {return format(this.goal())+' F1'},
             canComplete(){return player.F.F1.gte(this.goal())},
@@ -2874,6 +2878,8 @@ addLayer("G", {
         if(mil('J',4)) ef=ef.pow(buyableEffect('I',13))
         if(gcs('G',131)) ef=n(10).pow(ef.log(10).pow(1.008))
         if(gcs('I',311)) ef=n(10).tetrate(ef.max(10).slog().sub(tmp.I.resv[1]).max(0))
+        ef=ef.mul(buyableEffect('J',35))
+        ef=ef.pow(buyableEffect('J',85))
         ef=ef.min(tmp.H.php)
         return ef},
     gsef(){
@@ -2921,6 +2927,8 @@ addLayer("G", {
         if(gcs('G',122))  ef=ef.pow(1.5)
         if(gcs('G',131)) ef=n(10).pow(ef.log(10).pow(1.003))
         if(gcs('I',311)) ef=n(10).tetrate(ef.max(10).slog().sub(tmp.I.resv[2]).max(0))
+        ef=ef.mul(buyableEffect('J',35))
+        ef=ef.pow(buyableEffect('J',85))
         ef=ef.min(tmp.H.php)
         return ef},
     gsief(){
@@ -2978,7 +2986,8 @@ addLayer("G", {
         if (upg('G',105)) exp=exp.add(0.05)
         exp=exp.mul(buyableEffect('G',42).add(1))
         if(gcs('G',91)) exp=exp.mul(1.2)
-        if (player.G.Gsi.gte('1e345')) ef=player.G.Gsi.add(10).log(10).sub(345).max(0).pow(exp).div(2)
+        if(player.G.Gsi.gte('1e345')) ef=player.G.Gsi.add(10).log(10).sub(345).max(0).pow(exp).div(2)
+        if(gba('J',101).gte(23)&&player.G.Gsi.gte('1e200')) ef=player.G.Gsi.add(10).log(10).sub(200).max(0).pow(exp).div(2)
         ef=ef.mul(buyableEffect('G',41))
         ef=ef.min('ee9')
         if(mil('I',0)) ef=ef.mul(100)
@@ -3057,6 +3066,8 @@ addLayer("G", {
         //if(ef.gte('ee2200')) ef=n(10).pow(n(10).pow(n('2200').mul(ef.log(10).log(10).div('2200').pow(0.5))))
         //ef=ef.min('ee10000')
         if(gcs('I',311)) ef=n(10).tetrate(ef.max(10).slog().sub(tmp.I.resv[2]).max(0))
+        ef=ef.mul(buyableEffect('J',35))
+        ef=ef.pow(buyableEffect('J',85))
         ef=ef.min(tmp.H.php)
         return ef},
     gseef(){
@@ -3120,6 +3131,8 @@ addLayer("G", {
         if(ch('I',12)) ef=ef.pow(challengeEffect('I',12))   
         if(mil('I',9)) ef=ef.pow(buyableEffect('I',32))   
         if(gcs('I',311)) ef=n(10).tetrate(ef.max(10).slog().sub(tmp.I.resv[2]).max(0))
+        ef=ef.mul(buyableEffect('J',35))
+        ef=ef.pow(buyableEffect('J',85))
         ef=ef.min(tmp.H.php)
         return ef
     },

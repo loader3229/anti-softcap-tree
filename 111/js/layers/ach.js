@@ -957,9 +957,39 @@ addLayer("ac", {
             done() {return player.I.hi.gte('150')},
             tooltip: "get 150 harden I", 
         },
+        323: {
+            name: "189.go Fe308!",
+            done() {return player.J.ss.gte('1e308')},
+            tooltip: "get 1e308 slog speeder", 
+        },
+        324: {
+            name: "190.burn your points",
+            done() {return player.I.res[0].gte(40)},
+            tooltip: "set pts curse option to 40", 
+        },
+        325: {
+            name: "191.a reincarnation",
+            done() {return player.points.gte('10^^1e6')},
+            tooltip: "get F1e6 points <br>from 'the pro tree'.Fe6 unlock void and Re layer.", 
+        },
+        326: {
+            name: "192.IMR wall wall wall",
+            done() {return gba('J',101).gte(10)},
+            tooltip: "reach BP rank 10", 
+        },
+        331: {
+            name: "193.speedy",
+            done() {return tmp.J.ssef.gte('2019')},
+            tooltip: "get 2019 slog speeder effect", 
+        },
+        332: {
+            name: "194.infinite quality",
+            done() {return player.I.qolpoints.gte('e9e15')},
+            tooltip: "get e9e15 Qol points", 
+        },
     },
     tabFormat: ["blank", ["display-text", function() {
-        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/188 </h4>"
+        return "<h3 style='color: yellow;'>Achievements: " + player.ac.achievements.length + "/194 </h4>"
     }
     ], "blank", "blank", "achievements", ],
 },

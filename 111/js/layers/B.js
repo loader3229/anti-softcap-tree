@@ -323,18 +323,17 @@ addLayer("B", {
             description: "lg pts mult B.",
             cost:new Decimal('1e70'),
             effect()  { 
-                let ef = player.points.add(10).log(10)
-                if (hasUpgrade('A',53)) ef=Decimal.mul(ef,10)
-                if (hasUpgrade('A',54)) ef=Decimal.mul(ef,10)
-                if (hasUpgrade('B',63)) ef=Decimal.pow(ef,1.15)
-                if (hasUpgrade('B',64)) ef=Decimal.pow(ef,1.15)
-                if (hasUpgrade('B',74)) ef=Decimal.pow(ef,1.3)
-                if (hasUpgrade('A',62)) ef=Decimal.mul(ef,upgradeEffect('A',62))
-                if (hasUpgrade('E',31)) ef=Decimal.pow(ef,1.1)
-                if (hasMilestone('E',8)) ef=Decimal.pow(ef,1.05)
-                if (hasMilestone('E',10)) ef=Decimal.pow(ef,1.05)
-                if (hasUpgrade('E',105)) ef=Decimal.pow(ef,1.05)
-                if (hasMilestone('F',2)) ef=Decimal.pow(ef,1.1)
+                let ef=player.points.add(10).log(10)
+                if (hasUpgrade('A',53)) ef=ef.mul(10)
+                if (hasUpgrade('B',63)) ef=ef.pow(1.15)
+                if (hasUpgrade('B',64)) ef=ef.pow(1.15)
+                if (hasUpgrade('B',74)) ef=ef.pow(1.3)
+                if (hasUpgrade('A',62)) ef=ef.mul(upgradeEffect('A',62))
+                if (hasUpgrade('E',31)) ef=ef.pow(1.1)
+                if (hasMilestone('E',8)) ef=ef.pow(1.05)
+                if (hasMilestone('E',10)) ef=ef.pow(1.05)
+                if (hasUpgrade('E',105)) ef=ef.pow(1.05)
+                if (hasMilestone('F',2)) ef=ef.pow(1.1)
                 return ef;          
             },
             unlocked() { return (hasUpgrade(this.layer, 55))},
@@ -466,7 +465,7 @@ addLayer("B", {
             display() { // Everything else displayed in the buyable button after the title
                 return "give A a x"+ format(this.base()) + " mult \n\
                 Cost: " + format(this.cost()) + " B \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect()) + " A" },
             unlocked() { return hasMilestone('D',2) }
         },
@@ -518,7 +517,7 @@ addLayer("B", {
             display() { // Everything else displayed in the buyable button after the title
                 return "give B a x" + format(this.base()) + " mult \n\
                 Cost: " + format(this.cost()) + " B \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect()) + " B" },
             unlocked() { return hasUpgrade('B',41) }
         },
@@ -564,7 +563,7 @@ addLayer("B", {
             display() { // Everything else displayed in the buyable button after the title
                 return "boost to B's pts mult(exp) \n\
                 Cost: " + format(this.cost()) + " B \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: ^" + format(this.effect())},
             unlocked() { return hasUpgrade('B',42) }
         },
@@ -609,7 +608,7 @@ addLayer("B", {
             display() { // Everything else displayed in the buyable button after the title
                 return "boost to A's pts mult(exp) \n\
                 Cost: " + format(this.cost()) + " B \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: ^" + format(this.effect())},
             unlocked() { return hasUpgrade('B',45) }
         },
@@ -662,7 +661,7 @@ addLayer("B", {
             display() { // Everything else displayed in the buyable button after the title
                 return "boost Bb1-2 base \n\
                 Cost: " + format(this.cost()) + " B \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             unlocked() { return hasMilestone('B',3) }
         }
@@ -685,29 +684,29 @@ addLayer("B", {
         let sc=n(400)
         if (hasMilestone('E',15)) sc=Decimal.add(sc,100)
         if (inChallenge('E',42)) sc=Decimal.add(sc,-300)
-        if (!hasUpgrade('G',32)) sc=Decimal.add(sc,tmp.E.ekf.ceil())
+        if (!upg('G',32)) sc=Decimal.add(sc,tmp.E.ekf.ceil())
         sc = Decimal.add(sc,upgradeEffect('F',31).ceil())
-        if (hasUpgrade('G',15))  sc=n(Infinity)
+        if (upg('G',15))  sc=n(Infinity)
         return sc
     },
     scpow(){let scpow=n(0.45)
-        if (hasUpgrade('A',65)) scpow=Decimal.add(scpow,-0.01)
-        if (hasUpgrade('E',103)) scpow=Decimal.add(scpow,-0.005)
-        if (hasUpgrade('F',34)) scpow=Decimal.add(scpow,-0.003)
-        if (hasUpgrade('F',54)) scpow=Decimal.add(scpow,-0.008)
-        if (hasUpgrade('G',15))  scpow=n(0)
+        if (upg('A',65)) scpow=Decimal.add(scpow,-0.01)
+        if (upg('E',103)) scpow=Decimal.add(scpow,-0.005)
+        if (upg('F',34)) scpow=Decimal.add(scpow,-0.003)
+        if (upg('F',54)) scpow=Decimal.add(scpow,-0.008)
+        if (upg('G',15))  scpow=n(0)
         return scpow
     },
     scad(){let t=n(800)
-        if (hasUpgrade('A',65)) t=Decimal.add(t,150)
-        if (hasUpgrade('E',103)) t=Decimal.add(t,50)
+        if (upg('A',65)) t=Decimal.add(t,150)
+        if (upg('E',103)) t=Decimal.add(t,50)
         return t
     },
     sc2(){let sc=Decimal.add(tmp.B.scaling,60000)
-        if (hasUpgrade('F',42)) sc=Decimal.add(sc,1000)
-        if (hasUpgrade('F',55)) sc=Decimal.add(sc,2000)
-        if (hasUpgrade('F',63)) {if (!hasUpgrade('G',32)) sc=Decimal.add(sc,tmp.E.ekf)}
-        if (hasUpgrade('G',32))  sc=n(Infinity)
+        if (upg('F',42)) sc=Decimal.add(sc,1000)
+        if (upg('F',55)) sc=Decimal.add(sc,2000)
+        if (upg('F',63)&&!upg('G',32)) sc=Decimal.add(sc,tmp.E.ekf)//{if () }
+        if (upg('G',32))  sc=n(Infinity)
         //let sc=50000
         return sc
     }

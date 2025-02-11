@@ -103,12 +103,12 @@ addLayer("D", {
                 if (hasUpgrade('D',41)) ef = ef.mul(1e7)
                 if (hasUpgrade('D',51)) ef = ef.mul('1e40')
                 if (hasUpgrade('D',52)) ef = ef.mul('1e100')                
-                if (hasUpgrade('D',22)) ef = Decimal.pow(ef,1.2)
+                if (hasUpgrade('D',22)) ef = ef.pow(1.2)
                 if (inChallenge('C',12)) ef = n(1)
                 if (hasUpgrade('E',64)) exp=exp.add(0.1)
                 if (hasUpgrade('E',72)) exp=exp.add(0.1)
                 if (hasUpgrade('F',21)) exp=exp.add(0.4)
-                if (hasUpgrade('E',61)) ef=Decimal.pow(ef,n(buyableEffect("E",21).sub(1).mul(exp).add(1)))//ef=Decimal.pow(ef,1+(buyableEffect("E",21)-1)*exp)
+                if (hasUpgrade('E',61)) ef=ef.pow(n(buyableEffect("E",21).sub(1).mul(exp).add(1)))//ef=Decimal.pow(ef,1+(buyableEffect("E",21)-1)*exp)
                 return ef;          
             },
             cost:new Decimal(1),

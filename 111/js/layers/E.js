@@ -687,7 +687,7 @@ addLayer("E", {
             display() { // Everything else displayed in the buyable button after the title
                 return "give A a x"+ format(this.base()) + " mult \n\
                 Cost: " + format(this.cost()) + " E \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect()) + " A" },
             unlocked() { return hasMilestone('E',0) }
         },
@@ -728,7 +728,7 @@ addLayer("E", {
             display() { // Everything else displayed in the buyable button after the title
                 return "give B a x"+ format(this.base()) + " mult \n\
                 Cost: " + format(this.cost()) + " E \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect()) + " B" },
             unlocked() { return player[this.layer].total.gte('4000') }
         },
@@ -767,7 +767,7 @@ addLayer("E", {
             display() { // Everything else displayed in the buyable button after the title
                 return "give C/D a x"+ format(this.base()) + " mult \n\
                 Cost: " + format(this.cost()) + " E \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect()) + " C/D" },
             unlocked() { return hasMilestone('E',1) }
         },
@@ -804,7 +804,7 @@ addLayer("E", {
             display() { // Everything else displayed in the buyable button after the title
                 return "boost to E's pts mult(exp) \n\
                 Cost: " + format(this.cost()) + " E \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: ^" + format(this.effect())},
             unlocked() { return hasMilestone('E',5) }
         },
@@ -832,7 +832,7 @@ addLayer("E", {
                 return "give Em a x"+ format(this.base()) + " mult \n\
                 Eb5's factor/cost multiplier are fixed. \n\
                 Cost: " + format(this.cost()) + " E \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return hasMilestone('E',11) }
         },
@@ -858,7 +858,7 @@ addLayer("E", {
             display() { // Everything else displayed in the buyable button after the title
                 return "give Em a x"+ format(this.base()) + " mult \n\
                 Cost: " + format(this.cost()) + " E \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return hasMilestone('E',11) }
         },
@@ -887,7 +887,7 @@ addLayer("E", {
             display() { // Everything else displayed in the buyable button after the title
                 return "give Em a x"+ format(this.base()) + " mult \n\
                 Cost: " + format(this.cost()) + " E \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return player[this.layer].total.gte('1e73') }
         },
@@ -921,7 +921,7 @@ addLayer("E", {
                 Eb8's factor/cost multiplier are fixed. \n\
                 for balance,Eb8 is hardcapped at "+format(this.purchaseLimit())+" purchases\n\
                 Cost: " + format(this.cost()) + " E \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return hasMilestone('E',11) }
         },
@@ -950,7 +950,7 @@ addLayer("E", {
             display() { // Everything else displayed in the buyable button after the title
                 return "give Ek a x"+ format(this.base()) + " mult \n\
                 Cost: " + format(this.cost()) + " E \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return hasMilestone('E',15) }
         },
@@ -980,7 +980,7 @@ addLayer("E", {
             display() { // Everything else displayed in the buyable button after the title
                 return "boost Eb1-3 base \n\
                 Cost: " + format(this.cost()) + " E \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             unlocked() { return hasMilestone('E',18) }
         },
@@ -1082,7 +1082,7 @@ addLayer("E", {
                 if (challengeCompletions('E',22) == 1) return Decimal.pow(10,12900);
                 if (challengeCompletions('E',22) == 2) return Decimal.pow(10,13200);
             },
-            nerf() { return player.points.add(10).log(10).pow(-0.06)},            
+            nerf() { return player.points.add(10).log(10).pow(-0.06).max('1e-100')},            
             goalDescription:  function() {return format(this.goal())+' points'},
             canComplete(){return player.points.gte(this.goal())},
             rewardDescription: "boost to pts base on C-D pts upg.",
@@ -1137,7 +1137,7 @@ addLayer("E", {
                 if (challengeCompletions('E',32) == 3) return Decimal.pow(10,20000);
                 if (challengeCompletions('E',32) == 4) return Decimal.pow(10,25850);
             },      
-            nerf() { return player.E.Em.add(10).log(10).pow(-0.2)},       
+            nerf() { return player.E.Em.add(10).log(10).pow(-0.2).max('1e-100')},       
             goalDescription:  function() {return format(this.goal())+' points'},
             canComplete(){return player.points.gte(this.goal())},
             rewardDescription: "Ec6 comp add to Eb6-7 base.",
@@ -1189,7 +1189,7 @@ addLayer("E", {
                 if (challengeCompletions('E',42) == 3) return Decimal.pow(10,69870);
                 if (challengeCompletions('E',42) == 4) return Decimal.pow(10,88000);
             },
-            nerf() { return player.points.add(10).log(10).pow(-0.12)},            
+            nerf() { return player.points.add(10).log(10).pow(-0.12).max('1e-100')},            
             goalDescription:  function() {return format(this.goal())+' points'},
             canComplete(){return player.points.gte(this.goal())},
             rewardDescription: "boost to Em/Ek eff.",

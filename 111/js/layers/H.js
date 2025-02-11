@@ -34,6 +34,7 @@ addLayer("H", {
         if(gcs('I',132)) min=min.sub(500)//2500
         if(mil('I',9)) min=min.sub(1000)
         if(mil('I',11)) min=min.sub(500)//1000
+        if(gba('J',101).gte(6)) min=min.sub(800)//200
         if(player.H.points.gte(15)) exp=player.H.points.sub(6).min(min)
         if(upg('G',144)) exp=exp.div(tmp.H.dhef[1])
         return exp
@@ -182,6 +183,7 @@ addLayer("H", {
         if(gcs('I',132)) r=r.sub(500)
         if(ch('I',21)) r=r.mul(challengeEffect('I',21))
         if(mil('I',9)) r=r.mul(buyableEffect('I',33)).ceil()
+        if(gba('J',101).gte(6)) r=n(0)
         return r
     },
     microtabs: {
@@ -861,7 +863,7 @@ addLayer("H", {
             display() { // Everything else displayed in the buyable button after the title
                 return "give harsh a x"+ format(this.base()) + " mult \n\
                 Cost: " + format(this.cost()) + " harsh \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" + "+ format(this.extra())+" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" + "+ format(this.extra())+" \n\
                 Effect: x" + format(this.effect())},
             unlocked() { return mil('H',2) }
         },
@@ -919,7 +921,7 @@ addLayer("H", {
             display() { // Everything else displayed in the buyable button after the title
                 return "harsh exp +"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " harsh \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" + "+ format(this.extra())+" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" + "+ format(this.extra())+" \n\
                 Effect: +" + format(this.effect())},
             unlocked() { return mil('H',2) }
         },
@@ -963,7 +965,7 @@ addLayer("H", {
             display() { // Everything else displayed in the buyable button after the title
                 return "dilate harsh by +"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " harsh \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             unlocked() { return mil('H',2) }
         },
@@ -1004,7 +1006,7 @@ addLayer("H", {
             display() {
                 return "Gse exp +"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " harsh \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             unlocked() { return mil('H',2) }
         },
@@ -1053,11 +1055,11 @@ addLayer("H", {
             display() { // Everything else displayed in the buyable button after the title
                 if(upg('H',83)) {return "b1 eff amt mul +"+ format(this.base()[1],3) + " \n\
                 Cost: " + format(this.cost()) + " harsh \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" + "+ format(this.extra())+" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" + "+ format(this.extra())+" \n\
                 Effect: +" + format(this.effect()[1],3)}
                 else {return "b1 nerf ^"+ format(this.base()[0],3) + " \n\
                 Cost: " + format(this.cost()) + " harsh \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" + "+ format(this.extra())+" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" + "+ format(this.extra())+" \n\
                 Effect: ^" + format(this.effect()[0],4)} },
             unlocked() { return mil('H',2) }
         },
@@ -1094,7 +1096,7 @@ addLayer("H", {
             display() {
                 return "b2/4 base mult +"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " harsh \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             unlocked() { return mil('H',2) }
         },
@@ -1133,7 +1135,7 @@ addLayer("H", {
             display() { 
                 return "b1 base exp +"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " harsh \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             unlocked() { return upg('H',62) }
         },
@@ -1164,7 +1166,7 @@ addLayer("H", {
             display() { 
                 return "b3 base mul +"+ format(this.base()) + "(hardcap at "+format(this.purchaseLimit())+")  \n\
                 Cost: " + format(this.cost()) + " harsh \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect(),3)},
             unlocked() { return upg('H',64) }
         },
@@ -1201,7 +1203,7 @@ addLayer("H", {
             display() {
                 return "Gs gain and eff ^"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " harsh \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: ^" + format(this.effect(),3)},
             unlocked() { return upg('H',75) }
         },
@@ -1250,7 +1252,7 @@ addLayer("H", {
             display() { 
                 return "give hyper a x"+ format(this.base()) + " mult \n\
                 Cost: " + format(this.cost()) + " hyper \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" + "+ format(this.extra())+" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" + "+ format(this.extra())+" \n\
                 Effect: x" + format(this.effect())},
             style() {if (this.canAfford()) return {'background-color': '#C3FFDE' }},
             unlocked() { return mil('H',3) }
@@ -1312,7 +1314,7 @@ addLayer("H", {
             display() { 
                 return "hyper exp +"+ format(this.base()) + " and Hy1 base +"+ format(this.base2()) + "  \n\
                 Cost: " + format(this.cost()) + " hyper \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" + "+ format(this.extra())+" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" + "+ format(this.extra())+" \n\
                 Effect: exp+" + format(this.effect()[0]) + " y1+" + format(this.effect()[1])},
             style() {if (this.canAfford()) return {'background-color': '#C3FFDE' }},
             unlocked() { return mil('H',3) }
@@ -1416,7 +1418,7 @@ addLayer("H", {
             display() { 
                 return "y2 1st eff +"+ format(this.base()) + " and Hb3 base +"+ format(this.base2()) + "  \n\
                 Cost: " + format(this.cost()) + " hyper \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" + "+ format(this.extra())+" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" + "+ format(this.extra())+" \n\
                 Effect: y2+" + format(this.effect()[0],4) + " b3+" + format(this.effect()[1],4)},
             style() {if (this.canAfford()) return {'background-color': '#C3FFDE' }},
             unlocked() { return upg('H',84) }
@@ -1462,7 +1464,7 @@ addLayer("H", {
             display() { 
                 return "y3 1st eff +"+ format(this.base()) + " and Hb7 base +"+ format(this.base2()) + "(hardcap at "+format(this.purchaseLimit())+")  \n\ \n\
                 Cost: " + format(this.cost()) + " hyper \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: y3+" + format(this.effect()[0],4) + " b7+" + format(this.effect()[1],3)},
             style() {if (this.canAfford()&&(!getBuyableAmount(this.layer, this.id).gte(this.purchaseLimit()))) return {'background-color': '#C3FFDE' }},
             unlocked() { return upg('H',84) }
@@ -1519,7 +1521,7 @@ addLayer("H", {
             display() { 
                 return "Gs eff ^"+ format(this.base()) + " and hyper eff exp +"+ format(this.base2()) + " and provide free b2/y2  \n\
                 Cost: " + format(this.cost()) + " hyper \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: Gs^" + format(this.effect()[0]) + " hy+" + format(this.effect()[1],3)},
             style() {if (this.canAfford()) return {'background-color': '#C3FFDE' }},
             unlocked() { return upg('H',84) }
@@ -1555,7 +1557,7 @@ addLayer("H", {
             display() { 
                 return "dH points exp +"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " dH points \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: +" + format(this.effect())},
             style() {if (this.canAfford()) return {'background-color':'#3D3A3F'}},
             unlocked() { return mil('G',31) }
@@ -1591,7 +1593,7 @@ addLayer("H", {
             display() { 
                 return "dH points x"+ format(this.base()) + " \n\
                 Cost: " + format(this.cost()) + " dH points \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: x" + format(this.effect())},
             style() {if (this.canAfford()) return {'background-color':'#3D3A3F'}},
             unlocked() { return mil('G',31) }
@@ -1630,7 +1632,7 @@ addLayer("H", {
             display() { 
                 return "Gr2 base +"+ format(this.base()[0],4) + ",b2/y2 base +"+ format(this.base()[1],4) + ",dHp x"+ format(this.base()[2]) + " \n\
                 Cost: " + format(this.cost()) + " dH points \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: r2 +" + format(this.effect()[0])+",b2/y2 +" + format(this.effect()[1])+",dHpts x" + format(this.effect()[2])},
             style() {if (this.canAfford()) return {'background-color':'#3D3A3F'}},
             unlocked() { return upg('G',145) }
@@ -1664,7 +1666,7 @@ addLayer("H", {
             display() { 
                 return "dHs base +"+ format(this.base()[0]) + ",b3/y3 base +"+ format(this.base()[1],4) + "(^0.66) \n\
                 Cost: " + format(this.cost()) + " dH points \n\
-                Amount: " + player[this.layer].buyables[this.id]  +" \n\
+                Amount: " + format(player[this.layer].buyables[this.id])  +" \n\
                 Effect: dHs +" + format(this.effect()[0])+",b3/y3 +" + format(this.effect()[1])},
             style() {if (this.canAfford()) return {'background-color':'#3D3A3F'}},
             unlocked() { return mil('H',8) }
@@ -1820,9 +1822,13 @@ addLayer("H", {
         if(ef.gte('e2e6')) ef=n(10).pow(ef.log(10).div('2e6').pow(0.6).mul('2e6'))
         return ef
     },
-    php(){
+    phpb(){
         let ef=n(100)
         if(player.J.best.gte(1)) ef=ef.add(tmp.J.bpef)
+        return ef    
+    },
+    php(){
+        let ef=n(tmp.H.phpb)
         let r=n(10).tetrate(ef)
         return r
     },
@@ -1832,5 +1838,12 @@ addLayer("H", {
         player.H.max=player.H.max.max(player.H.points)
         for(let i=0;i<=5;i++) player.H.dhmax[i]=player.H.dhmax[i].max(player.H.dh[i])
         if (mil("G",31))  player.H.dhp = player.H.dhp.add(tmp.H.dhp.mul(diff))
+        if(gba('J',101).gte(6)) {player.H.dh[0]=player.G.Gsr.max(1).log(10).div(6).pow(5/9).sub(1).ceil().max(player.H.dh[0])
+            player.H.dh[1]=player.H.hyper.max(1).log(10).max(1).log(10).div(2).pow(1/1.55).sub(1).ceil().max(player.H.dh[1])
+            player.H.dh[2]=n(getBuyableAmount('G',31)).max(1).log(10).div(3).pow(1/1.7).sub(1).ceil().max(player.H.dh[2])
+            player.H.dh[3]=player.G.GGtot.div(7500).pow(1/2.2).sub(3).ceil().max(player.H.dh[3])
+            player.H.dh[4]=player.G.Gsetot.max(1).log(10).max(1).log(10).div(2).pow(2/3).sub(1).ceil().max(player.H.dh[4])
+            player.H.dh[5]=n(buyableEffect('G',33)).div(5).pow(20/27).ceil().max(player.H.dh[5])
+        }
     },
 })

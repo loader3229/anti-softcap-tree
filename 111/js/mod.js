@@ -8,19 +8,21 @@ let modInfo = {
 	discordName: "",
 	discordLink: "",
 	initialStartPoints: new Decimal (10), // Used for hard resets and new players
-	offlineLimit: 2400,  // In hours
+	offlineLimit: 8760,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.7.1",
-	name: "break infinity and hello 2025!",
+	num: "0.7.2",
+	name: "more about break infinity",
 }
 
 let changelog = `<h2>Changelog:</h2><br>
+    <h4>v0.7.2 (250210)</h4>
+		- add slog speeder. E:F4e10+. <br>
     <h4>v0.7.1 (250129)</h4>
-		- add layer J,break infinity and challenge'curse' E:1F32768+. <br>
-    <h4>--HAPPY NEW 2025---<h4><br>
+		- add layer J,break infinity and challenge 'curse' E:1F32768+. <br>
+    <h3>--HAPPY NEW 2025---<h3>
     <h4>v0.7.0.1 (241209)</h4>
 		- fix dH part's bug and achievements bug. <br>
     <h4>v0.7 (241207)</h4>
@@ -132,10 +134,10 @@ function getPointGen() {
 	if (inChallenge("A", 21))  gain = gain.pow(0.55)
 	if (inChallenge("A", 31))  gain = gain.pow(0.5)
 	if (inChallenge("C", 11))  gain = gain.pow(0.45)
-	if (inChallenge("E", 22))  gain = gain.pow(player.points.add(10).log(10).pow(-0.06))
-	if (inChallenge("E", 32))  gain = gain.pow(player.E.Em.add(10).log(10).pow(-0.2))
-	if (inChallenge("E", 42))  gain = gain.pow(player.points.add(10).log(10).pow(-0.12))
-	if (inChallenge("F", 12))  gain = Decimal.pow(10,gain.add(10).log(10).pow(0.8))
+	if (inChallenge("E", 22))  gain = gain.pow(player.points.add(10).log(10).pow(-0.06).max('1e-100'))
+	if (inChallenge("E", 32))  gain = gain.pow(player.E.Em.add(10).log(10).pow(-0.2).max('1e-100'))
+	if (inChallenge("E", 42))  gain = gain.pow(player.points.add(10).log(10).pow(-0.12).max('1e-100'))
+	if (inChallenge("F", 12))  gain = Decimal.pow(10,gain.add(10).log(10).pow(0.8).max('1e-100'))
 
 	if (hasChallenge("A", 21))  gain = gain.mul(50)
 	if (hasChallenge("A", 22))  gain = gain.mul(100)
@@ -157,14 +159,17 @@ function getPointGen() {
 	if (hasChallenge("E", 21))  gain = gain.mul(challengeEffect('E',21))
 	if (hasChallenge("E", 22))  gain = gain.mul(challengeEffect('E',22))
 
-	if (mil('G',14)&&gain.gte('10^^4'))  gain=n(10).pow(n(10).pow(n(10).pow(n(10).pow(gain.log(10).log(10).log(10).log(10).add(tmp.G.gsre)))))
+	if (mil('G',14)&&gain.gte('10^^5'))  gain=n(10).pow(n(10).pow(n(10).pow(n(10).pow(gain.log(10).log(10).log(10).log(10).add(tmp.G.gsre)))))
 		
 	let tet=n(0)
 	if(gcs('I',124))  tet=tet.add(0.3)
 	if(gcs('I',125))  tet=tet.add(0.5)
 	if(gcs('I',135))  tet=tet.add(1)
 	if(mil('J',8)) tet=tet.mul(2)
+	if(mil('J',11)) tet=tet.mul(tmp.J.ssef)
+	if(mil('I',23)) tet=tet.mul(tmp.I.hief[4])
 	if(gcs('I',311)) {if(gain.gte('10^^25')&&mil('I',21)) gain=n(10).tetrate(gain.max(10).slog().add(tet))
+		else if(gain.gte('10^^10')&&gba('J',101).gte(23)) gain=n(10).tetrate(gain.max(10).slog().add(tet))
 		else gain=n(10).tetrate(gain.max(10).slog().sub(tmp.I.resv[0]).max(0))}
 	else{if(gain.gte('10^^10'))  gain=n(10).tetrate(gain.max(10).slog().add(tet))}
 //
@@ -179,13 +184,13 @@ function addedPlayerData() { return {
 // Display extra things at the top of the page
 var displayThings = [
 	function() {
-		let s='current endgame:1F32768 hardcap.<br> Too easy? go to play  NG-10(aast) by qqqe308!'
+		let s='current endgame:F4e10 hardcap.<br> Too easy? go to play  NG-10(aast) by qqqe308!'
 		if(upg('G',155)||mil('I',0)) s=s+"<br><h4 style='color: #C52C14'>points gain is hardcapped at "+format(tmp.H.php)+"."
 		return s},//<br> points is hardcapped at 1F100.
 ]
 // Determines when the game "ends"
 function isEndgame() {
-	return tmp.H.php.gte('10^^32768')
+	return tmp.H.phpb.gte(4e10)
 }
 
 //<br> bilibili: @bili_50929957100
@@ -199,8 +204,8 @@ var backgroundStyle = {
 
 // You can change this if you have things that can be messed up by long tick lengths
 function maxTickLength() {
-	return(1e8) // Default is 100 hour which is just arbitrarily large
-}
+	return(1e10) // Default is 100 hour which is just arbitrarily large
+}//1e8
 
 // Use this if you need to undo inflation from an older version. If the version is older than the version that fixed the issue,
 // you can cap their current resources with this.
