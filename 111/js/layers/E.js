@@ -16,12 +16,14 @@ addLayer("E", {
         if (hasMilestone('E',15)) pg=Decimal.mul(pg,10)
         return pg},
     color: "#789A89",
-    requires: new Decimal('1e1760'), 
+    requires: new Decimal('1e426'), 
     resource: "E", 
     baseResource: "B", 
     baseAmount() {return player.B.points}, 
     type: "normal", 
-    exponent: 0.008, 
+	exponent(){
+		return n(0.015).mul(Decimal.pow(0.95,player.Z.points));
+	},
     gainExp() {
         return new Decimal(1)
     },
@@ -246,7 +248,7 @@ addLayer("E", {
             title:'E3',
             description: "boost to E base on D.",
             effect()  { 
-                let ef = player.D.points.add(10).log(10).div(100).add(1)
+                let ef = player.D.points.add(10).log(10).div(50).add(1)
                 if (hasUpgrade('E',24)) ef = Decimal.pow(ef,1.5)
                 if (hasUpgrade('E',63)) ef = Decimal.pow(ef,1.2)
                 if (hasUpgrade('C',35)) ef = Decimal.pow(ef,1.2)

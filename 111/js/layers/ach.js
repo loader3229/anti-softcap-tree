@@ -164,13 +164,13 @@ addLayer("ac", {
         },
         61: {
             name: "31.year in A",
-            done() { return (challengeCompletions("A", 41) >= 4)},
-            tooltip: "get 1e2024 pts in Ac7",
+            done() { return (challengeCompletions("A", 41) >= 5)},
+            tooltip: "get 1e2025 pts in Ac7",
         },
         62: {
             name: "32.year in A^2",
-            done() { return player.A.total.gte('1e2024')},
-            tooltip: "get 1e2024 A",
+            done() { return player.A.total.gte('1e2025')},
+            tooltip: "get 1e2025 A",
         },
         63: {
             name: "33.a set of timewall^2",

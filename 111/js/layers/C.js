@@ -9,14 +9,26 @@ addLayer("C", {
     passiveGeneration(){    let pg=1
         if (hasMilestone("D", 2))  pg=pg*100
         if (hasMilestone("B", 5))  pg=pg*100
-        return (mil("D", 1)||mil('I',1))?pg:0},
+		
+		
+        if (mil("Z", 2))  pg=Decimal.mul(pg,100)
+        if (mil("Z", 3))  pg=Decimal.mul(pg,100)
+        if (mil("Z", 4))  pg=Decimal.mul(pg,100)
+        if (mil("Z", 1))  return n(pg).mul(100);
+        return (mil("D", 1)||mil('I',1))?pg:0
+		},
     color: "#A73E16",
-    requires: new Decimal(2e36), 
+    requires(){
+		if (mil("Z", 4)) return new Decimal(1);
+		return new Decimal(2e36);
+	},
     resource: "C", 
     baseResource: "points", 
     baseAmount() {return player.points}, 
     type: "normal", 
-    exponent: 0.15, 
+	exponent(){
+		return n(0.15).mul(Decimal.pow(0.95,player.Z.points));
+	},
     gainExp() {
         return new Decimal(1)
     },
@@ -57,7 +69,7 @@ addLayer("C", {
         },
         3: {requirementDescription: "5e11 total C",
             done() {return player[this.layer].total.gte('5e11')}, 
-            effectDescription: "1000x points,100x B passive,unlock D.",
+            effectDescription: "1000x points,100x B passive.",
         },
     },
     microtabs: {

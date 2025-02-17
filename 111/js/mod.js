@@ -1,9 +1,9 @@
 let modInfo = {
-	name: "Anti-softcap tree",
-	id: "mymod",
-	author: "2^32",
+	name: "Anti-softcap anti-scaling tree",
+	id: "asast",
+	author: "2^32/loader3229",
 	pointsName: "points",
-	modFiles: ["layers/A.js", "layers/B.js","layers/C.js","layers/D.js","layers/E.js","layers/F.js","layers/G.js","layers/H.js","layers/I.js","layers/J.js","layers/ach.js","tree.js",],
+	modFiles: ["layers/A.js", "layers/B.js","layers/C.js","layers/D.js","layers/E.js","layers/F.js","layers/G.js","layers/H.js","layers/I.js","layers/J.js","layers/Z.js","layers/ach.js","tree.js",],
 
 	discordName: "",
 	discordLink: "",
@@ -113,6 +113,7 @@ function getPointGen() {
 	gain = gain.mul(hasUpgrade("B",11)?upgradeEffect("B",11):1)
 	gain = gain.mul(hasUpgrade("B",21)?upgradeEffect("B",21):1)
 	gain = gain.mul(hasUpgrade("B",44)?upgradeEffect("B",44):1)
+	gain = gain.mul(hasUpgrade("B",52)?upgradeEffect("B",52):1)
 
 	gain = gain.mul(hasUpgrade("C",11)?upgradeEffect("C",11):1)
 	gain = gain.mul(hasUpgrade("C",13)?upgradeEffect("C",13):1)
@@ -156,6 +157,9 @@ function getPointGen() {
 	if (mil('I',3))  gain = gain.pow(buyableEffect('I',12))
 	if(n(challengeCompletions('I',22)).gte(1))  gain = gain.pow(1.25)
 
+	if(hasMilestone("Z", 3))gain = gain.pow(1.05)
+	if(hasMilestone("Z", 4))gain = gain.pow(1.02)
+
 	if (hasChallenge("E", 21))  gain = gain.mul(challengeEffect('E',21))
 	if (hasChallenge("E", 22))  gain = gain.mul(challengeEffect('E',22))
 
@@ -174,6 +178,9 @@ function getPointGen() {
 	else{if(gain.gte('10^^10'))  gain=n(10).tetrate(gain.max(10).slog().add(tet))}
 //
 	gain=gain.min(tmp.H.php)
+	
+	
+	gain = gain.min([1e100,1e250,"1e450","1e700","1e1000","1e1400","1e2740","1e5000"][player.Z.points.toNumber()]);
 	return gain
 }
 
@@ -184,7 +191,7 @@ function addedPlayerData() { return {
 // Display extra things at the top of the page
 var displayThings = [
 	function() {
-		let s='current endgame:F4e10 hardcap.<br> Too easy? go to play  NG-10(aast) by qqqe308!'
+		let s='current endgame:1e2740'
 		if(upg('G',155)||mil('I',0)) s=s+"<br><h4 style='color: #C52C14'>points gain is hardcapped at "+format(tmp.H.php)+"."
 		return s},//<br> points is hardcapped at 1F100.
 ]
@@ -193,7 +200,7 @@ function isEndgame() {
 	return tmp.H.phpb.gte(4e10)
 }
 
-//<br> bilibili: @bili_50929957100
+//<br> bilibili: @bili_50929957100 / @loader3229
 
 // Less important things beyond this point!
 

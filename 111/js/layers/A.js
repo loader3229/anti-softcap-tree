@@ -9,18 +9,28 @@ addLayer("A", {
     passiveGeneration(){
         let pg=0
         if (upg("B",23)||mil('I',1)) pg=Decimal.add(pg,1)
+        if (mil("Z", 0))  pg=Decimal.add(pg,100)
+        if (mil("Z", 1))  pg=Decimal.mul(pg,100)
+        if (mil("Z", 2))  pg=Decimal.mul(pg,100)
+        if (mil("Z", 3))  pg=Decimal.mul(pg,100)
+        if (mil("Z", 4))  pg=Decimal.mul(pg,100)
         if (mil("C", 1))  pg=Decimal.mul(pg,100)
         if (mil("C", 2))  pg=Decimal.mul(pg,100)
         if (mil("D", 1))  pg=Decimal.mul(pg,100)
         if (mil("D", 2))  pg=Decimal.mul(pg,1e4)
         return pg},
     color: "#4BDC13",
-    requires: new Decimal(10), // Can be a funct}ion that takes requirement increases into account
+    requires(){
+		if (mil("Z", 4)) return new Decimal(1);
+		return new Decimal(10);
+	}, // Can be a funct}ion that takes requirement increases into account
     resource: "A", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: n(0.5), // Prestige currency exponent
+    exponent(){
+		return n(0.5).mul(Decimal.pow(0.95,player.Z.points));
+	}, // Prestige currency exponent
     gainExp() {// Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
@@ -163,6 +173,8 @@ addLayer("A", {
                 if (upg('A',44)) ef = ef.pow(1.25)
                 if (upg('A',52)) ef = ef.pow(1.15)
 
+				if(hasMilestone('Z',5))ef = ef.pow(15)
+
                 if (inChallenge("A",12)) ef = ef.pow(0.25)
                 if (inChallenge("A",22)) ef = n(1)
                 if (inChallenge("A",31)) ef = n(1)
@@ -257,35 +269,35 @@ addLayer("A", {
         53: {
             title:'A23',
             description: "B26 x10.",
-            cost:new Decimal('5e264'),
+            cost:new Decimal('5e224'),
             unlocked() { return (upg('B', 62))},
         },
         54: {
             title:'A24',
             description: "B26 x10,x3e4 pts.",
-            cost:new Decimal('2e277'),
+            cost:new Decimal('1e229'),
             unlocked() { return (upg(this.layer, 53))},
         },
         55: {
             title:'A25',
             description: "Bb3-4 are stronger.",
-            cost:new Decimal('1e322'),
+            cost:new Decimal('1e243'),
             unlocked() { return (upg(this.layer, 54))},
         },
         61: {
             title:'A26',
             description: "mult to C based on Bb1 eff.",
-            cost:new Decimal('1e1896'),
+            cost:new Decimal('1e440'),
             effect()  { 
                 let ef = buyableEffect('B',11).pow(0.02).times(buyableEffect('B',11).add(10).log(10).pow(1.5))
                 return ef},
             effectDisplay() { return format(this.effect())+"x" }, 
-            unlocked() { return (mil('B', 6))},
+            unlocked() { return (mil('B', 4))},
         },
         62: {
             title:'A27',
             description: "mult to B26 based on Bb1 eff.",
-            cost:new Decimal('1e2020'),
+            cost:new Decimal('1e450'),
             effect()  { 
                 let ef = buyableEffect('B',11).add(10).log(10).pow(1.2)
                 return ef;},
@@ -294,14 +306,14 @@ addLayer("A", {
         },
         63: {
             title:'A28',
-            description: "Bb5 x1.02.",
-            cost:new Decimal('1e2391'),
+            description: "Bb5 x2.",
+            cost:new Decimal('1e475'),
             unlocked() { return (upg(this.layer, 62))},
         },
         64: {
             title:'A29',
             description: "mult to D based on Bb1 eff.",
-            cost:new Decimal('1e2488'),
+            cost:new Decimal('1e621'),
             effect()  { 
                 let ef = buyableEffect('B',11).pow(0.006).times(buyableEffect('B',11).add(10).log(10).pow(1.25))
                 return ef;},
@@ -310,8 +322,8 @@ addLayer("A", {
         },
         65: {
             title:'A30',
-            description: "nerf Bb1-5's cost scaling.",
-            cost:new Decimal('1e2541'),
+            description: "Bb1-5 are cheaper.",
+            cost:new Decimal('1e625'),
             unlocked() { return (upg(this.layer, 64))},
         },
     },
@@ -377,12 +389,7 @@ addLayer("A", {
                 return "Bb3-5 are disabled <br> Completion: " +challengeCompletions(this.layer,this.id) + "/5"},
             unlocked() { return (mil('B',4))},
             goal(){
-                // if (challengeCompletions("A", 41) == 0) return Decimal.pow(10,777);
-                // if (challengeCompletions("A", 41) == 1) return Decimal.pow(10,1325);
-                // if (challengeCompletions("A", 41) == 2) return Decimal.pow(10,1540);
-                // if (challengeCompletions("A", 41) == 3) return Decimal.pow(10,2024);
-                // if (challengeCompletions("A", 41) >= 4) return Decimal.pow(10,2600);
-                let a=[n('e777'),n('e1325'),n('e1540'),n('e2024'),n('e2600'),n(0)]
+                let a=[n('e500'),n('e540'),n('e580'),n('e700'),n('e2025'),n(0)]
                 return a[(challengeCompletions(this.layer,this.id))]
             },            
             goalDescription:  function() {return format(this.goal())+' points'},

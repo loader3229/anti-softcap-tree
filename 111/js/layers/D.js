@@ -7,14 +7,26 @@ addLayer("D", {
 		points: new Decimal(0),
     }},
     passiveGeneration(){    let d_pg=100
+	
+        if (mil("Z", 3))  d_pg=Decimal.mul(d_pg,100)
+        if (mil("Z", 4))  d_pg=Decimal.mul(d_pg,100)
+		if(mil("B", 5) ||mil('I',1))return n(d_pg);
+        if (mil("Z", 4))  return n(10000);
+        if (mil("Z", 3))  return n(100);
+        if (mil("Z", 2))  return n(1);
         return (mil("B", 5)||mil('I',1))?d_pg:0},
     color: "#720202",
-    requires: new Decimal('1e13'), 
+    requires(){
+		if (mil("Z", 4)) return new Decimal(1);
+		return new Decimal(1e11);
+	},
     resource: "D", 
     baseResource: "C", 
     baseAmount() {return player.C.points}, 
     type: "normal", 
-    exponent: 0.2, 
+	exponent(){
+		return n(0.22).mul(Decimal.pow(0.95,player.Z.points));
+	},
     gainExp() {
         return new Decimal(1)
     },
@@ -22,7 +34,7 @@ addLayer("D", {
     hotkeys: [
         {key: "d", description: "D: Reset for D points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){ return ((mil('C',3))||player[this.layer].unlocked)},
+    layerShown(){ return ((player.Z.points.gte(1))||player[this.layer].unlocked)},
     gainMult() { 
         mult = new Decimal(1)
         mult = mult.mul(hasUpgrade(this.layer,12)?2:1)
