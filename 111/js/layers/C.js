@@ -195,13 +195,17 @@ addLayer("C", {
         31: {
             title:'C11',
             description: "1e7x pts.",
-            cost:new Decimal('1e2560'),
+			cost(){
+				return n(player.Z.points.gte(10)?'1e950':'1e1800');
+			},
             unlocked() { return (challengeCompletions("E", 21) >= 2)},
         },
         32: {
             title:'C12',
             description: "C upg boost E.<br>(1.3^x).",
-            cost:new Decimal('1e2760'),
+			cost(){
+				return n(player.Z.points.gte(10)?'1e1100':'1e2760');
+			},
             effect()  { 
                 let bas=1.3
                 let a=player.C.upgrades.length
@@ -215,7 +219,9 @@ addLayer("C", {
         33: {
             title:'C13',
             description: "Eb1 amt boost pts.<br>(1.5^x).",
-            cost:new Decimal('1e2835'),
+			cost(){
+				return n(player.Z.points.gte(10)?'1e1200':'1e2835');
+			},
             effect()  { 
                 let a=getBuyableAmount('E', 11)
                 let ef = Decimal.pow(1.5,a)
@@ -226,7 +232,7 @@ addLayer("C", {
         },
         34: {
             title:'C14',
-            description: "Eb4 is cheaper.<br>(^0.98,after scaling)",
+            description: "Eb4 is cheaper.",
             cost:new Decimal('1e2906'),
             unlocked() { return (hasUpgrade(this.layer, 33))},
         },

@@ -180,7 +180,7 @@ function getPointGen() {
 	gain=gain.min(tmp.H.php)
 	
 	
-	gain = gain.min([1e100,1e250,"1e450","1e700","1e1000","1e1400","1e2740","1e5000"][player.Z.points.toNumber()]);
+	gain = gain.min([1e100,1e250,"1e450","1e700","1e1000","1e1400","1e2740","1e4300","1e10100","1e22600","1e45100"][player.Z.points.toNumber()]);
 	return gain
 }
 
@@ -191,7 +191,7 @@ function addedPlayerData() { return {
 // Display extra things at the top of the page
 var displayThings = [
 	function() {
-		let s='current endgame:1e2740'
+		let s='current endgame:1e45100'
 		if(upg('G',155)||mil('I',0)) s=s+"<br><h4 style='color: #C52C14'>points gain is hardcapped at "+format(tmp.H.php)+"."
 		return s},//<br> points is hardcapped at 1F100.
 ]

@@ -237,13 +237,17 @@ addLayer("D", {
         41: {
             title:'D16',
             description: "1e7x pts.",
-            cost:new Decimal('1e578'),
+			cost(){
+				return n(player.Z.points.gte(10)?'1e185':'1e350');
+			},
             unlocked() { return (hasUpgrade('C', 31))},
         },
         42: {
             title:'D17',
             description: "D upg boost E.<br>(1.25^x).",
-            cost:new Decimal('1e628'),
+			cost(){
+				return n(player.Z.points.gte(10)?'1e225':'1e628');
+			},
             effect()  { 
                 let a=player.D.upgrades.length
                 let bas =1.25
@@ -258,7 +262,9 @@ addLayer("D", {
         43: {
             title:'D18',
             description: "Eb2 amt boost pts.<br>(1.75^x).",
-            cost:new Decimal('1e648'),
+			cost(){
+				return n(player.Z.points.gte(10)?'1e265':'1e648');
+			},
             effect()  { 
                 let a=getBuyableAmount('E', 12)
                 let ef = Decimal.pow(1.75,a)
@@ -269,14 +275,14 @@ addLayer("D", {
         },
         44: {
             title:'D19',
-            description: "Bb5 is cheaper.<br>(^0.98,after scaling)",
-            cost:new Decimal('1e659'),
+            description: "Bb5 is cheaper.",
+            cost:new Decimal('1e750'),
             unlocked() { return (hasUpgrade('D', 43))},
         },
         45: {
             title:'D20',
             description: "E12/E15 ^1.2",
-            cost:new Decimal('1e684'),
+            cost:new Decimal('1e999'),
             unlocked() { return (hasUpgrade('D', 44))},
         },
         51: {

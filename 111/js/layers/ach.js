@@ -249,7 +249,7 @@ addLayer("ac", {
         },
         86: {
             name: "48.Emmm...",
-            done() {return (hasMilestone('E',11))},
+            done() {return (hasMilestone('Z',9))},
             tooltip: "unlock Em", 
         },
         91: {
@@ -274,7 +274,7 @@ addLayer("ac", {
         },
         95: {
             name: "53.Ek ruby",
-            done() {return (hasMilestone('E',15))},
+            done() {return (hasMilestone('Z',10))},
             tooltip: "unlock Ek", 
         },
         96: {
