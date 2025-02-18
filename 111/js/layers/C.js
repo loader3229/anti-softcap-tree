@@ -196,7 +196,7 @@ addLayer("C", {
             title:'C11',
             description: "1e7x pts.",
 			cost(){
-				return n(player.Z.points.gte(10)?'1e950':'1e1800');
+				return n(player.Z.points.gte(11)?'1e789':player.Z.points.gte(10)?'1e950':'1e1800');
 			},
             unlocked() { return (challengeCompletions("E", 21) >= 2)},
         },
@@ -204,7 +204,7 @@ addLayer("C", {
             title:'C12',
             description: "C upg boost E.<br>(1.3^x).",
 			cost(){
-				return n(player.Z.points.gte(10)?'1e1100':'1e2760');
+				return n(player.Z.points.gte(11)?'1e876':player.Z.points.gte(10)?'1e1100':'1e2760');
 			},
             effect()  { 
                 let bas=1.3
@@ -220,7 +220,7 @@ addLayer("C", {
             title:'C13',
             description: "Eb1 amt boost pts.<br>(1.5^x).",
 			cost(){
-				return n(player.Z.points.gte(10)?'1e1200':'1e2835');
+				return n(player.Z.points.gte(11)?'1e900':player.Z.points.gte(10)?'1e1200':'1e2835');
 			},
             effect()  { 
                 let a=getBuyableAmount('E', 11)
@@ -233,13 +233,17 @@ addLayer("C", {
         34: {
             title:'C14',
             description: "Eb4 is cheaper.",
-            cost:new Decimal('1e2906'),
+			cost(){
+				return n(player.Z.points.gte(11)?'1e975':'1e2906');
+			},
             unlocked() { return (hasUpgrade(this.layer, 33))},
         },
         35: {
             title:'C15',
             description: "E3/E4 ^1.2",
-            cost:new Decimal('1e2996'),
+			cost(){
+				return n(player.Z.points.gte(11)?'1e1000':'1e2996');
+			},
             unlocked() { return (hasUpgrade(this.layer, 34))},
         },
         41: {

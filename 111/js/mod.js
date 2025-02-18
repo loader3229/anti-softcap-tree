@@ -145,6 +145,12 @@ function getPointGen() {
 	if (hasChallenge("C", 11))  gain = gain.mul(2000)
 	if (hasChallenge("C", 12))  gain = gain.mul(8000)
 	if (hasChallenge("A", 41))  gain = gain.mul(challengeEffect('A',41))
+		
+	if(hasMilestone("Z",11)){
+		gain = gain.pow(1.1)
+		if (hasChallenge("E", 21))  gain = gain.mul(challengeEffect('E',21))
+		if (hasChallenge("E", 22))  gain = gain.mul(challengeEffect('E',22))
+	}
 
 	if (hasChallenge("A", 32))  gain = gain.pow(1.01)
 	if (hasChallenge("C", 11))  gain = gain.pow(1.01)
@@ -157,11 +163,15 @@ function getPointGen() {
 	if (mil('I',3))  gain = gain.pow(buyableEffect('I',12))
 	if(n(challengeCompletions('I',22)).gte(1))  gain = gain.pow(1.25)
 
-	if(hasMilestone("Z", 3))gain = gain.pow(1.05)
-	if(hasMilestone("Z", 4))gain = gain.pow(1.02)
+	if(hasMilestone("Z",11)){
+		gain = gain.pow(1.1)
+	}else{
+		if(hasMilestone("Z", 3))gain = gain.pow(1.05)
+		if(hasMilestone("Z", 4))gain = gain.pow(1.02)
+		if (hasChallenge("E", 21))  gain = gain.mul(challengeEffect('E',21))
+		if (hasChallenge("E", 22))  gain = gain.mul(challengeEffect('E',22))
+	}
 
-	if (hasChallenge("E", 21))  gain = gain.mul(challengeEffect('E',21))
-	if (hasChallenge("E", 22))  gain = gain.mul(challengeEffect('E',22))
 
 	if (mil('G',14)&&gain.gte('10^^5'))  gain=n(10).pow(n(10).pow(n(10).pow(n(10).pow(gain.log(10).log(10).log(10).log(10).add(tmp.G.gsre)))))
 		
@@ -180,7 +190,7 @@ function getPointGen() {
 	gain=gain.min(tmp.H.php)
 	
 	
-	gain = gain.min([1e100,1e250,"1e450","1e700","1e1000","1e1400","1e2740","1e4300","1e10100","1e22600","1e45100"][player.Z.points.toNumber()]);
+	gain = gain.min([1e100,1e250,"1e450","1e700","1e1000","1e1400","1e2740","1e4300","1e10100","1e22600","1e45100","1e99100","1e360100"][player.Z.points.toNumber()]);
 	return gain
 }
 
@@ -191,7 +201,7 @@ function addedPlayerData() { return {
 // Display extra things at the top of the page
 var displayThings = [
 	function() {
-		let s='current endgame:1e45100'
+		let s='current endgame:1e360100'
 		if(upg('G',155)||mil('I',0)) s=s+"<br><h4 style='color: #C52C14'>points gain is hardcapped at "+format(tmp.H.php)+"."
 		return s},//<br> points is hardcapped at 1F100.
 ]

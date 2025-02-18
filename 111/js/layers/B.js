@@ -444,6 +444,7 @@ addLayer("B", {
                 if (hasMilestone('B',1)) cost = cost.div(upgradeEffect('B',61))
                 if (hasMilestone('Z',2)) cost = cost.div(10)
                 if (hasChallenge('E',31)) cost = cost.div(challengeEffect('E',31))
+			if(player.Z.points.gte(11)) cost = cost.div(tmp.E.ekf);
                 return cost
                 /*let cp=n(1.027)
                 cost = Decimal.pow(4, x.pow(1.1)).times('1e38')
@@ -511,6 +512,7 @@ addLayer("B", {
                 if (hasMilestone('B',1)) cost = cost.div(upgradeEffect('B',61))
                 if (hasMilestone('Z',2)) cost = cost.div(10)
                 if (hasChallenge('E',31)) cost = cost.div(challengeEffect('E',31))
+			if(player.Z.points.gte(11)) cost = cost.div(tmp.E.ekf);
                 return cost
 				
                 /*let cp=n(1.04)
@@ -569,6 +571,7 @@ addLayer("B", {
                 if (hasMilestone('B',1)) cost = cost.div(upgradeEffect('B',61))
                 if (hasMilestone('Z',2)) cost = cost.div(10)
                 if (hasChallenge('E',31)) cost = cost.div(challengeEffect('E',31))
+			if(player.Z.points.gte(11)) cost = cost.div(tmp.E.ekf);
                 return cost
 				
                /* cost = Decimal.pow(10, x.pow(1.07)).times('1e41')
@@ -619,6 +622,7 @@ addLayer("B", {
                 if (hasMilestone('B',1)) cost = cost.div(upgradeEffect('B',61))
                 if (hasMilestone('Z',2)) cost = cost.div(10)
                 if (hasChallenge('E',31)) cost = cost.div(challengeEffect('E',31))
+			if(player.Z.points.gte(11)) cost = cost.div(tmp.E.ekf);
                 return cost/*
                 let sc=400
                 if (inChallenge('E',42)) sc=Decimal.add(sc,-300)
@@ -668,6 +672,7 @@ addLayer("B", {
                 if (hasMilestone('B',1)) cost = cost.div(upgradeEffect('B',61))
                 if (hasMilestone('Z',2)) cost = cost.div(10)
                 if (hasChallenge('E',31)) cost = cost.div(challengeEffect('E',31))
+			if(player.Z.points.gte(11)) cost = cost.div(tmp.E.ekf);
 				return cost/*
                 let sc=n(400)
                 if (inChallenge('E',42)) sc=Decimal.add(sc,-300)
@@ -694,6 +699,7 @@ addLayer("B", {
                 let ef = Decimal.pow(x.div(40).add(1),0.7).sub(1)
                 if (player.Z.points.gte(9)) ef = Decimal.pow(x.div(20).add(1),0.5).sub(1)
                 if (player.Z.points.gte(10)) ef = Decimal.pow(x.div(5).add(1),1/3).sub(1)
+                if (player.Z.points.gte(12)) ef = Decimal.pow(x.div(2).add(1),0.25).sub(1)
                 if (inChallenge('A',41)) ef = n(0)
                 if (hasUpgrade('A',63)) ef = Decimal.mul(ef,2)
                 if (hasUpgrade('E',34)) ef = Decimal.mul(ef,1.2)

@@ -26,12 +26,14 @@ addLayer("F", {
         if(gcs('I',35)) p=n(1)
         return p},
     color: "#264321",
-    requires: new Decimal('1e1024'), 
+    requires: new Decimal('1e700'), 
     resource: "F", 
     baseResource: "E", 
     baseAmount() {return player.E.points}, 
     type: "normal", 
-    exponent: 0.004, 
+	exponent(){
+		return n(0.0075).mul(Decimal.pow(0.95,player.Z.points));
+	},
     gainExp() {
         let ef=n(1)
         //if (upg('F',32)) ef=Decimal.add(ef,1.1)
@@ -66,7 +68,7 @@ addLayer("F", {
         },
         2: {requirementDescription: "4 total F (3",
             done() {return player[this.layer].total.gte('4')}, 
-            effectDescription: "bulk buy x2 B upg,B26 ^1.1,keep C chal.",
+            effectDescription: "B26 ^1.1,keep C chal.",
         },
         3: {requirementDescription: "6 total F (4",
             done() {return player[this.layer].total.gte('6')}, 
@@ -82,7 +84,7 @@ addLayer("F", {
         },
         6: {requirementDescription: "160 total F (7",
             done() {return player[this.layer].total.gte('160')}, 
-            effectDescription: "x10 bulk buy Eb1-3.",
+            effectDescription: "x5 bulk buy Eb1-3.",
         },
         7: {requirementDescription: "1.5e7 total F (8",
             done() {return player[this.layer].total.gte('1.5e7')}, 
@@ -251,7 +253,7 @@ addLayer("F", {
         },
         22: {
             title:'F7',
-            description: "Eb4 x1.1,Eb scaling start 5 later.",
+            description: "Eb4 x1.1.",
             cost:new Decimal(15),
             unlocked() { return (upg(this.layer, 21))},
         },
@@ -280,7 +282,7 @@ addLayer("F", {
         },
         31: {
             title:'F11',
-            description: "Bb sc start later based on F,new 2 C/D upg.",
+            description: "new 2 C/D upg.",
             cost:new Decimal('1.5e8'),
             effect()  { 
                 let ef = player.F.total.add(10).log(10).pow(0.9).mul(2)
@@ -288,7 +290,7 @@ addLayer("F", {
                 if (upg('F',34)) ef=Decimal.mul(ef,1.28)
                 return ef;
             },
-            effectDisplay() { return "+"+format(this.effect()) },
+            //effectDisplay() { return "+"+format(this.effect()) },
             unlocked() { return (upg(this.layer, 25))},
         },
         32: {
